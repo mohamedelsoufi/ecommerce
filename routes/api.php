@@ -29,6 +29,10 @@ Route::group(['middleware' => ['changeLang']], function() {
 
     Route::post('login', 'App\Http\Controllers\Api\site\authentication\auth@login')->name('user');
 
+    Route::post('forgetPasswored/sendMail', 'App\Http\Controllers\Api\site\authentication\resetPasswored@sendEmail')->name('user');
+    Route::post('forgetPasswored/checkCode', 'App\Http\Controllers\Api\site\authentication\resetPasswored@checkCode')->name('user');
+    Route::post('forgetPasswored/passwordResetProcess', 'App\Http\Controllers\Api\site\authentication\resetPasswored@passwordResetProcess')->name('user');
+
     Route::group(['middleware' => ['checkJWTtoken:user']], function() {
         Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('user');
         Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('user');

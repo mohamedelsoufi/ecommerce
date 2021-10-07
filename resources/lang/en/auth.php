@@ -27,11 +27,13 @@ return [
     'passwored or email is wrong'                    => 'passwored or email is wrong',
     'some thing is wrong'                            => 'some thing is wrong',
     'user not found'                                 => 'user not found',
-    'you are blocked' => 'you are blocked',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
+    'you are blocked'                                => 'you are blocked',
+
+    //forget password
+    'Email does\'t found on our database'            => 'Email does\'t found on our database',
+    'Reset Email is send successfully, please check your inbox.' => 'Reset Email is send successfully, please check your inbox.',
+    'Either your email or code is wrong.' => 'Either your email or code is wrong.',
+    'Password has been updated.' => 'Password has been updated.',
     '' => '',
     '' => '',
     '' => '',

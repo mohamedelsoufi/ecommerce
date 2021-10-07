@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable()->unique();
             $table->tinyInteger('email_verified_at')->nullable()->comment('null -> not active, 1-> active');
-            $table->tinyInteger('status')->nullable()->comment('0-> blocked');
+            $table->tinyInteger('status')->default(1)->comment('0-> blocked');
             $table->tinyInteger('gender')->nullable()->comment('0-> male, 1-> famale');
             $table->date('birth')->nullable();
             $table->string('socialite_id')->nullable();
