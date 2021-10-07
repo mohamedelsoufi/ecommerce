@@ -26,6 +26,9 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
     Route::post('forgetPasswored/checkCode', 'App\Http\Controllers\Api\site\authentication\resetPasswored@checkCode')->name('vender');
     Route::post('forgetPasswored/passwordResetProcess', 'App\Http\Controllers\Api\site\authentication\resetPasswored@passwordResetProcess')->name('vender');
 
+    Route::post('verification/sendMail', 'App\Http\Controllers\Api\site\authentication\verification@sendEmail')->name('vender');
+    Route::post('verification', 'App\Http\Controllers\Api\site\authentication\verification@passwordResetProcess')->name('vender');
+
     Route::group(['middleware' => ['checkJWTtoken:vender']], function() {
         Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('vender');
         Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('vender');

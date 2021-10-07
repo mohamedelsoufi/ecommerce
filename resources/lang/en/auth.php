@@ -30,12 +30,14 @@ return [
     'you are blocked'                                => 'you are blocked',
 
     //forget password
-    'Email does\'t found on our database'            => 'Email does\'t found on our database',
-    'Reset Email is send successfully, please check your inbox.' => 'Reset Email is send successfully, please check your inbox.',
-    'Either your email or code is wrong.' => 'Either your email or code is wrong.',
-    'Password has been updated.' => 'Password has been updated.',
-    '' => '',
-    '' => '',
+    'Email does\'t found on our database'                           => 'Email does\'t found on our database',
+    'Reset Email is send successfully, please check your inbox.'    => 'Reset Email is send successfully, please check your inbox.',
+    'Either your email or code is wrong.'                           => 'Either your email or code is wrong.',
+    'Password has been updated.'                                    => 'Password has been updated.',
+
+    //email verify
+    'You must verify your email' => 'You must verify your email',
+    'email verification success' => 'email verification success',
     '' => '',
     '' => '',
     '' => '',

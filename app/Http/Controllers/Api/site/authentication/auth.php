@@ -48,6 +48,11 @@ class auth extends Controller
         if($data['status'] == 0){
             return $this->falid(trans('auth.you are blocked'), 403, 'E02');
         }
+
+        //check if user not active
+        if($data['email_verified_at'] == null){
+            return $this->falid(trans('auth.You must verify your email'), 403, 'E05');
+        }
         
         return response()->json([
             'status'  => true,

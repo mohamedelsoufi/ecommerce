@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\Api\site\authentication;
 
 use App\Http\Controllers\Controller;
-use App\Mail\ResetPasswordMail;
-use App\Models\User;
+use App\Mail\verification as MailVerification;
 use App\Traits\response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-// use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
 
-class resetPasswored extends Controller
+class verification extends Controller
 {
     use response;
     ////////sent email /////////////
@@ -27,13 +25,13 @@ class resetPasswored extends Controller
         
         // code is important in send mail 
         $code = $this->createCode($request->email, $guard);
-        Mail::to($request->email)->send(new ResetPasswordMail($code, $request->email));
+        Mail::to($request->email)->send(new MailVerification($code, $request->email));
 
         return $this::success(trans('auth.Reset Email is send successfully, please check your inbox.'), 200);
     }
 
     public function createCode($email, $guard){  // this is a function to get your request email that there are or not to send mail
-        $table = $guard . '_password_resets';
+        $table = $guard . 's_verification';
 
         $oldCode = DB::table($table)->where('email', $email)->first();
 
@@ -47,7 +45,7 @@ class resetPasswored extends Controller
     }
 
     public function saveCode($code, $email, $guard){  // this function save new password
-        $table = $guard . '_password_resets';
+        $table = $guard . 's_verification';
 
         DB::table($table)->insert([
             'email' => $email,
@@ -78,8 +76,6 @@ class resetPasswored extends Controller
         $validator = Validator::make($request->all(), [
             'email'             => 'required',
             'code'              => 'required',
-            'password'          => 'required|string|min:6',
-            'confirmPassword'   => 'required|string|same:password',
         ]);
 
         if($validator->fails()){
@@ -89,12 +85,12 @@ class resetPasswored extends Controller
         $guard = $request->route()->getName();
         $request->guard = $guard;
 
-        return $this->updatePasswordRow($request)->count() > 0 ? $this->resetPassword($request) : $this::falid(trans('auth.Either your email or code is wrong.'), 403, 'E04');
+        return $this->emailVerificationRow($request)->count() > 0 ? $this->emailVerification($request) : $this::falid(trans('auth.Either your email or code is wrong.'), 403, 'E04');
     }
   
     // Verify if code is valid
-    private function updatePasswordRow($request){
-        $table = $request->guard . '_password_resets';
+    private function emailVerificationRow($request){
+        $table = $request->guard . 's_verification';
 
         return DB::table($table)->where([
             'email' => $request->email,
@@ -102,18 +98,18 @@ class resetPasswored extends Controller
         ]);
     }
 
-    // Reset password
-    private function resetPassword($request) {
+    // email Verification
+    private function emailVerification($request) {
         $table = $request->guard . 's';
         // update password
         DB::table($table)
         ->where('email', $request->email)
-        ->update(['password' => bcrypt($request->password)]);
+        ->update(['email_verified_at' => 1]);
 
         // remove verification data from db
-        $this->updatePasswordRow($request)->delete();
+        $this->emailVerificationRow($request)->delete();
 
         // reset password response
-        return response::success(trans('auth.Password has been updated.'), 200);
+        return response::success(trans('auth.email verification success'), 200);
     } 
 }

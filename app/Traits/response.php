@@ -40,6 +40,9 @@ trait response
 
         else if ($input == "E04")
             return 'not found';
+
+        else if ($input == "E05")
+            return 'not active';
         else
             return "";
     }
