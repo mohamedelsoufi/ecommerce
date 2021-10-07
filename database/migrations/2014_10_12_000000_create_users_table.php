@@ -23,13 +23,9 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('status')->nullable()->comment('0-> blocked');
             $table->tinyInteger('gender')->nullable()->comment('0-> male, 1-> famale');
             $table->date('birth')->nullable();
-            $table->unsignedBigInteger('address_id')->nullable();
             $table->string('socialite_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
-
         });
     }
 
