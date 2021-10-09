@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api\site\authentication;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\login as RequestsLogin;
+use App\Models\User;
 use App\Traits\response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class auth extends Controller
 {
@@ -16,7 +18,7 @@ class auth extends Controller
 
     public function login(Request $request){
         $guard = $request->route()->getName();
-
+        
         // //validation
         $validator = Validator::make($request->all(), [
             'email' => 'required',
@@ -25,7 +27,7 @@ class auth extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 422, 'E03');
+            return $this->falid($validator->errors(), 403, 'E03');
         }
 
         //check password and email and login

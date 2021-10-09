@@ -14,7 +14,6 @@ class profile extends Controller
     use response;
 
     public function getProfile(Request $request){
-        return User::find(1)->address;
         //get guard
         $guard = $request->route()->getName();
 

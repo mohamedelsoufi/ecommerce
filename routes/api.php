@@ -25,7 +25,7 @@ Route::get('/clear-cache',function(){
 });
 
 Route::group(['middleware' => ['changeLang']], function() {
-    Route::post('register', 'App\Http\Controllers\Api\site\register@register');
+    Route::post('register', 'App\Http\Controllers\Api\site\authentication\registration@userRegister');
 
     Route::post('login', 'App\Http\Controllers\Api\site\authentication\auth@login')->name('user');
 

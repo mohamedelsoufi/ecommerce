@@ -36,9 +36,11 @@ return [
     'Password has been updated.'                                    => 'Password has been updated.',
 
     //email verify
-    'You must verify your email' => 'You must verify your email',
-    'email verification success' => 'email verification success',
-    '' => '',
+    'You must verify your email'                    => 'You must verify your email',
+    'email verification success'                    => 'email verification success',
+
+    //register
+    'register success' => 'register success',
     '' => '',
     '' => '',
     '' => '',
