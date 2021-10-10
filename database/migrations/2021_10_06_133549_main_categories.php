@@ -18,7 +18,7 @@ class MainCategories extends Migration
             $table->string('name')->nullable();
             $table->tinyInteger('status')->default(1)->comment('0->not avtive, 1->active');
             $table->string('locale')->nullable();
-            $table->string('parent')->nullable();
+            $table->bigInteger('parent')->nullable();
             $table->timestamps();
         });
     }

@@ -14,12 +14,18 @@ class Main_category extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'id'    => 'integer',
-        'status'=> 'integer',
+        'id'        => 'integer',
+        'status'    => 'integer',
+        'parent'    => 'integer',
     ];
 
     //relations
     public function Sub_category(){
         return $this->hasMany(Sub_category::class, 'main_cate_id');
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }

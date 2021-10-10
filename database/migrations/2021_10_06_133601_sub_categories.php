@@ -19,7 +19,7 @@ class SubCategories extends Migration
             $table->unsignedBigInteger('main_cate_id')->nullable();
             $table->tinyInteger('status')->default(1)->comment('0->not avtive, 1->active');
             $table->string('locale')->nullable();
-            $table->string('parent')->nullable();
+            $table->bigInteger('parent')->nullable();
             $table->timestamps();
 
             $table->foreign('main_cate_id')->references('id')->on('main_categories')->onDelete('cascade');

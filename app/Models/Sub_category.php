@@ -17,6 +17,7 @@ class Sub_category extends Model
         'id'            => 'integer',
         'main_cate_id'  => 'integer',
         'status'        => 'integer',
+        'parent'        => 'integer',
     ];
 
     //relations
@@ -26,5 +27,10 @@ class Sub_category extends Model
 
     public function Products(){
         return $this->hasMany(Product::class, 'sub_categoriesId');
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }
