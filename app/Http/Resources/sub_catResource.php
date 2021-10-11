@@ -16,7 +16,13 @@ class sub_catResource extends JsonResource
     public function toArray($request)
     {
         //get main category (parent of each main category)
-        $main_cat = Sub_category::where('id', '=' ,$this->parent)->first();
+        if($this->parent != 0){
+            //if it isn't a parent
+            $main_cat = Sub_category::where('id', '=' ,$this->parent)->first();
+        } else{
+            //if it is a parent
+            $main_cat = Sub_category::where('id', '=' ,$this->id)->first();
+        }
 
         return [
             'id'                => $this->id,

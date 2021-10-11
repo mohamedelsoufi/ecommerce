@@ -25,7 +25,10 @@ Route::get('/clear-cache',function(){
 });
 
 Route::group(['middleware' => ['changeLang'], 'prefix' => 'guest'], function() {
-    Route::get('categorys', 'App\Http\Controllers\Api\site\guest@getCategory');
+    Route::get('mainCategorys', 'App\Http\Controllers\Api\site\guest@getCategory');
+    Route::get('mainCategorys/details', 'App\Http\Controllers\Api\site\guest@main_cate_details');
+
+    Route::get('SubCategorys/details', 'App\Http\Controllers\Api\site\guest@sub_cate_details');
 });
 
 

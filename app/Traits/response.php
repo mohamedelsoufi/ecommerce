@@ -12,7 +12,7 @@ trait response
             ], $statusCode);
         } else {
             return response()->json([
-                'successful' => false,
+                'successful' => true,
                 'message' => $message,
                 $dataName => $data,
             ], $statusCode);
