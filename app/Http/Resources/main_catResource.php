@@ -31,10 +31,10 @@ class main_catResource extends JsonResource
         return [
             'id'                => $this->id,
             'name'              => $this->name,
-            'status'            => $this->status,
+            'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
             'locale'            => $this->locale,
             'image'             => ($main_cat->image != null) ? $main_cat->image->image : 'default.jpg',
-            'sub_categorys'     => sub_catResource::collection(Sub_category::where('locale', '=', Config::get('app.locale'))->where('main_cate_id', $main_cat->id)->get()),
+            'sub_categorys'     => sub_catResource::collection(Sub_category::where('locale', '=', Config::get('app.locale'))->where('main_cate_id', $main_cat->id)->where('status', 1)->get()),
         ];
     }
 }

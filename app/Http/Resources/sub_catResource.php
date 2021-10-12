@@ -28,7 +28,7 @@ class sub_catResource extends JsonResource
             'id'                => $this->id,
             'name'              => $this->name,
             'main_category_id'  => $this->main_cate_id,
-            'status'            => $this->status,
+            'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
             'iamge'             => ($main_cat->image != null) ? $main_cat->image->image : 'default.jpg',
             'locale'            => $this->locale,
         ];

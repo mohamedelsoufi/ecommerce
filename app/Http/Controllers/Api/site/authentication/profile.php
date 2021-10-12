@@ -19,7 +19,7 @@ class profile extends Controller
 
         //get user
         if (! $user = auth($guard)->user()) {
-            return response::falid('user_not_found', 404, 'E04');
+            return response::falid(trans('user.user not found'), 404, 'E04');
         }
 
         return response::success('success', 200, 'data', $user);

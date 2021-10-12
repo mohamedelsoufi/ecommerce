@@ -28,4 +28,9 @@ class Main_category extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    public function Products()
+    {
+        return $this->hasManyThrough(Product::class, Sub_category::class, 'main_cate_id', 'sub_categoriesId');
+    }
 }

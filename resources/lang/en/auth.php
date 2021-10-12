@@ -16,7 +16,7 @@ return [
     'failed'                                         => 'These credentials do not match our records.',
     'password'                                       => 'The provided password is incorrect.',
     'throttle'                                       => 'Too many login attempts. Please try again in :seconds seconds.',
-    'succeess'                                       =>'succeess',
+    'success'                                       =>'success',
     //autJWT middleware
     'Not authorized'                                 => 'Not authorized',
     'Token is Invalid'                               => 'Token is Invalid',

@@ -58,7 +58,7 @@ class auth extends Controller
         
         return response()->json([
             'status'  => true,
-            'message' => trans('auth.succeess'),
+            'message' => trans('auth.success'),
             'data'    => $data,
             'token'   => $token,
         ], 200);

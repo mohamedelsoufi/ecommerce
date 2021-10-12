@@ -17,6 +17,7 @@ class Rating extends Model
         'id'            => 'integer',
         'product_id'    => 'integer',
         'user_id'       => 'integer',
+        'rating'        => 'integer',
     ];
 
     //relations

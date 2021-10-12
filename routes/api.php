@@ -42,6 +42,14 @@ Route::group(['middleware' => ['changeLang']], function() {
         Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('user');
 
         Route::get('home', 'App\Http\Controllers\Api\site\user@home');
+
+        Route::post('love', 'App\Http\Controllers\Api\site\user@love');
+
+        Route::post('comment/add', 'App\Http\Controllers\Api\site\user@add_comment');
+        Route::post('comment/delete', 'App\Http\Controllers\Api\site\user@delete_comment');
+        Route::post('comment/edit', 'App\Http\Controllers\Api\site\user@edit_comment');
+
+        Route::post('rating', 'App\Http\Controllers\Api\site\user@rating');
     });
 });
 

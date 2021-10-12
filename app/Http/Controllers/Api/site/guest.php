@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\main_catResource;
+use App\Http\Resources\productResource;
 use App\Http\Resources\sub_catResource;
 use App\Models\Main_category;
 use App\Models\Product;
@@ -16,8 +17,10 @@ use Illuminate\Support\Facades\Validator;
 class guest extends Controller
 {
     use response;
-    public function getCategory(){
-        return main_catResource::collection(Main_category::where('locale', '=', Config::get('app.locale'))->get());
+
+    public function getCategories(){
+        $main_cate = main_catResource::collection(Main_category::where('locale', '=', Config::get('app.locale'))->where('status', 1)->get());
+        return $this->success(trans('auth.success'), 200, 'main_categories', $main_cate);
     }
 
     public function main_cate_details(Request $request){
@@ -30,9 +33,13 @@ class guest extends Controller
             return $this->falid($validator->errors(), 403, 'E03');
         }
 
-        $main_category = new main_catResource(Main_category::find($request->get('mainCategory_id')));
+        $main_category = Main_category::where('status', 1)->where('id',$request->get('mainCategory_id'))->first();
 
-        return $this->success('success', 200, 'main_category', $main_category);
+        if($main_category != null){
+            return $this->success(trans('auth.success'), 200, 'main_category', new main_catResource($main_category));
+        } else {
+            return $this->falid(trans('guest.this category not found'), 404, 'E04');
+        }
     }
 
     public function sub_cate_details(Request $request){
@@ -45,8 +52,37 @@ class guest extends Controller
             return $this->falid($validator->errors(), 403, 'E03');
         }
 
-        $sub_category = new sub_catResource(Sub_category::find($request->get('subCategory_id')));
+        $sub_category = Sub_category::where('status', 1)->whereHas('Main_categories', function($q){
+            $q->where('status', 1);
+        })->where('id', $request->get('subCategory_id'))->first();
 
-        return $this->success('success', 200, 'sub_category', $sub_category);
+        if($sub_category != null){
+            return $this->success(trans('auth.success'), 200, 'sub_category', new sub_catResource($sub_category));
+        } else {
+            return $this->falid(trans('guest.this category not found'), 404, 'E04');
+        }
+    }
+
+    public function product_details(Request $request){
+        //validation
+        $validator = validator::make($request->all(), [
+            'product_id'   => 'required:exists:products,id',
+        ]);
+
+        if($validator->fails()){
+            return $this->falid($validator->errors(), 403, 'E03');
+        }
+
+        $product = Product::where('status', 1)->whereHas('Sub_category', function($q){
+                                    $q->where('status', 1)->whereHas('Main_categories', function($query){
+                                        $query->where('status', 1);
+                                    });
+                            })->where('id',$request->get('product_id'))->first();
+
+        if($product != null){
+            return $this->success(trans('auth.success'), 200, 'product', new productResource($product));
+        } else {
+            return $this->falid(trans('guest.this product not found'), 404, 'E04');
+        }
     }
 }
