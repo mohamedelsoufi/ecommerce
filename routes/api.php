@@ -54,6 +54,12 @@ Route::group(['middleware' => ['changeLang']], function() {
         Route::post('rating', 'App\Http\Controllers\Api\site\user@rating');
 
         Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('user');
+
+        Route::get('cart', 'App\Http\Controllers\Api\site\user@cart_get');
+        Route::post('cart/add', 'App\Http\Controllers\Api\site\user@cart_add');
+        Route::post('cart/edit', 'App\Http\Controllers\Api\site\user@cart_edit');
+        Route::post('cart/remove', 'App\Http\Controllers\Api\site\user@cart_remove');
+        Route::post('cart/empty', 'App\Http\Controllers\Api\site\user@cart_empty');
     });
 });
 

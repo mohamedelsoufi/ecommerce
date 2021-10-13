@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\site;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\cartResource;
 use App\Http\Resources\main_catResource;
 use App\Http\Resources\productResource;
+use App\Models\Cart;
 use App\Models\Comment;
 use App\Models\Love;
 use App\Models\Main_category;
@@ -184,23 +186,111 @@ class user extends Controller
     }
 
     public function cart_get(){
+        //get user
+        if(!$user = auth('user')->user()){
+            return response::falid(trans('user.user not found'), 404, 'E04');
+        }
+
+        $carts = Cart::where('user_id', $user->id)->get();
+
+        return $this::success(trans('auth.success'), 200, 'carts',cartResource::collection($carts));
+    }
+
+    public function cart_add(Request $request){
+        //validation
+        $validator = validator::make($request->all(), [
+            'product_id' => 'required|exists:products,id',
+            'quantity'   => 'required|integer'
+        ]);
+
+        if($validator->fails()){
+            return $this->falid($validator->errors(), 403, 'E03');
+        }
+
+        //get user
+        if(!$user = auth('user')->user()){
+            return response::falid(trans('user.user not found'), 404, 'E04');
+        }
+
+        Cart::create([
+            'product_id' => $request->get('product_id'),
+            'user_id'    => $user->id,
+            'quantity'   => $request->get('quantity'),
+        ]);
+
+        return $this::success(trans('user.add to cart success'), 200);
+    }
+
+    public function cart_edit(Request $request){
+        //validation
+        $validator = validator::make($request->all(), [
+            'cart_id'       => 'required|exists:carts,id',
+            'quantity'      => 'required|integer'
+        ]);
+
+        if($validator->fails()){
+            return $this->falid($validator->errors(), 403, 'E03');
+        }
+
+        //get user
+        if(!$user = auth('user')->user()){
+            return response::falid(trans('user.user not found'), 404, 'E04');
+        }
+
+        $cart = Cart::where('user_id', $user->id)->where('id', $request->get('cart_id'))->first();
+
+        if($cart == null){
+            return $this::falid(trans('user.this cart item don\'t found'), 404,'E04');
+        }
+
+        $cart->quantity = $request->get('quantity');
+
+        if($cart->save()){
+            return $this::success(trans('user.edit success'), 200);
+        }
+
+        return $this::falid(trans('user.some thing is wrong'),400);
 
     }
 
-    public function cart_add(){
+    public function cart_remove(Request $request){
+        //validation
+        $validator = validator::make($request->all(), [
+            'cart_id' => 'required|exists:carts,id',
+        ]);
 
-    }
+        if($validator->fails()){
+            return $this->falid($validator->errors(), 403, 'E03');
+        }
 
-    public function cart_edit(){
+        //get user
+        if(!$user = auth('user')->user()){
+            return response::falid(trans('user.user not found'), 404, 'E04');
+        }
 
-    }
+        $cart = Cart::where('user_id', $user->id)->where('id', $request->get('cart_id'))->first();
 
-    public function cart_remove(){
+        if($cart == null){
+            return $this::falid(trans('user.this cart item don\'t found'), 404,'E04');
+        }
+
+        if($cart->delete()){
+            return $this::success(trans('user.delete success'), 200);
+        }
+
+        return $this::falid(trans('user.some thing is wrong'),400);
 
     }
 
     public function cart_empty(){
+        //get user
+        if(!$user = auth('user')->user()){
+            return response::falid(trans('user.user not found'), 404, 'E04');
+        }
 
+        Cart::where('user_id', $user->id)->delete();
+
+        return $this::success(trans('user.cart empty success'), 200);
     }
 
 }

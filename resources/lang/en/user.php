@@ -28,12 +28,14 @@ return [
     //rating
     'rating success'                    => 'rating success',
     're-rating success'                 => 're-rating success',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
+
+    //cart
+    'add to cart success'           => 'add to cart success',
+    'delete success'                => 'delete success',
+    'this cart item don\'t found'   => 'this cart item don\'t found',
+    'edit success'                  => 'edit success',
+    'cart empty success'            => 'cart empty success',
+    'some thing is wrong'           => 'some thing is wrong',
     '' => '',
     '' => '',
     '' => '',
