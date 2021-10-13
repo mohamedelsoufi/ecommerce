@@ -16,7 +16,7 @@ return [
     'failed'                                         => 'These credentials do not match our records.',
     'password'                                       => 'The provided password is incorrect.',
     'throttle'                                       => 'Too many login attempts. Please try again in :seconds seconds.',
-    'success'                                       =>'success',
+    'success'                                        =>'success',
     //autJWT middleware
     'Not authorized'                                 => 'Not authorized',
     'Token is Invalid'                               => 'Token is Invalid',
@@ -40,10 +40,12 @@ return [
     'email verification success'                    => 'email verification success',
 
     //register
-    'register success' => 'register success',
-    '' => '',
-    '' => '',
-    '' => '',
+    'register success'                              => 'register success',
+
+    //profile
+    'old password is wrong'                         => 'old password is wrong',
+    'change password success'                       => 'change password success',
+    'update password falid'                         => 'update password falid',
     '' => '',
     '' => '',
     '' => '',

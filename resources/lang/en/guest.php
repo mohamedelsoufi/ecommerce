@@ -19,7 +19,7 @@ return [
     'not active'                    => 'not active',
     'male'                          => 'male',
     'famale'                        => 'famale',
-    'other' => 'other',
+    'other'                         => 'other',
     '' => '',
     '' => '',
     '' => '',

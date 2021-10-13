@@ -31,6 +31,9 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
 
     Route::group(['middleware' => ['checkJWTtoken:vender']], function() {
         Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('vender');
+        Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('vender');
+
+
         Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('vender');
     });
 });

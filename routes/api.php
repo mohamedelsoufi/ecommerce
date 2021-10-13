@@ -39,6 +39,8 @@ Route::group(['middleware' => ['changeLang']], function() {
 
     Route::group(['middleware' => ['checkJWTtoken:user']], function() {
         Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('user');
+        Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('user');
+
         Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('user');
 
         Route::get('home', 'App\Http\Controllers\Api\site\user@home');
