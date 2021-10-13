@@ -35,6 +35,9 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
 
 
         Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('vender');
+
+        Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('vender');
+
     });
 });
 

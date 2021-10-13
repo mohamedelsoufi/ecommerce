@@ -45,7 +45,9 @@ class guest extends Controller
                                     $q->where('status', 1)->whereHas('Main_categories', function($query)use($request){
                                         $query->where('status', 1)->where('id', $request->get('mainCategory_id'));
                                     });
-                            })->where('quantity', '>', 0)->orderBy('number_of_sell', 'desc')->get();
+                            })
+                            ->where('quantity', '>', 0)
+                            ->orderBy('number_of_sell', 'desc')->get();
         
         
         //get some products this category order by discount
@@ -54,7 +56,10 @@ class guest extends Controller
                                     $q->where('status', 1)->whereHas('Main_categories', function($query)use($request){
                                         $query->where('status', 1)->where('id', $request->get('mainCategory_id'));
                                     });
-                            })->where('quantity', '>', 0)->orderBy('discound', 'desc')->limit(6)->get();
+                            })
+                            ->where('quantity', '>', 0)
+                            ->orderBy('discound', 'desc')
+                            ->limit(6)->get();
         
         
         $data = [
@@ -97,11 +102,13 @@ class guest extends Controller
             return $this->falid($validator->errors(), 403, 'E03');
         }
 
-        $product = Product::where('status', 1)->whereHas('Sub_category', function($q){
+        $product = Product::where('status', 1)
+                            ->whereHas('Sub_category', function($q){
                                     $q->where('status', 1)->whereHas('Main_categories', function($query){
                                         $query->where('status', 1);
                                     });
-                            })->where('id',$request->get('product_id'))->first();
+                            })
+                            ->where('id',$request->get('product_id'))->first();
 
         if($product != null){
             return $this->success(trans('auth.success'), 200, 'product', new productResource($product));

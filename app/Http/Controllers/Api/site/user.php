@@ -21,18 +21,20 @@ class user extends Controller
     use response;
 
     public function home(){
-        $main_cate      = main_catResource::collection(Main_category::where('locale', '=', Config::get('app.locale'))->where('status', 1)->limit(6)->get());
+        $main_cate      = Main_category::where('locale', '=', Config::get('app.locale'))->where('status', 1)->limit(6)->get();
 
-        $best_seller    = productResource::collection(Product::orderBy('number_of_sell', 'desc')->where('quantity', '>', 0)
-                                            ->where('status', 1)->whereHas('Sub_category', function($q){
+        $best_seller    = Product::orderBy('number_of_sell', 'desc')
+                                            ->where('quantity', '>', 0)
+                                            ->where('status', 1)
+                                            ->whereHas('Sub_category', function($q){
                                                     $q->where('status', 1)->whereHas('Main_categories', function($query){
                                                         $query->where('status', 1);
                                                     });
-                                            })->limit(6)->get());
+                                            })->limit(6)->get();
 
         $data = [
-            'main_categories' => $main_cate,
-            'best_seller'     => $best_seller
+            'main_categories' => main_catResource::collection($main_cate),
+            'best_seller'     => productResource::collection($best_seller),
         ];
 
         return $this::success(trans('auth.success'), 200, 'data', $data);
@@ -179,6 +181,26 @@ class user extends Controller
             $rating->save();
             return $this->success(trans('user.re-rating success'), 200);
         }
+    }
+
+    public function cart_get(){
+
+    }
+
+    public function cart_add(){
+
+    }
+
+    public function cart_edit(){
+
+    }
+
+    public function cart_remove(){
+
+    }
+
+    public function cart_empty(){
+
     }
 
 }

@@ -52,6 +52,8 @@ Route::group(['middleware' => ['changeLang']], function() {
         Route::post('comment/edit', 'App\Http\Controllers\Api\site\user@edit_comment');
 
         Route::post('rating', 'App\Http\Controllers\Api\site\user@rating');
+
+        Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('user');
     });
 });
 
