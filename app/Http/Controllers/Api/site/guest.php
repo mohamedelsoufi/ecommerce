@@ -33,13 +33,37 @@ class guest extends Controller
             return $this->falid($validator->errors(), 403, 'E03');
         }
 
+        //check if main category is active
         $main_category = Main_category::where('status', 1)->where('id',$request->get('mainCategory_id'))->first();
-
-        if($main_category != null){
-            return $this->success(trans('auth.success'), 200, 'main_category', new main_catResource($main_category));
-        } else {
+        if($main_category == null){
             return $this->falid(trans('guest.this category not found'), 404, 'E04');
         }
+
+        //get all product from this category order numbet of sell
+        $products = Product::where('status', 1)
+                            ->whereHas('Sub_category', function($q) use($request){
+                                    $q->where('status', 1)->whereHas('Main_categories', function($query)use($request){
+                                        $query->where('status', 1)->where('id', $request->get('mainCategory_id'));
+                                    });
+                            })->where('quantity', '>', 0)->orderBy('number_of_sell', 'desc')->get();
+        
+        
+        //get some products this category order by discount
+        $most_discount  = Product::where('status', 1)
+                            ->whereHas('Sub_category', function($q) use($request){
+                                    $q->where('status', 1)->whereHas('Main_categories', function($query)use($request){
+                                        $query->where('status', 1)->where('id', $request->get('mainCategory_id'));
+                                    });
+                            })->where('quantity', '>', 0)->orderBy('discound', 'desc')->limit(6)->get();
+        
+        
+        $data = [
+            'products'      => productResource::collection($products),
+            'most_discount' => productResource::collection($most_discount),
+        ];
+
+        return $this->success(trans('auth.success'), 200, 'data', $data);
+        
     }
 
     public function sub_cate_details(Request $request){

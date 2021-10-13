@@ -43,7 +43,7 @@ class productResource extends JsonResource
             'gender'            => $gender,
             'rating'            => [
                                         'count'     => $count,
-                                        'rating'    => $allRatnig / $count,
+                                        'rating'    => ($count != 0) ? $allRatnig / $count : 0,
                                     ],
             'sub_category'      => [
                                         'id'    => $this->Sub_category->id,     //relation
