@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// date_default_timezone_set('Africa/cairo');
+date_default_timezone_set('Africa/cairo');
 
 Route::get('/clear-cache',function(){
     Artisan::call('config:cache');

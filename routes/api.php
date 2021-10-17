@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// date_default_timezone_set('Africa/cairo');
+date_default_timezone_set('Africa/cairo');
 
 Route::get('/clear-cache',function(){
     Artisan::call('config:cache');
@@ -60,7 +60,12 @@ Route::group(['middleware' => ['changeLang']], function() {
         Route::post('cart/edit', 'App\Http\Controllers\Api\site\user@cart_edit');
         Route::post('cart/remove', 'App\Http\Controllers\Api\site\user@cart_remove');
         Route::post('cart/empty', 'App\Http\Controllers\Api\site\user@cart_empty');
+
+        Route::post('promoCode/check', 'App\Http\Controllers\Api\site\user@check_promoCode');
+
+        Route::post('order/make', 'App\Http\Controllers\Api\site\user@make_order');
     });
+    Route::post('test', 'App\Http\Controllers\Api\site\user@getPromoCodeDetails');
 });
 
 

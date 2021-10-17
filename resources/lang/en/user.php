@@ -30,17 +30,22 @@ return [
     're-rating success'                 => 're-rating success',
 
     //cart
-    'add to cart success'           => 'add to cart success',
-    'delete success'                => 'delete success',
-    'this cart item don\'t found'   => 'this cart item don\'t found',
-    'edit success'                  => 'edit success',
-    'cart empty success'            => 'cart empty success',
-    'some thing is wrong'           => 'some thing is wrong',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
+    'add to cart success'               => 'add to cart success',
+    'delete success'                    => 'delete success',
+    'this cart item don\'t found'       => 'this cart item don\'t found',
+    'edit success'                      => 'edit success',
+    'cart empty success'                => 'cart empty success',
+    'some thing is wrong'               => 'some thing is wrong',
+    'this product already add to cart'  => 'this product already add to cart',
 
+    //promocode
+    'this promo code expired'           => 'this promo code expired',
+
+    //order
+    'make order success'                => 'make order success',
+    'cart is empty'                     => 'cart is empty',
+    'This quantity is not available'    => 'This quantity is not available',
+    'make order faild'                  => 'make order faild',
+    'some thing is wrong'               => 'some thing is wrong',
+    'You can\'t order that quantity of '=> 'You can\'t order that quantity of '
 ];

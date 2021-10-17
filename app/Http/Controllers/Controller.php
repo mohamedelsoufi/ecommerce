@@ -41,6 +41,6 @@ class Controller extends BaseController
     }
 
     public function percentage($number, $totalNumber){
-        return ($number / $totalNumber) * 100;
+        return ($number / 100) * $totalNumber;
     }
 }

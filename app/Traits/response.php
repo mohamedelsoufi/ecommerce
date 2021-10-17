@@ -43,6 +43,8 @@ trait response
 
         else if ($input == "E05")
             return 'not active';
+        else if ($input == "E06")
+            return 'expired';
         else
             return "";
     }
