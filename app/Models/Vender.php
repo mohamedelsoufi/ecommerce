@@ -21,6 +21,11 @@ class Vender extends Authenticatable implements JWTSubject
         'gender'            => 'integer',
     ];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     //relations
     public function Products(){
         return $this->hasMany(Product::class, 'vender_id');

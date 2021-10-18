@@ -39,6 +39,8 @@ Route::group(['middleware' => ['changeLang']], function() {
 
     Route::group(['middleware' => ['checkJWTtoken:user']], function() {
         Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('user');
+        Route::post('profile/edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('user');
+
         Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('user');
 
         Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('user');
@@ -67,7 +69,7 @@ Route::group(['middleware' => ['changeLang']], function() {
         Route::post('order/tracking', 'App\Http\Controllers\Api\site\user@order_tracking');
         Route::post('order/details', 'App\Http\Controllers\Api\site\user@order_details');
     });
-    Route::post('test', 'App\Http\Controllers\Api\site\user@order_track');
+    Route::post('test', 'App\Http\Controllers\Api\site\user@test');
 });
 
 

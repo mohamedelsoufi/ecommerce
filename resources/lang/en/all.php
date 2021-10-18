@@ -13,10 +13,10 @@ return [
     |
     */
 
-    'send email success' => 'send email success',
-    '' => '',
-    '' => '',
-    '' => '',
+    'send email success'        => 'send email success',
+    'add address success'       => 'add address success',
+    'edit address success' => 'edit address success',
+    'edit address faild' => 'edit address faild',
     '' => '',
     '' => '',
     '' => '',

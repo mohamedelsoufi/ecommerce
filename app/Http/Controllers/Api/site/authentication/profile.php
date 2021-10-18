@@ -66,4 +66,45 @@ class profile extends Controller
             return $this::falid(trans('auth.update password falid'), 400);
         }
     }
+
+    public function editProdile(Request $request){
+        $guard = $request->route()->getName();
+        $table = $guard . 's';
+
+        //get user
+        if (! $data = auth($guard)->user()) {
+            return $this::falid(trans('user.user not found'), 404, 'E04');
+        }
+
+        // validate registeration request
+        $validator = Validator::make($request->all(), [
+            'fullName'          => 'nullable|string',
+            'phone'             => 'nullable|string',
+            'email'             => 'nullable|string|unique:' . $table . ',email,' . $data->id,
+            'gender'            => 'nullable|string',
+            'birth'             => 'nullable|string',
+        ]);
+
+        if($validator->fails()){
+            return $this::falid($validator->errors(), 403);
+        }
+
+        //request data to update
+        if($guard == 'user'){
+            $input = $request->only(
+                'fullName', 'phone', 'email', 'gender', 'birth' 
+            );
+        } else {
+            $input = $request->only(
+                'fullName', 'phone', 'email', 'gender', 'birth' 
+            );
+        }
+
+
+        if($data->update($input)){
+            return $this::success(trans('auth.update data success'), 200);
+        }
+
+        return $this::falid(trans('auth.update profile faild'), 400);
+    }
 }

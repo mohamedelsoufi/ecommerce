@@ -17,12 +17,12 @@ class Addresses extends Migration
             $table->id();
             $table->bigInteger('addressable_id')->nullable();
             $table->string('addressable_type')->nullable();
-            $table->string('name')->nullable();
+            $table->string('country')->nullable();
             $table->string('city')->nullable();
+            $table->string('Neighborhood')->nullable();
             $table->string('region')->nullable();
-            $table->string('details')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longgitude')->nullable();
+            $table->string('street_name')->nullable();
+            $table->string('building_number')->nullable();
             $table->string('notes')->nullable();
             $table->timestamps();
         });

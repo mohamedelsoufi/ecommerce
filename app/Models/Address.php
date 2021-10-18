@@ -18,6 +18,12 @@ class Address extends Model
         'addressable_id' => 'integer'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'addressable_type',
+    ];
+
     //relations
     public function addressable()
     {

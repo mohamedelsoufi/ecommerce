@@ -13,7 +13,6 @@ use App\Models\Comment;
 use App\Models\Love;
 use App\Models\Main_category;
 use App\Models\Order;
-use App\Models\Orderdetail;
 use App\Models\Product;
 use App\Models\Promo_code;
 use App\Models\Rating;
@@ -24,15 +23,15 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use OrderDetails;
 
 class user extends Controller
 {
     use response;
 
-    public function __construct(myfatoorah $myfatoorah,order $order){
+    public function __construct(myfatoorah $myfatoorah,order $order,address $address){
         $this->myfatoorah = $myfatoorah;
         $this->order      = $order;
+        $this->address    = $address;
     }
 
     public function home(){
@@ -431,5 +430,4 @@ class user extends Controller
         $orders = Order::where('user_id', $user->id)->where('id', $request->get('order_id'))->first()->Orderdetail;
         return orderDetailsResource::collection($orders);
     }
-
 }
