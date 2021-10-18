@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\site;
 
+use App\Http\Controllers\Api\site\order as SiteOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\cartResource;
 use App\Http\Resources\main_catResource;
@@ -28,7 +29,7 @@ class user extends Controller
 {
     use response;
 
-    public function __construct(myfatoorah $myfatoorah,order $order,address $address){
+    public function __construct(myfatoorah $myfatoorah,SiteOrder $order,address $address){
         $this->myfatoorah = $myfatoorah;
         $this->order      = $order;
         $this->address    = $address;
@@ -361,7 +362,7 @@ class user extends Controller
             $promoCode_id       = null;
 
             if($request->get('promo_code') != null){
-                $promoCode = $this->check_promoCode($request)->getData();
+                $promoCode = $this->check_promoCode($request);
 
                 if($promoCode->successful == true){
                     $promoCode_discound = $promoCode->promoCode->discound;
@@ -372,7 +373,7 @@ class user extends Controller
             DB::beginTransaction();
 
             //create order
-            $create_order = $this->order->create_order($request, $carts, $user, $promoCode_discound, $promoCode_id)->getData();
+            $create_order = $this->order->create_order($request, $carts, $user, $promoCode_discound, $promoCode_id);
             if($create_order->successful  == false){
                 return $this->falid($create_order->message, 400);
             }
@@ -382,6 +383,7 @@ class user extends Controller
 
             DB::commit();
         } catch(\Exception $ex){
+            return $ex;
             return $this::falid(trans('user.make order faild'), 400);
         }
 

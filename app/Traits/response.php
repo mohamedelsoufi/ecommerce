@@ -9,13 +9,13 @@ trait response
             return response()->json([
                 'successful' => true,
                 'message' => $message,
-            ], $statusCode);
+            ], $statusCode)->getData();
         } else {
             return response()->json([
                 'successful' => true,
                 'message' => $message,
                 $dataName => $data,
-            ], $statusCode);
+            ], $statusCode)->getData();
         }
     }
 
@@ -24,7 +24,7 @@ trait response
             'successful' => false,
             'status'     => $status,
             'message'    => $message,
-        ], $statusCode);
+        ], $statusCode)->getData();
     }
 
     public function getError($input)

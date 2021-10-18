@@ -34,8 +34,8 @@ class order extends Controller
         //creat order details//
         foreach($carts as $cart){
             $check_order_quantity = $this->check_order_quantity($cart->product_id, $cart->quantity);
-            if($check_order_quantity->getData()->successful  == false){
-                return $check_order_quantity->getData()->message;
+            if($check_order_quantity->successful  == false){
+                return $check_order_quantity;
             }
             //get product by relation ship
             $Product = $cart->Product;
@@ -69,12 +69,12 @@ class order extends Controller
             return response()->json([
                 'successful' => true,
                 'message'    => trans('auth.success'),
-            ], 400);
+            ], 400)->getData();
         } else {
             return response()->json([
                 'successful' => false,
                 'message'    => trans('user.You can\'t order that quantity of ') . $product->name,
-            ], 400);
+            ], 400)->getData();
         }
     }
 }
