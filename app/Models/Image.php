@@ -13,6 +13,14 @@ class Image extends Model
 
     protected $guarded = [];
 
+    protected $hidden = [
+        'id',
+        'imageable_id',
+        'imageable_type',
+        'created_at',
+        'updated_at'
+    ];
+
     protected $casts = [
         'id'            => 'integer',
         'imageable_id'  => 'integer',

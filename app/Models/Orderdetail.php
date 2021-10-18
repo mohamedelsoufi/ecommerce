@@ -21,4 +21,8 @@ class Orderdetail extends Model
         'product_price'     => 'integer',
         'product_total_price'    => 'integer',
     ];
+
+    public function Product(){
+        return $this->belongsTo(Product::class,'product_id');
+    }
 }

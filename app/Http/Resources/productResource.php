@@ -40,6 +40,7 @@ class productResource extends JsonResource
             'number_of_sell'    => $this->number_of_sell,
             'discound'          => $this->discound,
             'quantity'          => $this->quantity,
+            'image'             => ($this->image->first() != null) ? $this->image : array(['image' => 'default.jpg']),
             'gender'            => $gender,
             'rating'            => [
                                         'count'     => $count,

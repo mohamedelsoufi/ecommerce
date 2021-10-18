@@ -64,8 +64,10 @@ Route::group(['middleware' => ['changeLang']], function() {
         Route::post('promoCode/check', 'App\Http\Controllers\Api\site\user@check_promoCode');
 
         Route::post('order/make', 'App\Http\Controllers\Api\site\user@make_order');
+        Route::post('order/tracking', 'App\Http\Controllers\Api\site\user@order_tracking');
+        Route::post('order/details', 'App\Http\Controllers\Api\site\user@order_details');
     });
-    Route::post('test', 'App\Http\Controllers\Api\site\user@getPromoCodeDetails');
+    Route::post('test', 'App\Http\Controllers\Api\site\user@order_track');
 });
 
 

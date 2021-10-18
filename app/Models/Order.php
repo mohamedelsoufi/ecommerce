@@ -21,4 +21,8 @@ class Order extends Model
         'promoCode_id'     => 'integer',
         'payment_status'    => 'integer',
     ];
+
+    public function Orderdetail(){
+        return $this->hasMany(Orderdetail::class, 'order_id');
+    }
 }
