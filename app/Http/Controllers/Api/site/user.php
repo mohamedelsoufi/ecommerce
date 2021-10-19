@@ -390,6 +390,37 @@ class user extends Controller
         return $this->success(trans('user.make order success'), 200);
     }
 
+    public function cancel_order(Request $request){
+        //validation
+        $validator = validator::make($request->all(), [
+            'order_id' => 'required|exists:orders,id',
+        ]);
+
+        if($validator->fails()){
+            return $this->falid($validator->errors(), 403, 'E03');
+        }
+
+        //get user
+        if (! $user = auth('user')->user()) {
+            return response::falid(trans('user.user not found'), 404, 'E04');
+        }
+
+        //sellect order
+        $order = Order::where('user_id', $user->id)->where('status', 0)->where('id', $request->get('order_id'))->first();
+
+        //check if it is exist
+        if($order == null){
+            return $this::falid(trans('user.this order don\'t found'), 404, 'E04');
+        }
+
+        //update order
+        if($order->update(['status'=> -1])){
+            return $this::success(trans('user.order cancel success'), 200);
+        }
+
+        return $this::falid(trans('user.order cancel faild'), 400);
+    }
+
     public function order_tracking(Request $request){
         //validation
         $validator = validator::make($request->all(), [
@@ -406,7 +437,7 @@ class user extends Controller
         }
 
         if($request->get('status') == 3){
-            $orders = Order::where('user_id', $user->id)->get();
+            $orders = Order::where('user_id', $user->id)->where('status', '!=', -1)->get();
         } else {
             $orders = Order::where('user_id', $user->id)->where('status', $request->get('status'))->get();
         }

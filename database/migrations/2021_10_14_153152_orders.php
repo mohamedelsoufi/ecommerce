@@ -17,7 +17,7 @@ class Orders extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('address_id')->nullable();
-            $table->tinyInteger('status')->default(0)->comment('0->not active, 1->Preparation and delivery, 2->finshed');
+            $table->tinyInteger('status')->default(0)->comment('-1 -> cancel, 0->not active, 1->Preparation and delivery, 2->finshed');
             $table->integer('total')->nullable()->comment('without promo code');
             $table->integer('final_total')->nullable()->comment('with promo code');
             $table->unsignedBigInteger('promoCode_id')->nullable();
