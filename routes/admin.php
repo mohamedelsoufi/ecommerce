@@ -35,6 +35,9 @@ Route::get('/venders/block/{id}', 'App\Http\Controllers\Api\admin\venders@block'
 Route::get('/products', 'App\Http\Controllers\Api\admin\products@productShow')->middleware('auth:admin');
 Route::get('/products/active/{id}', 'App\Http\Controllers\Api\admin\products@active')->middleware('auth:admin');
 
+Route::get('/comments', 'App\Http\Controllers\Api\admin\comments@commentsShow')->middleware('auth:admin');
+Route::get('/comments/delete/{id}', 'App\Http\Controllers\Api\admin\comments@deleteComment')->middleware('auth:admin');
+
 Route::get('/logout', 'App\Http\Controllers\Api\admin\authentication@logout')->middleware('auth:admin');
 
 

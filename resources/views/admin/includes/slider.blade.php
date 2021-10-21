@@ -26,6 +26,14 @@
           </ul>
         </li>
 
+        <li class=" nav-item"><a href="{{url('/admin/comments')}}"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">comments</span><span class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Comment::count()}}</span></a>
+          <ul class="menu-content">
+            <li class="@if ($page == 'commentsShow') active @endif">
+              <a class="menu-item" href="{{url('/admin/comments')}}" data-i18n="nav.dash.ecommerce">all products</a>
+            </li>
+          </ul>
+        </li>
+
       </ul>
     </div>
   </div>
