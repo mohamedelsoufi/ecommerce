@@ -73,6 +73,21 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->morphOne(Address::class, 'addressable');
     }
+    /////
+    public function getGender()
+    {
+        return $this->gender == 0 ? 'male': 'famale';
+    }
+
+    public function getStatus()
+    {
+        return $this->status == 1 ? 'active': 'blocked';
+    }
+
+    public function getChangStatus()
+    {
+        return $this->status == 1 ? 'blocked': 'active';
+    }
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.

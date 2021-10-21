@@ -189,7 +189,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
           <li class="dropdown dropdown-user nav-item">
             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
               <span class="mr-1">Hello ,
-                <span class="user-name text-bold-700">ahmed maher</span>
+                <span class="user-name text-bold-700">{{auth('admin')->user()->userName}}</span>
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">{{--<a class="dropdown-item" href="{{url('admin/editeProfile/' . auth()->user()->id )}}"><i class="ft-user"></i>{{ trans('admin.Edit Profile') }}</a>--}}

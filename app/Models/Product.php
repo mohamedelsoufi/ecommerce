@@ -52,4 +52,29 @@ class Product extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    ////
+    /////
+    public function getGender()
+    {
+        return $this->gender == 0 ? 'male': 'famale';
+    }
+
+    public function getStatus()
+    {
+        return $this->status == 1 ? 'active': 'un active';
+    }
+
+    public function getImage()
+    {
+        if($this->image->first() != null){
+            return url('public/uploads/products'). '/'  . $this->image->first()->image;
+        } else {
+            return url('public/uploads/products/default.jpg');
+        }
+    }
+
+    public function getChangStatus()
+    {
+        return $this->status == 0 ? 'active': 'un active';
+    }
 }
