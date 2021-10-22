@@ -16,7 +16,7 @@ class MainCategories extends Migration
         Schema::create('main_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->tinyInteger('status')->default(1)->comment('0->not avtive, 1->active');
+            $table->tinyInteger('status')->default(1)->comment('0->not avtive, 1->active, -1 -> delete');
             $table->string('locale')->nullable();
             $table->bigInteger('parent')->nullable();
             $table->timestamps();

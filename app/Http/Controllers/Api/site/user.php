@@ -383,7 +383,6 @@ class user extends Controller
 
             DB::commit();
         } catch(\Exception $ex){
-            return $ex;
             return $this::falid(trans('user.make order faild'), 400);
         }
 

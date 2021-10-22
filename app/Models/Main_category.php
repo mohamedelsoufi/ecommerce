@@ -33,4 +33,15 @@ class Main_category extends Model
     {
         return $this->hasManyThrough(Product::class, Sub_category::class, 'main_cate_id', 'sub_categoriesId');
     }
+
+    ////
+    public function getStatus()
+    {
+        return $this->status == 1 ? 'active': 'un active';
+    }
+
+    public function getChangStatus()
+    {
+        return $this->status == 0 ? 'active': 'un active';
+    }
 }

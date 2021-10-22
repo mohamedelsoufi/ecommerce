@@ -10,8 +10,22 @@ use Illuminate\Http\Request;
 class products extends Controller
 {
     public function productShow(){
-        $products = Product::paginate();
+        $products = Product::where('status', '!=', -1)->paginate();
         return view('admin.products.productsShow')->with('products',$products);
+    }
+
+    public function delete($id){
+        //sellect product
+        $product = Product::find($id);
+
+        if($product == null){
+            return redirect()->back()->with('error', 'delete product faild');
+        }
+        //delete main category parent
+        if($product->update(['status'=> -1])){
+            return redirect()->back()->with('success', 'delete product success');
+        }
+        return redirect()->back()->with('error', 'delete product faild');
     }
 
     public function active($id){
@@ -19,7 +33,7 @@ class products extends Controller
         $product = Product::find($id);
 
         if($product == null){
-            return 'this product not found';
+            return redirect()->back()->with('error', 'faild');
         }
 
         if($product->status == 1){

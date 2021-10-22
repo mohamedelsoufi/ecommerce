@@ -19,7 +19,7 @@ class users extends Controller
         $user = User::find($id);
 
         if($user == null){
-            return 'this user not found';
+            return redirect()->back()->with('error', 'this user not found');
         }
 
         if($user->status == 1){

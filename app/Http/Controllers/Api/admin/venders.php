@@ -20,7 +20,7 @@ class venders extends Controller
 
         //if there are no vender with this id
         if($vender == null){
-            return 'this vender not found';
+            return redirect()->back()->with('error', 'this vender not found');
         }
 
         if($vender->status == 1){

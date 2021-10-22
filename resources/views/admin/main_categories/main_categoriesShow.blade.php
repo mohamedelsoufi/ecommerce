@@ -1,4 +1,4 @@
-<?php $page = "productsShow"?>
+<?php $page = "maincategoriesShow"?>
 @extends('layouts.admin')
 
 @section('content')
@@ -13,7 +13,7 @@
                               <ol class="breadcrumb" style="margin-top: 25px;">
                                   <li class="breadcrumb-item"><a href="{{url('admin')}}">dashbourd</a>
                                   </li>
-                                  <li class="breadcrumb-item active">products
+                                  <li class="breadcrumb-item active">Main categories
                                   </li>
                               </ol>
                           </div>
@@ -44,45 +44,40 @@
                               <thead>
                                   <tr>
                                       <th>id</th>
-                                      <th>image</th>
-                                      <th>Name</th>
-                                      <th>category</th>
-                                      <th>vender</th>
+                                      <th>iamge</th>
+                                      <th>name</th>
                                       <th>status</th>
-                                      <th>gender</th>
                                       <th>controller</th>
                                   </tr>
                               </thead>
                               <tbody>
-                                  @foreach ($products as $product)
+                                  @foreach ($main_categories as $main_category)
                                       <tr>
-                                          <td>{{$product->id}}</td>
-                                          <td><img src="{{$product->getImage()}}" style="width: 70px;"></td>
-                                          <td>{{$product->name}}</td>
-                                          <td>{{$product->Sub_category->Main_categories->name}} -> {{$product->Sub_category->name}}</td>
-                                          <td>{{$product->Vender->fullName}}</td>
-                                          <td>{{$product->getStatus()}}</td>
-                                          <td>{{$product->getGender()}}</td>
+                                          <td>{{$main_category->id}}</td>
+                                          <td><img src="{{url('public/uploads/main_categories/' .  $main_category->image->image)}}" style="width: 70px;"></td>
+                                          <td>{{$main_category->name}}</td>
+                                          <td>{{$main_category->getStatus()}}</td>
                                           <td>
-                                            <a href="{{url('/admin/products/delete/' . $product->id)}}" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1" style="min-width: 6.5rem; margin-right: 8px !important;">delete</a>
-                                              @if ($product->status == 1)
-                                                <a href="{{url('/admin/products/active/' . $product->id)}}" class="btn btn-warning btn-min-width box-shadow-5 mr-1 mb-1" style="min-width: 6.5rem; margin-right: 8px !important;">{{$product->getChangStatus()}}</a>
-                                              @else
-                                               <a href="{{url('/admin/products/active/' . $product->id)}}" class="btn btn-info btn-min-width box-shadow-3 mr-1 mb-1" style="min-width: 6.5rem; margin-right: 8px !important;">{{$product->getChangStatus()}}</a>
-                                              @endif
-                                          </td>
+                                            <a href="{{url('/admin/main_categories/edit/' . $main_category->id)}}" class="btn btn-purple btn-min-width box-shadow-5 mr-1 mb-1" style="min-width: 6.5rem; margin-right: 8px !important;">edit</a>
+                                            @if ($main_category->status == 1)
+                                                <a href="{{url('/admin/main_categories/active/' . $main_category->id)}}" class="btn btn-warning btn-min-width box-shadow-5 mr-1 mb-1" style="min-width: 6.5rem; margin-right: 8px !important;">{{$main_category->getChangStatus()}}</a>
+                                            @else
+                                                <a href="{{url('/admin/main_categories/active/' . $main_category->id)}}" class="btn btn-info btn-min-width box-shadow-3 mr-1 mb-1" style="min-width: 6.5rem; margin-right: 8px !important;">{{$main_category->getChangStatus()}}</a>
+                                            @endif
+                                            <a href="{{url('/admin/main_categories/delete/' . $main_category->id)}}" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1" style="min-width: 6.5rem; margin-right: 8px !important;">delete</a>
+                                        </td>
                                       </tr>
                                   @endforeach
-                                  @if (count($products) == 0)
+                                  @if (count($main_categories) == 0)
                                       <tr>
                                           <td colspan="5">
-                                              <div class="alert alert-secondary mb-2" role="alert">there are no products</div>
+                                              <div class="alert alert-secondary mb-2" role="alert">there are no category</div>
                                           </td>
                                       </tr>
                                   @endif
                               </tbody>
                           </table>
-                          {!! $products->links() !!}
+                          {!! $main_categories->links() !!}
                       </div>
                   </div>
               </div>

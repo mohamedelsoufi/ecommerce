@@ -64,6 +64,11 @@ class Product extends Model
         return $this->status == 1 ? 'active': 'un active';
     }
 
+    public function getChangStatus()
+    {
+        return $this->status == 0 ? 'active': 'un active';
+    }
+
     public function getImage()
     {
         if($this->image->first() != null){
@@ -71,10 +76,5 @@ class Product extends Model
         } else {
             return url('public/uploads/products/default.jpg');
         }
-    }
-
-    public function getChangStatus()
-    {
-        return $this->status == 0 ? 'active': 'un active';
     }
 }

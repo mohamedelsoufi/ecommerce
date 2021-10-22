@@ -18,7 +18,7 @@ class comments extends Controller
         $comment = comment::find($id);
 
         if($comment == null){
-            return 'this comment not found';
+            return redirect()->back()->with('error', 'this comment not found');
         }
 
         if($comment->delete()){
