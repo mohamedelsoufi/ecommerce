@@ -54,6 +54,7 @@ class order extends Controller
                 'order_id'              => $order->id,
                 'quantity'              => $cart->quantity,
                 'product_price'         => $cart->Product->price,
+                'product_discound'      => $cart->Product->discound,
                 'product_total_price'   => $cart->Product->price -  $this->percentage($cart->Product->discound, $cart->Product->price),    
             ]);
         }

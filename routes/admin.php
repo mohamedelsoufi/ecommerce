@@ -62,6 +62,12 @@ Route::post('/sub_categories/add','App\Http\Controllers\Api\admin\sub_categories
 Route::get('/sub_categories/edit/{id}', 'App\Http\Controllers\Api\admin\sub_categories@edit_view')->middleware('auth:admin');
 Route::post('/sub_categories/edit/{id}', 'App\Http\Controllers\Api\admin\sub_categories@edit')->middleware('auth:admin');
 
+Route::get('/orders', 'App\Http\Controllers\Api\admin\orders@ordersShow')->middleware('auth:admin');
+Route::get('/orders/details/{id}', 'App\Http\Controllers\Api\admin\orders@details')->middleware('auth:admin');
+Route::get('/orders/cancel/{id}', 'App\Http\Controllers\Api\admin\orders@cancel')->middleware('auth:admin');
+Route::get('/orders/active/{id}', 'App\Http\Controllers\Api\admin\orders@active')->middleware('auth:admin');
+Route::get('/orders/finish/{id}', 'App\Http\Controllers\Api\admin\orders@finish')->middleware('auth:admin');
+
 
 Route::get('/logout', 'App\Http\Controllers\Api\admin\authentication@logout')->middleware('auth:admin');
 

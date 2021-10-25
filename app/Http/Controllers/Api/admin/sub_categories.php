@@ -146,8 +146,6 @@ class sub_categories extends Controller
         ]);
     }
 
-    
-
     public function edit(edit $request,$id){
         //sellect sub category
         $sub_category = Sub_category::where('id', $id)->where('locale', '=','0')->first();

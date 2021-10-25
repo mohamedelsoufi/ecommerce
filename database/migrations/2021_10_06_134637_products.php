@@ -22,7 +22,7 @@ class Products extends Migration
             $table->unsignedBigInteger('vender_id')->nullable();
             $table->tinyInteger('status')->default(1)->comment('0->not avtive, 1->active, -1 -> delete');
             $table->integer('number_of_sell')->default(0)->nullable();
-            $table->integer('discound')->nullable();
+            $table->integer('discound')->default(0);
             $table->integer('quantity')->nullable();
             $table->tinyInteger('gender')->nullable();
 

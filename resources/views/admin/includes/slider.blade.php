@@ -58,6 +58,14 @@
           </ul>
         </li>
 
+        <li class=" nav-item"><a href="{{url('/admin/orders')}}"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">orders</span><span class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Order::count()}}</span></a>
+          <ul class="menu-content">
+            <li class="@if ($page == 'ordersShow') active @endif">
+              <a class="menu-item" href="{{url('/admin/orders')}}" data-i18n="nav.dash.ecommerce">orders</a>
+            </li>
+          </ul>
+        </li>
+
       </ul>
     </div>
   </div>
