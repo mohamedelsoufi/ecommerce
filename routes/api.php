@@ -40,6 +40,7 @@ Route::group(['middleware' => ['changeLang']], function() {
     Route::group(['middleware' => ['checkJWTtoken:user']], function() {
         Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('user');
         Route::post('profile/edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('user');
+        Route::post('profile/edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('user');
 
         Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('user');
 

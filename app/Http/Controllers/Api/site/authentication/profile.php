@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Vender;
 use App\Traits\response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -106,5 +107,64 @@ class profile extends Controller
         }
 
         return $this::falid(trans('auth.update profile faild'), 400);
+    }
+
+    public function edit_image(Request $request){
+        try{
+            DB::beginTransaction();
+            $guard = $request->route()->getName();
+
+            // validate registeration request
+            $validator = Validator::make($request->all(), [
+                'image'       => 'required|mimes:jpeg,jpg,png,gif',
+            ]);
+
+            if($validator->fails()){
+                return $this::falid($validator->errors(), 403);
+            }
+
+            //model (folder)
+            if($guard == 'user'){
+                $model = 'App\Models\User';
+            } else if($guard == 'vender'){
+                $model = 'App\Models\Vender';
+            }
+
+            //get user
+            if (! $data = auth($guard)->user()) {
+                return $this::falid(trans('user.user not found'), 404, 'E04');
+            }
+
+            //update image
+            $image_name = $this->upload_image($request->file('image'),'uploads/' . $guard . 's', 300, 300);
+
+            if($data->image == null){
+                //if user don't have image 
+                Image::create([
+                    'imageable_id'   => $data->id,
+                    'imageable_type' => $model,
+                    'image'          => $image_name,
+                ]);
+            } else {
+                //if user have image
+                $oldImage = $data->image->image;
+
+                if(file_exists(base_path('public/uploads/'  . $guard . 's/') . $oldImage)){
+                    unlink(base_path('public/uploads/' . $guard . 's/') . $oldImage);
+                }
+
+                $data->image->image = $image_name;
+                $data->image->save();
+            }
+
+            DB::commit();
+            return $this::success(trans('auth.update image success'), 200);
+        } catch(\Exception $ex){
+            return $this::falid(trans('auth.update image faild'), 200);
+        }   
+    }
+
+    public function nnn(){
+        return 'asd';
     }
 }

@@ -54,6 +54,14 @@ Route::post('/main_categories/add', 'App\Http\Controllers\Api\admin\main_categor
 Route::get('/main_categories/edit/{id}', 'App\Http\Controllers\Api\admin\main_categories@edit_view')->middleware('auth:admin');
 Route::post('/main_categories/edit/{id}', 'App\Http\Controllers\Api\admin\main_categories@edit')->middleware('auth:admin');
 
+Route::get('/sub_categories', 'App\Http\Controllers\Api\admin\sub_categories@sub_categoryShow')->middleware('auth:admin');
+Route::get('/sub_categories/delete/{id}', 'App\Http\Controllers\Api\admin\sub_categories@sub_category_delete')->middleware('auth:admin');
+Route::get('/sub_categories/active/{id}', 'App\Http\Controllers\Api\admin\sub_categories@active')->middleware('auth:admin');
+Route::get('/sub_categories/add', 'App\Http\Controllers\Api\admin\sub_categories@add_view')->middleware('auth:admin');
+Route::post('/sub_categories/add','App\Http\Controllers\Api\admin\sub_categories@add')->middleware('auth:admin');
+Route::get('/sub_categories/edit/{id}', 'App\Http\Controllers\Api\admin\sub_categories@edit_view')->middleware('auth:admin');
+Route::post('/sub_categories/edit/{id}', 'App\Http\Controllers\Api\admin\sub_categories@edit')->middleware('auth:admin');
+
 
 Route::get('/logout', 'App\Http\Controllers\Api\admin\authentication@logout')->middleware('auth:admin');
 

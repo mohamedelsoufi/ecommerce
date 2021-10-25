@@ -33,4 +33,15 @@ class Sub_category extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    ////
+    public function getStatus()
+    {
+        return $this->status == 1 ? 'active': 'un active';
+    }
+
+    public function getChangStatus()
+    {
+        return $this->status == 0 ? 'active': 'un active';
+    }
 }

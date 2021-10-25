@@ -34,7 +34,7 @@
           </ul>
         </li>
 
-        <li class=" nav-item"><a href="{{url('/admin/maincategoriesShow')}}"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">main categories</span><span class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Main_category::where('status', '!=',-1)->where('parent', 0)->count()}}</span></a>
+        <li class=" nav-item"><a href="{{url('/admin/main_categories')}}"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">main categories</span><span class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Main_category::where('status', '!=',-1)->where('parent', 0)->count()}}</span></a>
           <ul class="menu-content">
             <li class="@if ($page == 'maincategoriesShow') active @endif">
               <a class="menu-item" href="{{url('/admin/main_categories')}}" data-i18n="nav.dash.ecommerce">main categories</a>
@@ -43,7 +43,18 @@
             <li class="@if ($page == 'maincategoriesAdd') active @endif">
               <a class="menu-item" href="{{url('/admin/main_categories/add')}}" data-i18n="nav.dash.ecommerce">add main categories</a>
             </li>
+          </ul>
+        </li>
 
+        <li class=" nav-item"><a href="{{url('/admin/sub_categories')}}"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Sub categories</span><span class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Sub_category::where('status', '!=',-1)->where('parent', 0)->count()}}</span></a>
+          <ul class="menu-content">
+            <li class="@if ($page == 'subcategoriesShow') active @endif">
+              <a class="menu-item" href="{{url('/admin/sub_categories')}}" data-i18n="nav.dash.ecommerce">sub categories</a>
+            </li>
+
+            <li class="@if ($page == 'subcategoriesAdd') active @endif">
+              <a class="menu-item" href="{{url('/admin/sub_categories/add')}}" data-i18n="nav.dash.ecommerce">add sub categories</a>
+            </li>
           </ul>
         </li>
 

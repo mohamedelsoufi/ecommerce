@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 date_default_timezone_set('Africa/cairo');
 
+
 Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() {
     Route::post('register', 'App\Http\Controllers\Api\site\authentication\registration@venderRegister');
 
@@ -32,6 +33,7 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
     Route::group(['middleware' => ['checkJWTtoken:vender']], function() {
         Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('vender');
         Route::post('profile/edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('vender');
+        Route::post('profile/edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('vender');
 
         Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('vender');
 
