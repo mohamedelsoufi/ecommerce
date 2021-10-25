@@ -17,4 +17,10 @@ class Promo_code extends Model
         'id'                => 'integer',
         'discound'          => 'integer',
     ];
+
+    /////
+    public function getStatus()
+    {
+        return ($this->expire_date > date("Y-m-d H:i:s")) ? 'not expired': 'expired';
+    }
 }

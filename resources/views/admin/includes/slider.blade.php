@@ -66,6 +66,18 @@
           </ul>
         </li>
 
+        <li class=" nav-item"><a href="{{url('/admin/promoCodes')}}"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">promo Codes</span><span class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Promo_code::count()}}</span></a>
+          <ul class="menu-content">
+            <li class="@if ($page == 'promoCodesShow') active @endif">
+              <a class="menu-item" href="{{url('/admin/promoCodes')}}" data-i18n="nav.dash.ecommerce">promo Codes</a>
+            </li>
+
+            <li class="@if ($page == 'promoCodesAdds') active @endif">
+              <a class="menu-item" href="{{url('/admin/promoCodes/add')}}" data-i18n="nav.dash.ecommerce">add promo Code</a>
+            </li>
+          </ul>
+        </li>
+
       </ul>
     </div>
   </div>

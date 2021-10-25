@@ -68,6 +68,10 @@ Route::get('/orders/cancel/{id}', 'App\Http\Controllers\Api\admin\orders@cancel'
 Route::get('/orders/active/{id}', 'App\Http\Controllers\Api\admin\orders@active')->middleware('auth:admin');
 Route::get('/orders/finish/{id}', 'App\Http\Controllers\Api\admin\orders@finish')->middleware('auth:admin');
 
+Route::get('/promoCodes', 'App\Http\Controllers\Api\admin\promoCode@promoCodesShow')->middleware('auth:admin');
+Route::get('/promoCodes/add', 'App\Http\Controllers\Api\admin\promoCode@addView')->middleware('auth:admin');
+Route::post('/promoCodes/add', 'App\Http\Controllers\Api\admin\promoCode@add')->middleware('auth:admin');
+Route::get('/promoCodes/expiry/{id}', 'App\Http\Controllers\Api\admin\promoCode@expiry')->middleware('auth:admin');
 
 Route::get('/logout', 'App\Http\Controllers\Api\admin\authentication@logout')->middleware('auth:admin');
 
