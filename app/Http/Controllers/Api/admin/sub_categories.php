@@ -184,7 +184,7 @@ class sub_categories extends Controller
             foreach($request->sub_cate as $key=>$cat){
                 $sub_category = Sub_category::where('parent', $id)->where('locale', $key)->first();
                 $sub_category->name =  $cat['name'];
-                $sub_category_parent->main_cate_id  =  $request->main_category_id;
+                $sub_category->main_cate_id  =  $request->main_category_id;
                 $sub_category->save();
             }
 

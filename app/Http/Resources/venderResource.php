@@ -32,7 +32,7 @@ class venderResource extends JsonResource
             'gender'            => $gender,
             'birth'             => $this->birth,
             'iamge'             => ($this->image != null)? url('public/uploads/venders/' . $this->image->image) : url('public/uploads/venders/default.jpg'),
-            'address'           => $this->address,
+            'address'           => new addressResource($this->address),
         ];
     }
 }

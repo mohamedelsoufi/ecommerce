@@ -44,4 +44,12 @@ class Sub_category extends Model
     {
         return $this->status == 0 ? 'active': 'un active';
     }
+
+    //scope
+    public function scopeActive($query)
+    {
+        $query->where('status', 1)->whereHas('Main_categories', function($q){
+            $q->where('status', 1);
+        });
+    }
 }

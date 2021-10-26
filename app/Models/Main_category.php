@@ -44,4 +44,10 @@ class Main_category extends Model
     {
         return $this->status == 0 ? 'active': 'un active';
     }
+
+    //scope
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
 }

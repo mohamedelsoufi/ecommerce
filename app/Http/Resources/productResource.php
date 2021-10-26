@@ -40,8 +40,10 @@ class productResource extends JsonResource
             'number_of_sell'    => $this->number_of_sell,
             'discound'          => $this->discound,
             'quantity'          => $this->quantity,
-            'image'             => ($this->image->first() != null) ? $this->image : array(['image' => 'default.jpg']),
             'gender'            => $gender,
+            'comments_count'    =>  $this->comments->count(),
+            'image'             => ($this->image->first() != null) ? $this->image : array(['image' => 'default.jpg']),
+
             'rating'            => [
                                         'count'     => $count,
                                         'rating'    => ($count != 0) ? $allRatnig / $count : 0,
@@ -54,7 +56,6 @@ class productResource extends JsonResource
                                         'id'        => $this->Vender->id,       //relation
                                         'fullName'  => $this->Vender->fullName, //relation
                                 ],
-            'comments'          =>  $this->comments,
         ];
     }
 }

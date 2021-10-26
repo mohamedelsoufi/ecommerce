@@ -34,6 +34,8 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
         Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('vender');
         Route::post('profile/edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('vender');
         Route::post('profile/edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('vender');
+        Route::post('profile/address/add', 'App\Http\Controllers\Api\site\authentication\profile@add_address')->name('vender');
+        Route::post('profile/address/edit', 'App\Http\Controllers\Api\site\authentication\profile@edit_address')->name('vender');
 
         Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('vender');
 

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Api\site\authentication;
 
+use App\Http\Controllers\Api\site\address as SiteAddress;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\addressResource;
 use App\Http\Resources\userResource;
 use App\Http\Resources\venderResource;
+use App\Models\Address;
 use App\Models\Image;
 use App\Models\User;
 use App\Models\Vender;
@@ -17,6 +20,10 @@ use Illuminate\Support\Facades\Validator;
 class profile extends Controller
 {
     use response;
+
+    public function __construct(SiteAddress $address){
+        $this->address    = $address;
+    }
 
     public function getProfile(Request $request){
         //get guard
@@ -123,7 +130,7 @@ class profile extends Controller
                 return $this::falid($validator->errors(), 403);
             }
 
-            //model (folder)
+            //get model
             if($guard == 'user'){
                 $model = 'App\Models\User';
             } else if($guard == 'vender'){
@@ -164,7 +171,74 @@ class profile extends Controller
         }   
     }
 
-    public function nnn(){
-        return 'asd';
+    public function add_address(Request $request){
+        $guard = $request->route()->getName();
+
+        // validate registeration request
+        $validator = Validator::make($request->all(), [
+            'country'           => 'required|string',
+            'city'              => 'required|string',
+            'Neighborhood'      => 'required|string',
+            'region'            => 'required|string',
+            'street_name'       => 'required|string',
+            'building_number'   => 'required|string',
+            'notes'             => 'required|string',
+        ]);
+
+        if($validator->fails()){
+            return $this::falid($validator->errors(), 403, 'E03');
+        }
+        //get user
+        if (! $data = auth($guard)->user()) {
+            return $this::falid(trans('user.user not found'), 404, 'E04');
+        }
+
+        //get model
+        if($guard == 'user'){
+            $model = 'App\Models\User';
+        } else {
+            $model = 'App\Models\Vender';
+        }
+        //check if user already add address
+        $address = Address::where('addressable_id', $data->id)->where('addressable_type', $model)->first();
+
+        if($address !=  null){
+            return $this->falid(trans('auth.you already add address'), 400);
+        }
+
+        //create address
+        $new_address = Address::create([
+            'addressable_id'        => $data->id,
+            'addressable_type'      => $model,
+            'country'               => $request->get('country'),
+            'city'                  => $request->get('city'),
+            'Neighborhood'          => $request->get('Neighborhood'),
+            'region'                => $request->get('region'),
+            'street_name'           => $request->get('street_name'),
+            'building_number'       => $request->get('building_number'),
+            'notes'                 => $request->get('notes'),
+        ]);
+
+        return $this::success(trans('all.add address success'), 200, 'address', new addressResource($new_address));
+    }
+
+    public function edit_address(Request $request){
+        $guard = $request->route()->getName();
+
+        //get user
+        if (! $data = auth($guard)->user()) {
+            return $this::falid(trans('user.user not found'), 404, 'E04');
+        }
+
+        if($data->Address == null){
+            return $this->falid(trans('auth.you should add address first'), 400);
+        }
+
+        //set address id with request
+        $request->request->add(['address_id' => $data->Address->id]);
+
+        $address = $this->address->editAddress($request);
+
+        return $address;
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Resources\main_catResource;
 use App\Http\Resources\orderDetailsResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\productResource;
+use App\Http\Resources\userResource;
 use App\Models\Cart;
 use App\Models\Comment;
 use App\Models\Love;
@@ -36,16 +37,9 @@ class user extends Controller
     }
 
     public function home(){
-        $main_cate      = Main_category::where('locale', '=', Config::get('app.locale'))->where('status', 1)->limit(6)->get();
+        $main_cate      = Main_category::where('locale', '=', Config::get('app.locale'))->active()->limit(6)->get();
 
-        $best_seller    = Product::orderBy('number_of_sell', 'desc')
-                                            ->where('quantity', '>', 0)
-                                            ->where('status', 1)
-                                            ->whereHas('Sub_category', function($q){
-                                                    $q->where('status', 1)->whereHas('Main_categories', function($query){
-                                                        $query->where('status', 1);
-                                                    });
-                                            })->limit(6)->get();
+        $best_seller    = Product::active()->orderBy('number_of_sell', 'desc')->limit(6)->get();
 
         $data = [
             'main_categories' => main_catResource::collection($main_cate),
@@ -84,6 +78,19 @@ class user extends Controller
             return $this->success(trans('user.remove love success'), 200);
         }
 
+    }
+
+    public function get_love(Request $request){
+        //get user
+        if (! $user = auth('user')->user()) {
+            return response::falid(trans('user.user not found'), 404, 'E04');
+        }
+
+        $products = Product::active()->whereHas('Loves', function($q) use($user){
+            $q->where('user_id', $user->id);
+        })->get();
+
+        return $this->success('success', 200, 'products', productResource::collection($products));
     }
 
     public function add_comment(Request $request){
@@ -333,6 +340,12 @@ class user extends Controller
         return $this::success(trans('auth.success'), 200, 'promoCode', $promoCode);
     }
 
+    public function order_address(Request $request){
+        $address = $this->address->addAddress($request);
+
+        return $address;
+    }
+
     public function make_order(Request $request){
         //validation
         $validator = validator::make($request->all(), [
@@ -461,5 +474,28 @@ class user extends Controller
 
         $orders = Order::where('user_id', $user->id)->where('id', $request->get('order_id'))->first()->Orderdetail;
         return orderDetailsResource::collection($orders);
+    }
+
+    public function profil_details(){
+        //get user
+        if (! $user = auth('user')->user()) {
+            return response::falid(trans('user.user not found'), 404, 'E04');
+        }
+
+        //products that user add love in it
+        $products = Product::active()->whereHas('Loves', function($q) use($user){
+            $q->where('user_id', $user->id);
+        })->get();
+
+        //orders that finished
+        $orders = Order::where('user_id', $user->id)->where('status', 2)->get();
+
+        $data = [
+            'user'              => new userResource($user),
+            'loves_products'    => productResource::collection($products),
+            'orders'            => OrderResource::collection($orders),
+        ];
+
+        return $this->success('success', 200, 'data', $data);
     }
 }

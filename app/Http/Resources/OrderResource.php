@@ -24,6 +24,7 @@ class OrderResource extends JsonResource
             'payment_method'        => $this->payment_method,
             'item_count'            => $this->Orderdetail->count(), //from relation
             'date'                  => date("Y-m-d H:i:s", strtotime($this->created_at)),
+            'order_details'         => orderDetailsResource::collection($this->Orderdetail),
         ];
     }
 }

@@ -77,4 +77,16 @@ class Product extends Model
             return url('public/uploads/products/default.jpg');
         }
     }
+
+    //scop
+    public function scopeActive($query)
+    {
+        return $query->where('quantity', '>', 0)
+                        ->where('status', 1)
+                        ->whereHas('Sub_category', function($q){
+                                $q->where('status', 1)->whereHas('Main_categories', function($query){
+                                    $query->where('status', 1);
+                                });
+                        });
+    }
 }

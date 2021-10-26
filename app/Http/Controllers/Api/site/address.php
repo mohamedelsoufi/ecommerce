@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\site;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\addressResource;
 use App\Models\Address as ModelsAddress;
 use App\Traits\response;
 use Illuminate\Http\Request;
@@ -36,11 +37,10 @@ class address extends Controller
             'street_name'       => 'required|string',
             'building_number'   => 'required|string',
             'notes'             => 'required|string',
-
         ]);
 
         if($validator->fails()){
-            return $this::falid($validator->errors(), 403);
+            return $this::falid($validator->errors(), 403, 'E03');
         }
 
         $address = ModelsAddress::create([
@@ -53,7 +53,7 @@ class address extends Controller
             'notes'                 => $request->get('notes'),
         ]);
 
-        return $this::success(trans('all.add address success'), 200, 'address', $address);
+        return $this::success(trans('all.add address success'), 200, 'address', new addressResource($address));
     }
 
     public function editAddress(Request $request){
@@ -80,7 +80,7 @@ class address extends Controller
         $address = ModelsAddress::find($request->get('address_id'));
 
         if($address->update($input)){
-            return $this::success(trans('all.edit address success'), 200, 'address', $address);
+            return $this::success(trans('all.edit address success'), 200, 'address', new addressResource($address));
         }
 
         return $this::falid(trans('all.edit address faild'), 200);

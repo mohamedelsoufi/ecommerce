@@ -39,8 +39,12 @@ Route::group(['middleware' => ['changeLang']], function() {
 
     Route::group(['middleware' => ['checkJWTtoken:user']], function() {
         Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('user');
+        Route::get('profile/details', 'App\Http\Controllers\Api\site\user@profil_details')->name('user');
         Route::post('profile/edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('user');
         Route::post('profile/edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('user');
+        Route::post('profile/address/add', 'App\Http\Controllers\Api\site\authentication\profile@add_address')->name('user');
+        Route::post('profile/address/edit', 'App\Http\Controllers\Api\site\authentication\profile@edit_address')->name('user');
+
 
         Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('user');
 
@@ -49,6 +53,7 @@ Route::group(['middleware' => ['changeLang']], function() {
         Route::get('home', 'App\Http\Controllers\Api\site\user@home');
 
         Route::post('love', 'App\Http\Controllers\Api\site\user@love');
+        Route::get('loves', 'App\Http\Controllers\Api\site\user@get_love');
 
         Route::post('comment/add', 'App\Http\Controllers\Api\site\user@add_comment');
         Route::post('comment/delete', 'App\Http\Controllers\Api\site\user@delete_comment');
@@ -66,6 +71,7 @@ Route::group(['middleware' => ['changeLang']], function() {
 
         Route::post('promoCode/check', 'App\Http\Controllers\Api\site\user@check_promoCode');
 
+        Route::post('order/address', 'App\Http\Controllers\Api\site\user@order_address');
         Route::post('order/make', 'App\Http\Controllers\Api\site\user@make_order');
         Route::post('order/tracking', 'App\Http\Controllers\Api\site\user@order_tracking');
         Route::post('order/details', 'App\Http\Controllers\Api\site\user@order_details');

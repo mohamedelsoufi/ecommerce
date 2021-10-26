@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\site;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\commentResource;
 use App\Http\Resources\main_catResource;
 use App\Http\Resources\productResource;
 use App\Http\Resources\sub_catResource;
@@ -19,8 +20,9 @@ class guest extends Controller
     use response;
 
     public function getCategories(){
-        $main_cate = main_catResource::collection(Main_category::where('locale', '=', Config::get('app.locale'))->where('status', 1)->get());
-        return $this->success(trans('auth.success'), 200, 'main_categories', $main_cate);
+
+        $main_cate = Main_category::where('locale', '=', Config::get('app.locale'))->active()->get();
+        return $this->success(trans('auth.success'), 200, 'main_categories', main_catResource::collection($main_cate));
     }
 
     public function main_cate_details(Request $request){
@@ -34,33 +36,26 @@ class guest extends Controller
         }
 
         //check if main category is active
-        $main_category = Main_category::where('status', 1)->where('id',$request->get('mainCategory_id'))->first();
+        $main_category = Main_category::active()->where('parent', '!=', 0)->where('id',$request->get('mainCategory_id'))->first();
         if($main_category == null){
             return $this->falid(trans('guest.this category not found'), 404, 'E04');
         }
 
-        //get all product from this category order numbet of sell
-        $products = Product::where('status', 1)
-                            ->whereHas('Sub_category', function($q) use($request){
-                                    $q->where('status', 1)->whereHas('Main_categories', function($query)use($request){
-                                        $query->where('status', 1)->where('id', $request->get('mainCategory_id'));
+        //get all product from this category (order number of sell)
+        $products = Product::active()->orderBy('number_of_sell', 'desc')
+                            ->whereHas('Sub_category', function($q) use($main_category){
+                                $q->whereHas('Main_categories', function($query) use($main_category){
+                                    $query->where('id', $main_category->parent);
+                                });
+                            })->get();
+        
+        //get some products this category (order by discount)
+        $most_discount  = Product::active()->orderBy('discound', 'desc')
+                                ->whereHas('Sub_category', function($q) use($main_category){
+                                    $q->whereHas('Main_categories', function($query) use($main_category){
+                                        $query->where('id', $main_category->parent);
                                     });
-                            })
-                            ->where('quantity', '>', 0)
-                            ->orderBy('number_of_sell', 'desc')->get();
-        
-        
-        //get some products this category order by discount
-        $most_discount  = Product::where('status', 1)
-                            ->whereHas('Sub_category', function($q) use($request){
-                                    $q->where('status', 1)->whereHas('Main_categories', function($query)use($request){
-                                        $query->where('status', 1)->where('id', $request->get('mainCategory_id'));
-                                    });
-                            })
-                            ->where('quantity', '>', 0)
-                            ->orderBy('discound', 'desc')
-                            ->limit(6)->get();
-        
+                                })->limit(6)->get();
         
         $data = [
             'products'      => productResource::collection($products),
@@ -102,16 +97,18 @@ class guest extends Controller
             return $this->falid($validator->errors(), 403, 'E03');
         }
 
-        $product = Product::where('status', 1)
-                            ->whereHas('Sub_category', function($q){
-                                    $q->where('status', 1)->whereHas('Main_categories', function($query){
-                                        $query->where('status', 1);
-                                    });
-                            })
-                            ->where('id',$request->get('product_id'))->first();
+        $product = Product::active()->where('id',$request->get('product_id'))->first();
+
+        $recommended = Product::active()->where('sub_categoriesId', $product->sub_categoriesId)->limit(6)->get();
+
+        $data = [
+            'product_details' => new productResource($product),
+            'recommended'     => $recommended,
+            'comments'        => commentResource::collection($product->Comments),
+        ];
 
         if($product != null){
-            return $this->success(trans('auth.success'), 200, 'product', new productResource($product));
+            return $this->success(trans('auth.success'), 200, 'data', $data);
         } else {
             return $this->falid(trans('guest.this product not found'), 404, 'E04');
         }

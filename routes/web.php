@@ -17,6 +17,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('hi', 'App\Http\Controllers\Api\site\authentication\profile@nnn');
-
-
