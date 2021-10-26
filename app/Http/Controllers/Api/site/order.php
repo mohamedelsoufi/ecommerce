@@ -27,6 +27,7 @@ class order extends Controller
             'address_id'        => $request->get('address_id'),
             'total'             => $total,
             'final_total'       => $final_total,
+            'shipping_cost'     => 10,
             'promoCode_id'      => $promoCode_id,
             'payment_status'    => 0,
         ]);

@@ -47,13 +47,17 @@
                                       <th>user</th>
                                       <th>address</th>
                                       <th>status</th>
-                                      <th>promo code discound</th>
-                                      <th>total</th>
-                                      <th>final_total</th>
+                                      <th>total</th>            <!--order totle without promo code-->
+                                      <th>promo code</th>       <!--promo code discound-->
+                                      <th>final total</th>      <!--order totle with promo code discound-->
+                                      <th>shipping cost</th>    <!--shipping_cost-->
+                                      <th>cost</th>             <!--final cost with shiping cost-->
                                       <th>controller</th>
                                   </tr>
                               </thead>
                               <tbody>
+                                  
+                            
                                   @foreach ($orders as $order)
                                       <tr>
                                           <td>{{$order->id}}</td>
@@ -66,9 +70,11 @@
                                               {{$order->address->street_name}},
                                           </td>
                                           <td>{{$order->getStatus()}}</td>
-                                          <td>{{$order->getDiscound()}} %</td>
                                           <td>{{$order->total}}</td>
+                                          <td>{{$order->getDiscound()}} %</td>
                                           <td>{{$order->final_total}} $</td>
+                                          <td>{{$order->shipping_cost}} $</td>
+                                          <td>{{$order->final_total + $order->shipping_cost}} $</td>
                                           <td>
                                             @if ($order->status == 0)
                                                 <a href="{{url('/admin/orders/cancel/' . $order->id)}}" class="btn btn-danger btn-min-width box-shadow-3 mr-1 mb-1" style="min-width: 6.5rem; margin-right: 8px !important;">cancel</a>

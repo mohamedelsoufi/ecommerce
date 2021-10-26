@@ -20,6 +20,7 @@ class Orders extends Migration
             $table->tinyInteger('status')->default(0)->comment('-1 -> cancel, 0->not active, 1->Preparation and delivery, 2->finshed');
             $table->integer('total')->nullable()->comment('without promo code');
             $table->integer('final_total')->nullable()->comment('with promo code');
+            $table->integer('shipping_cost')->default(0);
             $table->unsignedBigInteger('promoCode_id')->nullable();
             $table->string('payment_method')->nullable();
             $table->string('payment_id')->nullable();
