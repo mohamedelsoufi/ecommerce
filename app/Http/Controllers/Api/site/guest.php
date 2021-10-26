@@ -113,4 +113,20 @@ class guest extends Controller
             return $this->falid(trans('guest.this product not found'), 404, 'E04');
         }
     }
+
+    public function filter(Request $request){
+        $products = Product::active()->where('sub_categoriesId', $request->sub_categoriesId)
+                        ->orWhere('gender',$request->gender)
+                        ->orWhereBetween('price', [$request->from, $request->to])
+                        ->get();
+    
+        return $this->success('success', 200, 'products', productResource::collection($products));
+    }
+
+    public function search(Request $request){
+        $products = Product::active()->where('name', 'like', '%'. $request->text .'%')
+                        ->get();
+
+        return $this->success('success', 200, 'products', productResource::collection($products));
+    }
 }

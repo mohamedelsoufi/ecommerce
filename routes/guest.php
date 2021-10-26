@@ -31,6 +31,9 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'guest'], function() {
     Route::get('SubCategorys/details', 'App\Http\Controllers\Api\site\guest@sub_cate_details');
 
     Route::get('product/details', 'App\Http\Controllers\Api\site\guest@product_details');
+
+    Route::get('filter', 'App\Http\Controllers\Api\site\guest@filter');
+    Route::get('search', 'App\Http\Controllers\Api\site\guest@search');
 });
 
 
