@@ -1,49 +1,27 @@
 **Show User**
 ----
-  Returns json data about a single user.
-
 * **URL**
-
-  /users/:id
-
-* **Method:**
-
-  `GET`
-  
-*  **URL Params**
-
-   **Required:**
- 
-   `id=[integer]`
-
-* **Data Params**
-
-  None
+    http://localhost/ahmedmaher/laravel/projects/ecommerce/api/
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12, name : "Michael Bloom" }`
+  * **status:** true <br />
+    **message:** message <br />
+    **data:** `{ id : 12, .. }` <br />
  
 * **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "User doesn't exist" }`
+  * **successful:** false <br />
+    **status:** "E00" <br />
+    **message:** message <br />
 
-  OR
+* ** Auth end point**
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
+| end point | Method | Auth |URL Params| Describe |
+| :---:     | :---:  | :---:|:---:     | :---:    |
+| /login    | Post   | No   | email : required <br /> password : required| your acount should be verify |
+| /register | Post   | No   | email :  required <br /> fullName : required <br /> password : required <br /> confirm_password : required <br /> phone : required <br /> gender : required <br /> birth : required <br />  | you should verify your email |
+| /logout   | Post   | yes  | --       | --       |
+| /logout   | Post   | yes  | --       | --       |
 
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
+ 
