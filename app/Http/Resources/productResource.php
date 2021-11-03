@@ -31,6 +31,15 @@ class productResource extends JsonResource
         $count = $ratnig->count();
         $allRatnig = $ratnig->sum('rating');
 
+        //get product images
+        if($this->image->first() != null){
+            $images = $this->image->transform(function ($item, $key) {
+                return url('public/uploads/products/' . $item->image);
+            });
+        } else {
+            $images = array(url('public/uploads/products/default.jpg'));
+        }
+
         return [
             'id'                => $this->id,
             'name'              => $this->name,
@@ -41,8 +50,8 @@ class productResource extends JsonResource
             'discound'          => $this->discound,
             'quantity'          => $this->quantity,
             'gender'            => $gender,
-            'comments_count'    =>  $this->comments->count(),
-            'image'             => ($this->image->first() != null) ? $this->image : array(['image' => 'default.jpg']),
+            'comments_count'    => $this->comments->count(),
+            'images'            => $images,
             'color'             => $this->color,
             'sizes'             => $this->color,
             'rating'            => [

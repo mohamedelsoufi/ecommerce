@@ -90,7 +90,7 @@ class guest extends Controller
     public function product_details(Request $request){
         //validation
         $validator = validator::make($request->all(), [
-            'product_id'   => 'required:exists:products,id',
+            'product_id'   => 'required|exists:products,id',
         ]);
 
         if($validator->fails()){
@@ -103,7 +103,7 @@ class guest extends Controller
 
         $data = [
             'product_details' => new productResource($product),
-            'recommended'     => $recommended,
+            'recommended'     => productResource::collection($recommended),
             'comments'        => commentResource::collection($product->Comments),
         ];
 
