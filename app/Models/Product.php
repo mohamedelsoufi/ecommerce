@@ -22,6 +22,8 @@ class Product extends Model
         'discound'              => 'integer',
         'quantity'              => 'integer',
         'gender'                => 'integer',
+        'sizes'                 => 'array',
+        'color'                 => 'array',
     ];
 
     //relations

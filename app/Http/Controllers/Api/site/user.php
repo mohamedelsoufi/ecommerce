@@ -220,7 +220,9 @@ class user extends Controller
         //validation
         $validator = validator::make($request->all(), [
             'product_id' => 'required|exists:products,id',
-            'quantity'   => 'required|integer'
+            'quantity'   => 'required|integer',
+            'color'      => 'nullable|string',
+            'size'       => 'nullable|string',
         ]);
 
         if($validator->fails()){
@@ -242,6 +244,8 @@ class user extends Controller
             'product_id' => $request->get('product_id'),
             'user_id'    => $user->id,
             'quantity'   => $request->get('quantity'),
+            'color'      => $request->color,
+            'size'       => $request->size,
         ]);
 
         return $this::success(trans('user.add to cart success'), 200);
@@ -251,7 +255,9 @@ class user extends Controller
         //validation
         $validator = validator::make($request->all(), [
             'cart_id'       => 'required|exists:carts,id',
-            'quantity'      => 'required|integer'
+            'quantity'      => 'required|integer',
+            'color'         => 'nullable|string',
+            'size'          => 'nullable|string',
         ]);
 
         if($validator->fails()){
@@ -270,6 +276,9 @@ class user extends Controller
         }
 
         $cart->quantity = $request->get('quantity');
+        $cart->color    = $request->get('color');
+        $cart->size     = $request->get('size');
+
 
         if($cart->save()){
             return $this::success(trans('user.edit success'), 200);

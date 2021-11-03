@@ -57,6 +57,8 @@ class order extends Controller
                 'product_price'         => $cart->Product->price,
                 'product_discound'      => $cart->Product->discound,
                 'product_total_price'   => $cart->Product->price -  $this->percentage($cart->Product->discound, $cart->Product->price),    
+                'color'                 => $cart->color,
+                'size'                  => $cart->size,
             ]);
         }
         return $this->success(trans('auth.success'), 200);

@@ -18,6 +18,8 @@ class Carts extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->integer('quantity')->nullable();
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

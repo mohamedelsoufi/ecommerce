@@ -35,5 +35,12 @@ class main_catResource extends JsonResource
             });
         })->get();
 
+        return [
+            'id'                => $this->id,
+            'name'              => $this->name,
+            'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
+            'iamge'             => ($main_cat->image != null) ? $main_cat->image->image : 'default.jpg',
+            'locale'            => $this->locale,
+        ];
     }
 }

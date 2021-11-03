@@ -46,6 +46,8 @@
                                       <th>id</th>
                                       <th>product</th>
                                       <th>quantity</th>
+                                      <th>color</th>
+                                      <th>size</th>
                                       <th>product price</th>
                                       <th>product discound</th>
                                       <th>product price with discound</th>
@@ -58,6 +60,8 @@
                                         <td>{{$order_details->id}}</td>
                                         <td>{{$order_details->Product->name}}</td>
                                         <td>{{$order_details->quantity}}</td>
+                                        <td>{{$order_details->color}}</td>
+                                        <td>{{$order_details->size}}</td>
                                         <td>{{$order_details->product_price}} $</td>
                                         <td>{{$order_details->product_discound}} %</td>
                                         <td>{{$order_details->product_total_price}} $</td>

@@ -26,6 +26,9 @@ class Products extends Migration
             $table->integer('quantity')->nullable();
             $table->tinyInteger('gender')->nullable();
 
+            $table->text('colors')->nullable();
+            $table->text('sizes')->nullable();
+
             $table->timestamps();
 
             $table->foreign('sub_categoriesId')->references('id')->on('sub_categories')->onDelete('cascade');

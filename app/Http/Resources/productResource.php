@@ -43,7 +43,8 @@ class productResource extends JsonResource
             'gender'            => $gender,
             'comments_count'    =>  $this->comments->count(),
             'image'             => ($this->image->first() != null) ? $this->image : array(['image' => 'default.jpg']),
-
+            'color'             => $this->color,
+            'sizes'             => $this->color,
             'rating'            => [
                                         'count'     => $count,
                                         'rating'    => ($count != 0) ? $allRatnig / $count : 0,

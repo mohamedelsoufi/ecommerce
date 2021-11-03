@@ -17,6 +17,8 @@ class cartResource extends JsonResource
         return [
             'id'                => $this->id,
             'quantity'          => $this->quantity,
+            'color'             => $this->color,
+            'size'              => $this->size,
             'product'           => [
                                     'id'                => $this->Product->id,
                                     'name'              => $this->Product->name,
@@ -24,7 +26,6 @@ class cartResource extends JsonResource
                                     'price'             => $this->Product->price,
                                     'discound'          => $this->Product->discound,
                                     ],
-
         ];
     }
 }
