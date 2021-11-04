@@ -39,11 +39,13 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
 
         Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('vender');
 
-
         Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('vender');
 
         Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('vender');
 
+        Route::get('home', 'App\Http\Controllers\Api\site\vender@home');
+
+        Route::get('products', 'App\Http\Controllers\Api\site\vender@products');
     });
 });
 

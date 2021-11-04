@@ -40,7 +40,14 @@ class Controller extends BaseController
         }
     }
 
+    // 
     public function percentage($number, $totalNumber){
         return ($number / 100) * $totalNumber;
     }
+
+    //get percentage
+    public function getPercentage($number, $totalNumber){
+        return ($number / $totalNumber) * 100;
+    }
+
 }

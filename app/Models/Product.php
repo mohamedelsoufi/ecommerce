@@ -91,4 +91,9 @@ class Product extends Model
                                 });
                         });
     }
+
+    public function scopeNotDelete($query)
+    {
+        return $query->where('status', '!=' , -1);
+    }
 }

@@ -18,5 +18,6 @@
   <!-- BEGIN PAGE LEVEL JS-->
   <script src="{{url('public/theme/app-assets/js/scripts/navs/navs.js')}}" type="text/javascript"></script>
   <!-- END PAGE LEVEL JS-->
+  
 </body>
 </html>
