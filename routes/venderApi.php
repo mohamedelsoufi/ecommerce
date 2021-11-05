@@ -46,6 +46,9 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
         Route::get('home', 'App\Http\Controllers\Api\site\vender@home');
 
         Route::get('products', 'App\Http\Controllers\Api\site\vender@products');
+        Route::get('products/informations', 'App\Http\Controllers\Api\site\vender@products_informations');
+
+        Route::get('product/order', 'App\Http\Controllers\Api\site\vender@product_order');
     });
 });
 

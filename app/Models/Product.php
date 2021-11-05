@@ -23,7 +23,7 @@ class Product extends Model
         'quantity'              => 'integer',
         'gender'                => 'integer',
         'sizes'                 => 'array',
-        'color'                 => 'array',
+        'colors'                => 'array',
     ];
 
     //relations

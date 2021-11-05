@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\site;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\orderDetailsResource;
+use App\Http\Resources\productResource;
+use App\Http\Resources\productsDetailsResource;
 use App\Models\Orderdetail;
 use App\Models\Product;
 use App\Traits\response;
@@ -25,7 +28,7 @@ class vender extends Controller
         $orderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 2)->orWhere('status', 3);
         })->whereHas('Product', function($q) use($vender){
-            $q->where('vender_id', $vender->id);
+            $q->notDelete()->where('vender_id', $vender->id);
         })->get();
 
         $totalMony = $orderdetails->sum(function ($product) {
@@ -36,7 +39,7 @@ class vender extends Controller
         $finishedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 2);
         })->whereHas('Product', function($q) use($vender){
-            $q->where('vender_id', $vender->id);
+            $q->notDelete()->where('vender_id', $vender->id);
         })->get();
 
         $finishedMony = $finishedOrderdetails->sum(function ($product) {
@@ -47,7 +50,7 @@ class vender extends Controller
         $returnedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 3);
         })->whereHas('Product', function($q) use($vender){
-            $q->where('vender_id', $vender->id);
+            $q->notDelete()->where('vender_id', $vender->id);
         })->get();
         
         $returnedMony = $returnedOrderdetails->sum(function ($product) {
@@ -78,7 +81,7 @@ class vender extends Controller
         $orderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 2)->orWhere('status', 3);
         })->whereHas('Product', function($q) use($vender){
-            $q->where('vender_id', $vender->id);
+            $q->notDelete()->where('vender_id', $vender->id);
         })->get();
 
         $number_of_sell = $orderdetails->sum(function ($product) {
@@ -89,7 +92,7 @@ class vender extends Controller
         $returnedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 3);
         })->whereHas('Product', function($q) use($vender){
-            $q->where('vender_id', $vender->id);
+            $q->notDelete()->where('vender_id', $vender->id);
         })->get();
 
         $number_of_returned_sell= $returnedOrderdetails->sum(function ($product) {
@@ -105,5 +108,40 @@ class vender extends Controller
         ];
 
         return $this->success('success', 200, 'data', $data);
+    }
+
+    public function products_informations(){
+        //get user
+        if (! $vender = auth('vender')->user()) {
+            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+        }
+
+        //products count
+        $products_count = Product::notDelete()->where('vender_id', $vender->id)->count();
+
+        //products
+        $products       = Product::notDelete()->where('vender_id', $vender->id)->get();
+
+        //data
+        $data = [
+            'products_count'            => $products_count,
+            'products'                  => productsDetailsResource::collection($products),
+        ];
+
+        return $this->success('success', 200, 'data', $data);
+    }
+
+    public function product_order(){
+        //get user
+        if (! $vender = auth('vender')->user()) {
+            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+        }
+
+        //get products orders
+        $Orderdetail = Orderdetail::whereHas('Product', function($q) use($vender){
+            $q->notDelete()->where('vender_id', $vender->id);
+        })->get();
+
+        return orderDetailsResource::collection($Orderdetail);
     }
 }
