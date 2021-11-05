@@ -10,6 +10,7 @@ use App\Models\Orderdetail;
 use App\Models\Product;
 use App\Traits\response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class vender extends Controller
 {
@@ -122,26 +123,86 @@ class vender extends Controller
         //products
         $products       = Product::notDelete()->where('vender_id', $vender->id)->get();
 
+        //totalMony (that finished or returned)
+        $orderdetails  = Orderdetail::whereHas('Order' , function($q){
+            $q->where('status', 2)->orWhere('status', 3);
+        })->whereHas('Product', function($q) use($vender){
+            $q->notDelete()->where('vender_id',  $vender->id);
+        })->get();
+
+        $totalMony = $orderdetails->sum(function ($product) {
+            return $product['product_total_price'] * $product['quantity'];
+        });
+
         //data
         $data = [
             'products_count'            => $products_count,
+            'totalMony'                 => $totalMony,
             'products'                  => productsDetailsResource::collection($products),
         ];
 
         return $this->success('success', 200, 'data', $data);
     }
 
-    public function product_order(){
+    public function product_order(Request $request){
+        //validation
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        if($validator->fails()){
+            return $this->falid($validator->errors(), 403, 'E03');
+        }
+
         //get user
         if (! $vender = auth('vender')->user()) {
             return response::falid(trans('vender.vendor not found'), 404, 'E04');
         }
 
         //get products orders
-        $Orderdetail = Orderdetail::whereHas('Product', function($q) use($vender){
+        $Orderdetail = Orderdetail::whereHas('Product', function($q) use($vender, $request){
+            $q->notDelete()->where('id', $request->product_id)->where('vender_id', $vender->id);
+        })->get();
+
+        return $this->success('success', 200, 'orders', orderDetailsResource::collection($Orderdetail));
+    }
+
+    public function money(){
+        //get user
+        if (! $vender = auth('vender')->user()) {
+            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+        }
+
+        //totalMony (that finished or returned)
+        $orderdetails  = Orderdetail::whereHas('Order' , function($q){
+            $q->where('status', 2)->orWhere('status', 3);
+        })->whereHas('Product', function($q) use($vender){
             $q->notDelete()->where('vender_id', $vender->id);
         })->get();
 
-        return orderDetailsResource::collection($Orderdetail);
+        $totalMony = $orderdetails->sum(function ($product) {
+            return $product['product_total_price'] * $product['quantity'];
+        });
+
+        //returnedOrderdetails for vender that returned
+        $returnedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
+            $q->where('status', 3);
+        })->whereHas('Product', function($q) use($vender){
+            $q->notDelete()->where('vender_id', $vender->id);
+        })->get();
+        
+        $returnedMony = $returnedOrderdetails->sum(function ($product) {
+            return $product['product_total_price'] * $product['quantity'];
+        });
+
+        //data
+        $data = [
+            'total_mony'                => $totalMony,
+            'net_prodit'                => $totalMony - $returnedMony,
+            'returned_mony_percentage'  => $returnedMony,
+            'withdrawal'                => 0,
+        ];
+
+        return $this->success('success', 200, 'data', $data);
     }
 }

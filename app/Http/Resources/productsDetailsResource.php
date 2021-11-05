@@ -17,20 +17,6 @@ class productsDetailsResource extends JsonResource
      */
     public function toArray($request)
     {
-        //gender
-        if($this->gender == 0){
-            $gender = trans('guest.male');
-        } else if($this->gender == 1){
-            $gender = trans('guest.famale');
-        } else {
-            $gender = trans('guest.other');
-        }
-
-        //rating
-        $ratnig = $this->Ratings;
-        $count = $ratnig->count();
-        $allRatnig = $ratnig->sum('rating');
-
         //get product images
         if($this->image->first() != null){
             $images = $this->image->transform(function ($item, $key) {
@@ -40,27 +26,36 @@ class productsDetailsResource extends JsonResource
             $images = array(url('public/uploads/products/default.jpg'));
         }
 
-        //get returned products count
+        //totalMony (that finished or returned)
+        $orderdetails  = Orderdetail::whereHas('Order' , function($q){
+            $q->where('status', 2)->orWhere('status', 3);
+        })->whereHas('Product', function($q){
+            $q->notDelete()->where('id', $this->id)->where('vender_id',  $this->Vender->id);
+        })->get();
+
+        $totalMony = $orderdetails->sum(function ($product) {
+            return $product['product_total_price'] * $product['quantity'];
+        });
+
+
+        //get returned products count and mony
         $returnedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 3);
         })->whereHas('Product', function($q){
-            $q->notDelete()->where('vender_id', $this->Vender->id);
+            $q->notDelete()->where('id', $this->id)->where('vender_id', $this->Vender->id);
         })->get();
         
         $returned_count = $returnedOrderdetails->sum(function ($product) {
             return $product['quantity'];
         });
+        
+        $returned_money = $returnedOrderdetails->sum(function ($product) {
+            return $product['product_total_price'] * $product['quantity'];
+        });
 
         return [
             'id'                => $this->id,
             'name'              => $this->name,
-            'describe'          => $this->describe,
-            'price'             => $this->price,
-            'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
-            'number_of_sell'    => $this->number_of_sell,
-            'discound'          => $this->discound,
-            'gender'            => $gender,
-            'comments_count'    => $this->comments->count(),
             'date'              => date("Y-m-d H:i:s", strtotime($this->created_at)),
             'quantity'          => [
                                     'quantity'           => $this->quantity + $this->number_of_sell,
@@ -68,17 +63,14 @@ class productsDetailsResource extends JsonResource
                                     'returned_count'     => $returned_count,
                                     'remaining_quantity' => $this->quantity,
                                 ],
+            'money'             => [
+                                        'total_money'    => $totalMony,
+                                        'returned_money' => $returned_money,
+                                        'net_profit'     => $totalMony - $returned_money,
+                                    ],
             'images'            => $images,
             'colors'            => $this->colors,
             'sizes'             => $this->sizes,
-            'rating'            => [
-                                        'count'     => $count,
-                                        'rating'    => ($count != 0) ? $allRatnig / $count : 0,
-                                    ],
-            'sub_category'      => [
-                                        'id'    => $this->Sub_category->id,     //relation
-                                        'name'  => Sub_category::where('locale', Config::get('app.locale'))->where('parent', $this->Sub_category->id)->first()->name,
-                                    ],
         ];
     }
 }
