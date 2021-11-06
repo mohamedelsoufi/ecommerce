@@ -13,13 +13,13 @@ return [
     |
     */
     //
-    'vendor not found' => 'vendor not found',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
-    '' => '',
+    'vendor not found'                  => 'vendor not found',
+    'this sub category not valide'      => 'this sub category not valide',
+    'add product success'               => 'add product success',
+    'this product not found'            => 'this product not found',
+    'delete product success'            => 'delete product success',
+    'delete product faild'              => 'delete product faild',
+    'edit product success' => 'edit product success',
     '' => '',
     '' => '',
     '' => '',

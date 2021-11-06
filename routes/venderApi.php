@@ -47,10 +47,12 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
 
         Route::get('products', 'App\Http\Controllers\Api\site\vender@products');
         Route::get('products/informations', 'App\Http\Controllers\Api\site\vender@products_informations');
-        Route::get('money', 'App\Http\Controllers\Api\site\vender@money');
-
+        Route::get('products/money', 'App\Http\Controllers\Api\site\vender@money');
 
         Route::get('product/order', 'App\Http\Controllers\Api\site\vender@product_order');
+        Route::post('product/add', 'App\Http\Controllers\Api\site\vender@product_add');
+        Route::post('product/delete', 'App\Http\Controllers\Api\site\vender@product_delete');
+        Route::post('product/edit', 'App\Http\Controllers\Api\site\vender@product_edit');
 
     });
 });
