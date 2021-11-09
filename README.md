@@ -104,6 +104,12 @@
 | /rating                | post   | Yes  | product_id : required <br> rating : required | rating -> from 1 to 5 |
 
 
+* ** some page end point**
+
+| end point       | Method | Auth |URL Params| Describe |
+| :---:           | :---:  | :---:|:---:     | :---:    |
+| /home           | get    | Yes  | _        | _ |
+| /contact_us     | post   | Yes  | email : required <br> phone :required <br>  title : required <br>  body : required | _ |
 
 
 <h1 align="center"> vendor apis </h1>
@@ -144,3 +150,35 @@
 | /changePassword             | Post   | Yes  | oldPassword : required <br> password : required <br> confirmPassword : required | _ |
 | /profile/address/add        | Post   | Yes  | country : required <br> city : required <br> Neighborhood : required <br> region : required <br> street_name : required <br> building_number : required <br> notes : required | _ |
 | /profile/address/edit       | Post   | Yes  | country : nullable <br> city : nullable <br> Neighborhood : nullable <br> region : nullable <br> street_name : nullable <br> building_number : nullable <br> notes : nullable | _ |
+
+
+* ** product end point**
+
+| end point                     | Method | Auth |URL Params| Describe |
+| :---:                         |  :---: | :---:|  :---:   |  :---:   |
+| /vender/products              | get    | Yes  |    _     |     _    |
+| /vender/products/informations | get    | Yes  |    _     |     _    |
+| /vender/products/money        | get    | Yes  |    _     |     _    |
+| /vender/product/order         | get    | Yes  |    _     |     _    |
+| /vender/product/add           | post   | Yes  | name : required <br> describe : required <br> price : required <br> quantity : required <br> gender : required <br> discound : required <br> sub_categoriesId : required <br> sizes[] : nullable <br> colors[] : nullable <br> iamges : required | _ |
+| /vender/product/edit          | post   | Yes  | name : nullable <br> describe : nullable <br> price : nullable <br> quantity : nullable <br> gender : nullable <br> discound : nullable <br> sub_categoriesId : nullable <br> sizes[] : nullable <br> colors[] : nullable <br> iamges : nullable | _ |
+| /ender/product/delete         | post   | Yes  |product_id : required | _ |
+
+
+* ** some page end point**
+
+| end point       | Method | Auth |URL Params| Describe |
+| :---:           | :---:  | :---:|:---:     | :---:    |
+| /home           | get    | Yes  | _        | _ |
+| /contact_us     | post   | Yes  | email : required <br> phone :required <br>  title : required <br>  body : required | _ |
+
+
+<h1 align="center"> guest apis </h1>
+
+* ** end point**
+
+| end point                     | Method | Auth |URL Params| Describe |
+| :---:                         | :---:  | :---:|:---:     | :---:    |
+| /guest/product/details        | get    | No   | product_id : required | _ |
+| /guest/mainCategorys/details  | get    | No   | mainCategory_id : required | _ |
+
