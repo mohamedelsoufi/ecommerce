@@ -12,7 +12,7 @@
 * **Error Response:**
 
   * **successful:** false <br />
-    **status:** "E00" <br />
+    **status:** "status error" <br />
     **message:** message <br />
     
  * **status error:**
