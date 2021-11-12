@@ -1,5 +1,4 @@
-**Show User**
-----
+
 * **URL**
     http://localhost/ahmedmaher/laravel/projects/ecommerce/api/
 
