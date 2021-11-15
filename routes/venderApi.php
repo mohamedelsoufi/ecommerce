@@ -23,19 +23,28 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
 
     Route::post('login', 'App\Http\Controllers\Api\site\authentication\auth@login')->name('vender');
 
-    Route::post('forgetPasswored/sendMail', 'App\Http\Controllers\Api\site\authentication\resetPasswored@sendEmail')->name('vender');
-    Route::post('forgetPasswored/checkCode', 'App\Http\Controllers\Api\site\authentication\resetPasswored@checkCode')->name('vender');
-    Route::post('forgetPasswored/passwordResetProcess', 'App\Http\Controllers\Api\site\authentication\resetPasswored@passwordResetProcess')->name('vender');
+    //forget passwored
+    Route::group(['prefix' => 'forgetPasswored'], function(){
+        Route::post('sendMail', 'App\Http\Controllers\Api\site\authentication\resetPasswored@sendEmail')->name('vender');
+        Route::post('checkCode', 'App\Http\Controllers\Api\site\authentication\resetPasswored@checkCode')->name('vender');
+        Route::post('passwordResetProcess', 'App\Http\Controllers\Api\site\authentication\resetPasswored@passwordResetProcess')->name('vender');
+    });
 
-    Route::post('verification/sendMail', 'App\Http\Controllers\Api\site\authentication\verification@sendEmail')->name('vender');
-    Route::post('verification', 'App\Http\Controllers\Api\site\authentication\verification@passwordResetProcess')->name('vender');
+    //verification
+    Route::group(['prefix' => 'verification'], function(){
+        Route::post('sendMail', 'App\Http\Controllers\Api\site\authentication\verification@sendEmail')->name('vender');
+        Route::post('/', 'App\Http\Controllers\Api\site\authentication\verification@passwordResetProcess')->name('vender');
+    });
 
     Route::group(['middleware' => ['checkJWTtoken:vender']], function() {
-        Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('vender');
-        Route::post('profile/edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('vender');
-        Route::post('profile/edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('vender');
-        Route::post('profile/address/add', 'App\Http\Controllers\Api\site\authentication\profile@add_address')->name('vender');
-        Route::post('profile/address/edit', 'App\Http\Controllers\Api\site\authentication\profile@edit_address')->name('vender');
+        //profile
+        Route::group(['prefix' => 'profile'], function(){
+            Route::get('/', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('vender');
+            Route::post('edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('vender');
+            Route::post('edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('vender');
+            Route::post('address/add', 'App\Http\Controllers\Api\site\authentication\profile@add_address')->name('vender');
+            Route::post('address/edit', 'App\Http\Controllers\Api\site\authentication\profile@edit_address')->name('vender');
+        });
 
         Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('vender');
 
@@ -45,14 +54,20 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
 
         Route::get('home', 'App\Http\Controllers\Api\site\vender@home');
 
-        Route::get('products', 'App\Http\Controllers\Api\site\vender@products');
-        Route::get('products/informations', 'App\Http\Controllers\Api\site\vender@products_informations');
-        Route::get('products/money', 'App\Http\Controllers\Api\site\vender@money');
+        //products
+        Route::group(['prefix' => 'products'], function(){
+            Route::get('/', 'App\Http\Controllers\Api\site\vender@products');
+            Route::get('informations', 'App\Http\Controllers\Api\site\vender@products_informations');
+            Route::get('money', 'App\Http\Controllers\Api\site\vender@money');
+        });
 
-        Route::get('product/order', 'App\Http\Controllers\Api\site\vender@product_order');
-        Route::post('product/add', 'App\Http\Controllers\Api\site\vender@product_add');
-        Route::post('product/delete', 'App\Http\Controllers\Api\site\vender@product_delete');
-        Route::post('product/edit', 'App\Http\Controllers\Api\site\vender@product_edit');
+        //product
+        Route::group(['prefix' => 'product'], function(){
+            Route::get('order', 'App\Http\Controllers\Api\site\vender@product_order');
+            Route::post('add', 'App\Http\Controllers\Api\site\vender@product_add');
+            Route::post('delete', 'App\Http\Controllers\Api\site\vender@product_delete');
+            Route::post('edit', 'App\Http\Controllers\Api\site\vender@product_edit');
+        });
 
     });
 });

@@ -34,6 +34,8 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'guest'], function() {
 
     Route::get('filter', 'App\Http\Controllers\Api\site\guest@filter');
     Route::get('search', 'App\Http\Controllers\Api\site\guest@search');
+
+    Route::post('promoCode/check', 'App\Http\Controllers\Api\site\user@check_promoCode');
 });
 
 

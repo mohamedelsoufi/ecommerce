@@ -29,55 +29,74 @@ Route::group(['middleware' => ['changeLang']], function() {
 
     Route::post('login', 'App\Http\Controllers\Api\site\authentication\auth@login')->name('user');
 
-    Route::post('forgetPasswored/sendMail', 'App\Http\Controllers\Api\site\authentication\resetPasswored@sendEmail')->name('user');
-    Route::post('forgetPasswored/checkCode', 'App\Http\Controllers\Api\site\authentication\resetPasswored@checkCode')->name('user');
-    Route::post('forgetPasswored/passwordResetProcess', 'App\Http\Controllers\Api\site\authentication\resetPasswored@passwordResetProcess')->name('user');
+    //forget passwored
+    Route::group(['prefix' => 'forgetPasswored'], function(){
+        Route::post('sendMail', 'App\Http\Controllers\Api\site\authentication\resetPasswored@sendEmail')->name('user');
+        Route::post('checkCode', 'App\Http\Controllers\Api\site\authentication\resetPasswored@checkCode')->name('user');
+        Route::post('passwordResetProcess', 'App\Http\Controllers\Api\site\authentication\resetPasswored@passwordResetProcess')->name('user');
+    });
 
-    Route::post('verification/sendMail', 'App\Http\Controllers\Api\site\authentication\verification@sendEmail')->name('user');
-    Route::post('verification', 'App\Http\Controllers\Api\site\authentication\verification@passwordResetProcess')->name('user');
+    //verification
+    Route::group(['prefix' => 'verification'], function(){
+        Route::post('sendMail', 'App\Http\Controllers\Api\site\authentication\verification@sendEmail')->name('user');
+        Route::post('/', 'App\Http\Controllers\Api\site\authentication\verification@passwordResetProcess')->name('user');
+    });
 
-
+                             // ****************************//
+                            //  should log in (pass token) //
+                            //*************************** *//
     Route::group(['middleware' => ['checkJWTtoken:user']], function() {
-        Route::get('profile', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('user');
-        Route::get('profile/details', 'App\Http\Controllers\Api\site\user@profil_details')->name('user');
-        Route::post('profile/edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('user');
-        Route::post('profile/edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('user');
-        Route::post('profile/address/add', 'App\Http\Controllers\Api\site\authentication\profile@add_address')->name('user');
-        Route::post('profile/address/edit', 'App\Http\Controllers\Api\site\authentication\profile@edit_address')->name('user');
+        //profile 
+        Route::group(['prefix' => 'profile'], function(){
+            Route::get('/', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('user');
+            Route::get('details', 'App\Http\Controllers\Api\site\user@profil_details')->name('user');
+            Route::post('edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('user');
+            Route::post('edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('user');
+            Route::post('address/add', 'App\Http\Controllers\Api\site\authentication\profile@add_address')->name('user');
+            Route::post('address/edit', 'App\Http\Controllers\Api\site\authentication\profile@edit_address')->name('user');
+        });
 
+        //comments
+        Route::group(['prefix' => 'comment'], function(){
+            Route::post('add', 'App\Http\Controllers\Api\site\user@add_comment');
+            Route::post('delete', 'App\Http\Controllers\Api\site\user@delete_comment');
+            Route::post('edit', 'App\Http\Controllers\Api\site\user@edit_comment');
+        });
+        
+        //cart
+        Route::group(['prefix' => 'cart'], function(){
+            Route::get('/', 'App\Http\Controllers\Api\site\user@cart_get');
+            Route::post('add', 'App\Http\Controllers\Api\site\user@cart_add');
+            Route::post('edit', 'App\Http\Controllers\Api\site\user@cart_edit');
+            Route::post('remove', 'App\Http\Controllers\Api\site\user@cart_remove');
+            Route::post('empty', 'App\Http\Controllers\Api\site\user@cart_empty');
+        });
 
-        Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('user');
+        //order
+        Route::group(['prefix' => 'order'], function(){
+            Route::post('address', 'App\Http\Controllers\Api\site\user@order_address');
+            Route::post('make', 'App\Http\Controllers\Api\site\user@make_order');
+            Route::post('tracking', 'App\Http\Controllers\Api\site\user@order_tracking');
+            Route::post('details', 'App\Http\Controllers\Api\site\user@order_details');
+            Route::post('cancel', 'App\Http\Controllers\Api\site\user@cancel_order');
+        });
 
         Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('user');
 
+        Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('user');
+
         Route::get('home', 'App\Http\Controllers\Api\site\user@home');
 
+        //loves
         Route::post('love', 'App\Http\Controllers\Api\site\user@love');
         Route::get('loves', 'App\Http\Controllers\Api\site\user@get_love');
-
-        Route::post('comment/add', 'App\Http\Controllers\Api\site\user@add_comment');
-        Route::post('comment/delete', 'App\Http\Controllers\Api\site\user@delete_comment');
-        Route::post('comment/edit', 'App\Http\Controllers\Api\site\user@edit_comment');
 
         Route::post('rating', 'App\Http\Controllers\Api\site\user@rating');
 
         Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('user');
 
-        Route::get('cart', 'App\Http\Controllers\Api\site\user@cart_get');
-        Route::post('cart/add', 'App\Http\Controllers\Api\site\user@cart_add');
-        Route::post('cart/edit', 'App\Http\Controllers\Api\site\user@cart_edit');
-        Route::post('cart/remove', 'App\Http\Controllers\Api\site\user@cart_remove');
-        Route::post('cart/empty', 'App\Http\Controllers\Api\site\user@cart_empty');
 
-        Route::post('promoCode/check', 'App\Http\Controllers\Api\site\user@check_promoCode');
-
-        Route::post('order/address', 'App\Http\Controllers\Api\site\user@order_address');
-        Route::post('order/make', 'App\Http\Controllers\Api\site\user@make_order');
-        Route::post('order/tracking', 'App\Http\Controllers\Api\site\user@order_tracking');
-        Route::post('order/details', 'App\Http\Controllers\Api\site\user@order_details');
-        Route::post('order/cancel', 'App\Http\Controllers\Api\site\user@cancel_order');
     });
-    Route::post('test', 'App\Http\Controllers\Api\site\user@test');
 });
 
 
