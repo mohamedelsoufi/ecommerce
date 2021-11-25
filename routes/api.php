@@ -44,7 +44,8 @@ Route::group(['middleware' => ['changeLang']], function() {
 
                              // ****************************//
                             //  should log in (pass token) //
-                            //*************************** *//
+                          //*************************** *//
+
     Route::group(['middleware' => ['checkJWTtoken:user']], function() {
         //profile 
         Route::group(['prefix' => 'profile'], function(){
@@ -94,8 +95,6 @@ Route::group(['middleware' => ['changeLang']], function() {
         Route::post('rating', 'App\Http\Controllers\Api\site\user@rating');
 
         Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('user');
-
-
     });
 });
 
