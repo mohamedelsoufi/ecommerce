@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 date_default_timezone_set('Africa/cairo');
 
-
 Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() {
     Route::post('register', 'App\Http\Controllers\Api\site\authentication\registration@venderRegister');
 

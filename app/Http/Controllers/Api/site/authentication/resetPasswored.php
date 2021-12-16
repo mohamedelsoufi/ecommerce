@@ -27,6 +27,7 @@ class resetPasswored extends Controller
         
         // code is important in send mail 
         $code = $this->createCode($request->email, $guard);
+
         Mail::to($request->email)->send(new ResetPasswordMail($code, $request->email));
 
         return $this::success(trans('auth.Reset Email is send successfully, please check your inbox.'), 200);
@@ -41,7 +42,7 @@ class resetPasswored extends Controller
             return $oldCode->code;
         }
 
-        $code = rand(1000000,9999999);
+        $code = rand(1000000, 9999999);
         $this->saveCode($code, $email, $guard);
         return $code;
     }
