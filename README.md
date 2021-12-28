@@ -1,6 +1,6 @@
 
 * **URL**
-    http://ahmedmaher1792001dgashdgywq.xyz/ecommerce/
+    https://ahmedmaher1792001dgashdgywq.xyz/ecommerce/
 
 * **Success Response:**
 
