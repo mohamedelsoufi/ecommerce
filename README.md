@@ -1,6 +1,6 @@
 
 * **URL**
-    http://ahmedmaher1792001dgashdgywq.xyz/Hiring-Application/public/
+    http://ahmedmaher1792001dgashdgywq.xyz/ecommerce/
 
 * **Success Response:**
 
