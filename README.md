@@ -1,6 +1,6 @@
 
 * **URL**
-    http://localhost/ahmedmaher/laravel/projects/ecommerce/api/
+    http://ahmedmaher1792001dgashdgywq.xyz/Hiring-Application/public/
 
 * **Success Response:**
 
