@@ -32,7 +32,7 @@ class productResource extends JsonResource
         $allRatnig = $ratnig->sum('rating');
 
         //get product images
-        if($this->Image->first() != null){
+        if($this->Images->first() != null){
             $images = $this->Image->transform(function ($item, $key) {
                 return url('public/uploads/products/' . $item->Image);
             });

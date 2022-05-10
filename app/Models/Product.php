@@ -50,7 +50,7 @@ class Product extends Model
         return $this->hasMany(Rating::class, 'product_id');
     }
 
-    public function image()
+    public function Images()
     {
         return $this->morphMany(Image::class, 'imageable');
     }
@@ -72,8 +72,8 @@ class Product extends Model
 
     public function getImage()
     {
-        if($this->Image->first() != null){
-            return url('public/uploads/products'). '/'  . $this->Image->first()->Image;
+        if($this->Images->first() != null){
+            return url('public/uploads/products'). '/'  . $this->Images->first()->Image;
         } else {
             return url('public/uploads/products/default.jpg');
         }

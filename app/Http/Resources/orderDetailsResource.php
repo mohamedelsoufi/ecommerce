@@ -32,7 +32,7 @@ class orderDetailsResource extends JsonResource
                 'number_of_sell'    => $this->Product->number_of_sell,
                 'discound'          => $this->Product->discound,
                 'quantity'          => $this->Product->quantity,
-                'image'             => ($this->Product->Image->first() != null) ? $this->Product->Image : array(['image' => 'default.jpg']),
+                'image'             => ($this->product->Images->first() != null) ? $this->product->Images : array(['image' => 'default.jpg']),
                 ],
         ];
     }

@@ -42,9 +42,13 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vendor'], function() 
             Route::post('changePassword', 'App\Http\Controllers\Api\site\vendors\authentication\profile@changePasswordProcess');
         });
 
-        Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('vender');
-
-        Route::get('home', 'App\Http\Controllers\Api\site\vender@home');
+        //product
+        Route::group(['prefix' => 'products'], function(){
+            Route::get('/', 'App\Http\Controllers\Api\site\vendors\products@index');
+            Route::post('create', 'App\Http\Controllers\Api\site\vendors\products@create');
+            Route::post('update', 'App\Http\Controllers\Api\site\vendors\products@update');
+            Route::post('delete', 'App\Http\Controllers\Api\site\vendors\products@delete');
+        });
 
         //products
         Route::group(['prefix' => 'products'], function(){
@@ -52,6 +56,10 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vendor'], function() 
             Route::get('informations', 'App\Http\Controllers\Api\site\vender@products_informations');
             Route::get('money', 'App\Http\Controllers\Api\site\vender@money');
         });
+
+        Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('vender');
+
+        Route::get('home', 'App\Http\Controllers\Api\site\vender@home');
 
         //product
         Route::group(['prefix' => 'product'], function(){

@@ -18,7 +18,7 @@ class productsDetailsResource extends JsonResource
     public function toArray($request)
     {
         //get product images
-        if($this->Image->first() != null){
+        if($this->Images->first() != null){
             $images = $this->Image->transform(function ($item, $key) {
                 return url('public/uploads/products/' . $item->Image);
             });
