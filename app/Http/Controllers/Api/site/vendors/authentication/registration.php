@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\site\vendors\authentication;
 
 use App\Http\Controllers\Controller;
-use App\Models\Vender;
+use App\Models\Vendor;
 use App\Traits\response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +16,7 @@ class registration extends Controller
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'fullName'         => 'required|string',
-            'email'            => 'required|string|email|max:255|unique:venders',
+            'email'            => 'required|string|email|max:255|unique:vendors',
             'password'         => 'required|string|min:6',
             'confirm_password' => 'required|string|same:password',
             'phone'            => 'required|min:6',
@@ -41,7 +41,7 @@ class registration extends Controller
     }
 
     public function insert_vendor_in_dataBase($request){
-        $vendors = Vender::create([
+        $vendors = Vendor::create([
             'fullName'          => $request->get('fullName'),
             'email'             => $request->get('email'),
             'password'          => Hash::make($request->get('password')),

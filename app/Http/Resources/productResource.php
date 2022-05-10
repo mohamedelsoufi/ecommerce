@@ -63,8 +63,8 @@ class productResource extends JsonResource
                                         'name'  => Sub_category::where('locale', Config::get('app.locale'))->where('parent', $this->Sub_category->id)->first()->name,
                                     ],
             'vendor'            => [
-                                        'id'        => $this->Vender->id,       //relation
-                                        'fullName'  => $this->Vender->fullName, //relation
+                                        'id'        => $this->vendor->id,       //relation
+                                        'fullName'  => $this->vendor->fullName, //relation
                                 ],
         ];
     }

@@ -19,7 +19,7 @@ class Products extends Migration
             $table->string('describe')->nullable();
             $table->integer('price')->nullable();
             $table->unsignedBigInteger('sub_categoriesId')->nullable();
-            $table->unsignedBigInteger('vender_id')->nullable();
+            $table->unsignedBigInteger('vendor_id')->nullable();
             $table->tinyInteger('status')->default(1)->comment('0->not avtive, 1->active, -1 -> delete');
             $table->integer('number_of_sell')->default(0)->nullable();
             $table->integer('discound')->default(0);
@@ -32,7 +32,7 @@ class Products extends Migration
             $table->timestamps();
 
             $table->foreign('sub_categoriesId')->references('id')->on('sub_categories')->onDelete('cascade');
-            $table->foreign('vender_id')->references('id')->on('venders')->onDelete('cascade');
+            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');
         });
     }
     /**

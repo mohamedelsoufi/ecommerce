@@ -18,17 +18,17 @@ use Illuminate\Support\Facades\Route;
 date_default_timezone_set('Africa/cairo');
 
 Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() {
-    Route::post('register', 'App\Http\Controllers\Api\site\authentication\registration@venderRegister');
+    Route::post('register', 'App\Http\Controllers\Api\site\vendors\authentication\registration@create');
 
     Route::post('login', 'App\Http\Controllers\Api\site\vendors\authentication\login@login');
 
     Route::group(['prefix' => 'resetPasswored'], function(){
         Route::post('sendCode', 'App\Http\Controllers\Api\site\vendors\authentication\resetPasswored@sendCode');
         Route::post('checkCode', 'App\Http\Controllers\Api\site\vendors\authentication\resetPasswored@checkCode');
-        Route::post('passwordResetProcess', 'App\Http\Controllers\Api\site\vendors\authentication\resetPasswored@passwordResetProcess')->middleware('checkJWTtoken:vender');
+        Route::post('passwordResetProcess', 'App\Http\Controllers\Api\site\vendors\authentication\resetPasswored@passwordResetProcess')->middleware('checkJWTtoken:vendor');
     });   
 
-    Route::group(['middleware' => ['checkJWTtoken:vender']], function() {
+    Route::group(['middleware' => ['checkJWTtoken:vendor']], function() {
         Route::post('logout', 'App\Http\Controllers\Api\site\vendors\authentication\login@logout')->name('vender');
 
         Route::group(['prefix' => 'verification'], function(){

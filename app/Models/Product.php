@@ -17,7 +17,7 @@ class Product extends Model
         'id'                    => 'integer',
         'price'                 => 'integer',
         'sub_categoriesId'      => 'integer',
-        'vender_id'             => 'integer',
+        'vendor_id'             => 'integer',
         'number_of_sell'        => 'integer',
         'discound'              => 'integer',
         'quantity'              => 'integer',
@@ -30,8 +30,8 @@ class Product extends Model
     public function Sub_category(){
         return $this->belongsTo(Sub_category::class,'sub_categoriesId');
     }
-    public function Vender(){
-        return $this->belongsTo(Vender::class,'vender_id');
+    public function Vendor(){
+        return $this->belongsTo(Vendor::class,'vendor_id');
     }
 
     public function Comments(){
@@ -54,7 +54,6 @@ class Product extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
-    ////
     /////
     public function getGender()
     {

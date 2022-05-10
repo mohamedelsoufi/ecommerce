@@ -10,7 +10,7 @@
           </ul>
         </li>
 
-        <li class=" nav-item"><a href="{{url('/admin/venders')}}"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">venders</span><span class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Vender::count()}}</span></a>
+        <li class=" nav-item"><a href="{{url('/admin/venders')}}"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">venders</span><span class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Vendor::count()}}</span></a>
           <ul class="menu-content">
             <li class="@if ($page == 'vendersShow') active @endif">
               <a class="menu-item" href="{{url('/admin/venders')}}" data-i18n="nav.dash.ecommerce">all venders</a>

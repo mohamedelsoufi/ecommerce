@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\site\vendors\authentication;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\venderResource;
+use App\Http\Resources\vendorResource;
 use App\Traits\response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class verification extends Controller
 {
     use response;
     public function send_code_to_vendor_from_token(){
-        if (! $vendor = auth('vender')->user()) {
+        if (! $vendor = auth('vendor')->user()) {
             return response::faild(trans('auth.vendor not found'), 404, 'E04');
         }
 
@@ -35,19 +35,21 @@ class verification extends Controller
     }
 
     public function createCode($email){
-        $oldCode = DB::table('venders_verification')->where('email', $email)->first();
+        $oldCode = DB::table('vendors_verification')->where('email', $email)->first();
 
         //if vendor already has code
         if ($oldCode)
             return $oldCode->code;
 
-        $code = rand(1000,9999);
+        // $code = rand(1000,9999);
+        $code = "1234";
+
         $this->saveCode($code, $email);
         return $code;
     }
 
     public function saveCode($code, $email){
-        DB::table('venders_verification')->insert([
+        DB::table('vendors_verification')->insert([
             'email'         => $email,
             'code'          => $code,
             'created_at'    => Carbon::now()
@@ -55,7 +57,7 @@ class verification extends Controller
     }
 
     public function validateEmail($email){
-        return !!DB::table('venders')->where('email', $email)->first();
+        return !!DB::table('vendors')->where('email', $email)->first();
     }
     //////////////////////// verification ////////////
 
@@ -76,21 +78,21 @@ class verification extends Controller
     }
   
     private function verificationRow($request){
-        if (! $vendor = auth('vender')->user()) {
+        if (! $vendor = auth('vendor')->user()) {
             return response::faild(trans('auth.vendor not found'), 404, 'E04');
         }
-        return DB::table('venders_verification')->where([
+        return DB::table('vendors_verification')->where([
             'email'  => $vendor->email,
             'code'   => $request->code
         ]);
     }
 
     private function verification($request) {
-        if (! $vendor = auth('vender')->user()) {
+        if (! $vendor = auth('vendor')->user()) {
             return response::faild(trans('auth.vendor not found'), 404, 'E04');
         }
         // update vendors
-        DB::table('venders')
+        DB::table('vendors')
         ->where('email', $vendor->email)
         ->update(['verified' => 1]);
 
@@ -108,7 +110,7 @@ class verification extends Controller
         return response()->json([
             'successful'=> true,
             'message'   => 'success',
-            'vendor'    => new venderResource($vendor),
+            'vendor'    => new vendorResource($vendor),
             'token'     => $token,
         ], 200);
     } 

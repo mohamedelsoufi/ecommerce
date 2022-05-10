@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\site\vendors\authentication;
 
 use App\Http\Controllers\Controller;
-use App\Models\Vender;
+use App\Models\Vendor;
 use App\Traits\response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -36,7 +36,7 @@ class resetPasswored extends Controller
     }
 
     public function createCode($email){  
-        $oldCode = DB::table('vender_password_resets')->where('email', $email)->first();
+        $oldCode = DB::table('vendor_password_resets')->where('email', $email)->first();
 
         //if vendor already has code
         if ($oldCode)
@@ -49,7 +49,7 @@ class resetPasswored extends Controller
     }
 
     public function saveCode($code, $email){  
-        DB::table('vender_password_resets')->insert([
+        DB::table('vendor_password_resets')->insert([
             'email'      => $email,
             'code'          => $code,
             'created_at'    => Carbon::now()
@@ -57,7 +57,7 @@ class resetPasswored extends Controller
     }
 
     public function validateEmail($email){
-        return !!DB::table('venders')->where('email', $email)->first();
+        return !!DB::table('vendors')->where('email', $email)->first();
     }
     
     ///////////////check if code is valid ////////////
@@ -72,7 +72,7 @@ class resetPasswored extends Controller
         }
 
         if($this->updatePasswordRow($request->code, $request->email)->count() > 0){
-            $vendor = Vender::where('email', $request->email)->first();
+            $vendor = Vendor::where('email', $request->email)->first();
 
             if (! $token = JWTAuth::fromUser($vendor)) { //login
                 return response::faild(trans('auth.passwored or email is wrong'), 404, 'E04');
@@ -95,7 +95,7 @@ class resetPasswored extends Controller
         if($validator->fails())
             return response::faild($validator->errors(), 403, 'E03');
 
-        if (! $vendor = auth('vender')->user())
+        if (! $vendor = auth('vendor')->user())
             return response::faild(trans('auth.vendor not found'), 404, 'E04');
 
         if($this->updatePasswordRow($request->code, $vendor->email)->count() > 0){
@@ -106,7 +106,7 @@ class resetPasswored extends Controller
     }
 
     private function updatePasswordRow($code, $email){
-        return DB::table('vender_password_resets')->where([
+        return DB::table('vendor_password_resets')->where([
             'email'  => $email,
             'code'   => $code
         ]);
@@ -114,7 +114,7 @@ class resetPasswored extends Controller
 
     private function resetPassword($request, $vendor) {
         // update password
-        DB::table('venders')
+        DB::table('vendors')
         ->where('email', $vendor->email)
         ->update(['password' => bcrypt($request->password)]);
 

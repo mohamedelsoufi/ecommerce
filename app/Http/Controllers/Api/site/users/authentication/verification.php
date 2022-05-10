@@ -41,7 +41,8 @@ class verification extends Controller
         if ($oldCode)
             return $oldCode->code;
 
-        $code = rand(1000,9999);
+        // $code = rand(1000,9999);
+        $code = "1234";
         $this->saveCode($code, $email);
         return $code;
     }

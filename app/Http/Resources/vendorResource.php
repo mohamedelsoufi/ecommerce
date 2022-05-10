@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class venderResource extends JsonResource
+class vendorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -31,7 +31,7 @@ class venderResource extends JsonResource
             'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
             'gender'            => $gender,
             'birth'             => $this->birth,
-            'iamge'             => ($this->image != null)? url('public/uploads/venders/' . $this->image->image) : url('public/uploads/venders/default.jpg'),
+            'iamge'             => ($this->image != null)? url('public/uploads/vendors/' . $this->image->image) : url('public/uploads/vendors/default.jpg'),
             'address'           => new addressResource($this->address),
         ];
     }

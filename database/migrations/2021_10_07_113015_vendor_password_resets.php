@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class VendersVerification extends Migration
+class VendorPasswordResets extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class VendersVerification extends Migration
      */
     public function up()
     {
-        Schema::create('venders_verification', function (Blueprint $table) {
+        Schema::create('vendor_password_resets', function (Blueprint $table) {
             $table->string('email')->index();
             $table->string('code');
             $table->timestamp('created_at')->nullable();
@@ -27,6 +27,6 @@ class VendersVerification extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('venders_verification');
+        Schema::dropIfExists('vendor_password_resets');
     }
 }

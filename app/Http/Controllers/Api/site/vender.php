@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\orderDetailsResource;
-use App\Http\Resources\productResource;
 use App\Http\Resources\productsDetailsResource;
 use App\Models\Image;
 use App\Models\Orderdetail;
@@ -21,40 +20,40 @@ class vender extends Controller
 
     public function home(){
         //get user
-        if (! $vender = auth('vender')->user()) {
-            return response::faild(trans('vender.vendor not found'), 404, 'E04');
+        if (! $vendor = auth('vendor')->user()) {
+            return response::faild(trans('vendor.vendor not found'), 404, 'E04');
         }
 
         //products count
-        $products_count = Product::notDelete()->where('vender_id', $vender->id)->count();
+        $products_count = Product::notDelete()->where('vendor_id', $vendor->id)->count();
 
         //totalMony (that finished or returned)
         $orderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 2)->orWhere('status', 3);
-        })->whereHas('Product', function($q) use($vender){
-            $q->notDelete()->where('vender_id', $vender->id);
+        })->whereHas('Product', function($q) use($vendor){
+            $q->notDelete()->where('vendor_id', $vendor->id);
         })->get();
 
         $totalMony = $orderdetails->sum(function ($product) {
             return $product['product_total_price'] * $product['quantity'];
         });
 
-        //finishedMony for vender that finished
+        //finishedMony for vendor that finished
         $finishedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 2);
-        })->whereHas('Product', function($q) use($vender){
-            $q->notDelete()->where('vender_id', $vender->id);
+        })->whereHas('Product', function($q) use($vendor){
+            $q->notDelete()->where('vendor_id', $vendor->id);
         })->get();
 
         $finishedMony = $finishedOrderdetails->sum(function ($product) {
             return $product['product_total_price'] * $product['quantity'];
         });
 
-        //returnedOrderdetails for vender that returned
+        //returnedOrderdetails for vendor that returned
         $returnedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 3);
-        })->whereHas('Product', function($q) use($vender){
-            $q->notDelete()->where('vender_id', $vender->id);
+        })->whereHas('Product', function($q) use($vendor){
+            $q->notDelete()->where('vendor_id', $vendor->id);
         })->get();
         
         $returnedMony = $returnedOrderdetails->sum(function ($product) {
@@ -74,29 +73,29 @@ class vender extends Controller
 
     public function products(){
         //get user
-        if (! $vender = auth('vender')->user()) {
-            return response::faild(trans('vender.vendor not found'), 404, 'E04');
+        if (! $vendor = auth('vendor')->user()) {
+            return response::faild(trans('vendor.vendor not found'), 404, 'E04');
         }
 
         //products
-        $products = Product::notDelete()->where('vender_id', $vender->id)->get();
+        $products = Product::notDelete()->where('vendor_id', $vendor->id)->get();
 
         //number_of_sell (that finished or returned)
         $orderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 2)->orWhere('status', 3);
-        })->whereHas('Product', function($q) use($vender){
-            $q->notDelete()->where('vender_id', $vender->id);
+        })->whereHas('Product', function($q) use($vendor){
+            $q->notDelete()->where('vendor_id', $vendor->id);
         })->get();
 
         $number_of_sell = $orderdetails->sum(function ($product) {
             return $product['quantity'];
         });
 
-        //number_of_sell for vender that returned
+        //number_of_sell for vendor that returned
         $returnedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 3);
-        })->whereHas('Product', function($q) use($vender){
-            $q->notDelete()->where('vender_id', $vender->id);
+        })->whereHas('Product', function($q) use($vendor){
+            $q->notDelete()->where('vendor_id', $vendor->id);
         })->get();
 
         $number_of_returned_sell= $returnedOrderdetails->sum(function ($product) {
@@ -116,21 +115,21 @@ class vender extends Controller
 
     public function products_informations(){
         //get user
-        if (! $vender = auth('vender')->user()) {
-            return response::faild(trans('vender.vendor not found'), 404, 'E04');
+        if (! $vendor = auth('vendor')->user()) {
+            return response::faild(trans('vendor.vendor not found'), 404, 'E04');
         }
 
         //products count
-        $products_count = Product::notDelete()->where('vender_id', $vender->id)->count();
+        $products_count = Product::notDelete()->where('vendor_id', $vendor->id)->count();
 
         //products
-        $products       = Product::notDelete()->where('vender_id', $vender->id)->get();
+        $products       = Product::notDelete()->where('vendor_id', $vendor->id)->get();
 
         //totalMony (that finished or returned)
         $orderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 2)->orWhere('status', 3);
-        })->whereHas('Product', function($q) use($vender){
-            $q->notDelete()->where('vender_id',  $vender->id);
+        })->whereHas('Product', function($q) use($vendor){
+            $q->notDelete()->where('vendor_id',  $vendor->id);
         })->get();
 
         $totalMony = $orderdetails->sum(function ($product) {
@@ -158,13 +157,13 @@ class vender extends Controller
         }
 
         //get user
-        if (! $vender = auth('vender')->user()) {
-            return response::faild(trans('vender.vendor not found'), 404, 'E04');
+        if (! $vendor = auth('vendor')->user()) {
+            return response::faild(trans('vendor.vendor not found'), 404, 'E04');
         }
 
         //get products orders
-        $Orderdetail = Orderdetail::whereHas('Product', function($q) use($vender, $request){
-            $q->notDelete()->where('id', $request->product_id)->where('vender_id', $vender->id);
+        $Orderdetail = Orderdetail::whereHas('Product', function($q) use($vendor, $request){
+            $q->notDelete()->where('id', $request->product_id)->where('vendor_id', $vendor->id);
         })->get();
 
         return $this->success('success', 200, 'orders', orderDetailsResource::collection($Orderdetail));
@@ -172,26 +171,26 @@ class vender extends Controller
 
     public function money(){
         //get user
-        if (! $vender = auth('vender')->user()) {
-            return response::faild(trans('vender.vendor not found'), 404, 'E04');
+        if (! $vendor = auth('vendor')->user()) {
+            return response::faild(trans('vendor.vendor not found'), 404, 'E04');
         }
 
         //totalMony (that finished or returned)
         $orderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 2)->orWhere('status', 3);
-        })->whereHas('Product', function($q) use($vender){
-            $q->notDelete()->where('vender_id', $vender->id);
+        })->whereHas('Product', function($q) use($vendor){
+            $q->notDelete()->where('vendor_id', $vendor->id);
         })->get();
 
         $totalMony = $orderdetails->sum(function ($product) {
             return $product['product_total_price'] * $product['quantity'];
         });
 
-        //returnedOrderdetails for vender that returned
+        //returnedOrderdetails for vendor that returned
         $returnedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 3);
-        })->whereHas('Product', function($q) use($vender){
-            $q->notDelete()->where('vender_id', $vender->id);
+        })->whereHas('Product', function($q) use($vendor){
+            $q->notDelete()->where('vendor_id', $vendor->id);
         })->get();
         
         $returnedMony = $returnedOrderdetails->sum(function ($product) {
@@ -231,16 +230,16 @@ class vender extends Controller
             return $this->faild($validator->errors(), 403, 'E03');
         }
 
-        //get vender
-        if (! $vender = auth('vender')->user()) {
-            return response::faild(trans('vender.vendor not found'), 404, 'E04');
+        //get vendor
+        if (! $vendor = auth('vendor')->user()) {
+            return response::faild(trans('vendor.vendor not found'), 404, 'E04');
         }
 
         //check if subcategory is parent subcategory parent = 0
         $sub_category = Sub_category::where('parent', $request->get('sub_categoriesId'))->first();
 
         if($sub_category == null){
-            return $this->faild(trans('vender.this sub category not valide'), 400);
+            return $this->faild(trans('vendor.this sub category not valide'), 400);
         }
 
         $product = Product::create([
@@ -251,7 +250,7 @@ class vender extends Controller
                 'gender'            => $request->get('gender'),
                 'quantity'          => $request->get('quantity'),
                 'discound'          => $request->get('discound'),
-                'vender_id'         => $vender->id,
+                'vendor_id'         => $vendor->id,
                 'sizes'             => $request->get('sizes'),
                 'colors'            => $request->get('colors'),
         ]);
@@ -269,7 +268,7 @@ class vender extends Controller
         }
         Image::insert($images);
 
-        return $this->success(trans('vender.add product success'), 200);
+        return $this->success(trans('vendor.add product success'), 200);
     }
 
     public function product_delete(Request $request){
@@ -282,26 +281,26 @@ class vender extends Controller
             return $this->faild($validator->errors(), 403, 'E03');
         }
 
-        //get vender
-        if (! $vender = auth('vender')->user()) {
-            return response::faild(trans('vender.vendor not found'), 404, 'E04');
+        //get vendor
+        if (! $vendor = auth('vendor')->user()) {
+            return response::faild(trans('vendor.vendor not found'), 404, 'E04');
         }
 
         //select product 
-        $product = Product::where('vender_id', $vender->id)->where('id', $request->get('product_id'))->first();
+        $product = Product::where('vendor_id', $vendor->id)->where('id', $request->get('product_id'))->first();
 
         if($product == null){
-            return $this->faild(trans('vender.this product not found'), 404, 'E04');
+            return $this->faild(trans('vendor.this product not found'), 404, 'E04');
         }
 
         //delete product
         $product->status = -1;
 
         if($product->save()){
-            return $this->success(trans('vender.delete product success'), 200);
+            return $this->success(trans('vendor.delete product success'), 200);
         }
 
-        return $this->faild(trans('vender.delete product faild'), 400);
+        return $this->faild(trans('vendor.delete product faild'), 400);
     }
 
     public function product_edit(Request $request){
@@ -325,16 +324,16 @@ class vender extends Controller
             return $this->faild($validator->errors(), 403, 'E03');
         }
 
-        //get vender
-        if (! $vender = auth('vender')->user()) {
-            return response::faild(trans('vender.vendor not found'), 404, 'E04');
+        //get vendor
+        if (! $vendor = auth('vendor')->user()) {
+            return response::faild(trans('vendor.vendor not found'), 404, 'E04');
         }
 
         //sellect product 
-        $product = Product::where('vender_id', $vender->id)->where('id', $request->get('product_id'))->first();
+        $product = Product::where('vendor_id', $vendor->id)->where('id', $request->get('product_id'))->first();
 
         if($product == null){
-            return $this->faild(trans('vender.this product not found'), 404, 'E04');
+            return $this->faild(trans('vendor.this product not found'), 404, 'E04');
         }
 
         //check if subcategory is parent subcategory parent = 0
@@ -342,7 +341,7 @@ class vender extends Controller
             $sub_category = Sub_category::where('parent', $request->get('sub_categoriesId'))->first();
 
             if($sub_category == null){
-                return $this->faild(trans('vender.this sub category not valide'), 400);
+                return $this->faild(trans('vendor.this sub category not valide'), 400);
             }
         }
 
@@ -353,7 +352,7 @@ class vender extends Controller
         
         $product->update($input);
 
-        //if vender want to change images
+        //if vendor want to change images
 
         // update images
         if($request->file('images') != null){
@@ -381,6 +380,6 @@ class vender extends Controller
             Image::insert($images);
         }
 
-        return $this->success(trans('vender.edit product success'), 200);
+        return $this->success(trans('vendor.edit product success'), 200);
     }
 }

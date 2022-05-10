@@ -4,34 +4,34 @@ namespace App\Http\Controllers\Api\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Models\Vender;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 
-class venders extends Controller
+class vendors extends Controller
 {
-    public function venderShow(){
-        $vensers = Vender::paginate();
-        return view('admin.venders.vendersShow')->with('vensers', $vensers);
+    public function vendorShow(){
+        $vensers = Vendor::paginate();
+        return view('admin.vendors.vendorsShow')->with('vensers', $vensers);
     }
 
     public function block($id){
-        //sellect vender
-        $vender = Vender::find($id);
+        //sellect vendor
+        $vendor = Vendor::find($id);
 
-        //if there are no vender with this id
-        if($vender == null){
-            return redirect()->back()->with('error', 'this vender not found');
+        //if there are no vendor with this id
+        if($vendor == null){
+            return redirect()->back()->with('error', 'this vendor not found');
         }
 
-        if($vender->status == 1){
-            //block vender
-            $vender->status = 0;
+        if($vendor->status == 1){
+            //block vendor
+            $vendor->status = 0;
         } else {
-            //un block vender
-            $vender->status = 1;
+            //un block vendor
+            $vendor->status = 1;
         }
 
-        if($vender->save()){
+        if($vendor->save()){
             return redirect()->back()->with('success', 'success');
         }
         return redirect()->back()->with('error', 'faild');

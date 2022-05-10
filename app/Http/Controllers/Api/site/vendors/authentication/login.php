@@ -27,14 +27,14 @@ class login extends Controller
             return $check_data;
 
         //get user date
-        if (! $vendor = auth('vender')->user()) 
+        if (! $vendor = auth('vendor')->user()) 
             return $this->faild(trans('auth.vendor not found'), 404, 'E04');
 
         return $this->vendor_response($vendor, $check_data->token);
     }
 
     public function logout(){
-        Auth::guard('vender')->logout();
+        Auth::guard('vendor')->logout();
 
         return response::success('logout success', 200);
     }
@@ -43,7 +43,7 @@ class login extends Controller
         $credentials = ['email' => $request->email, 'password' => $request->password];
 
         try {
-            if (! $token = auth('vender')->attempt($credentials)) {
+            if (! $token = auth('vendor')->attempt($credentials)) {
                 return $this::faild(trans('auth.passwored or email is wrong'), 400, 'E04');
             }
         } catch (JWTException $e) {

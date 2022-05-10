@@ -7,10 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Vender extends Authenticatable implements JWTSubject
+class Vendor extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
-    protected $table = 'venders';
+    protected $table = 'vendors';
 
     protected $guarded = [];
 
@@ -28,7 +28,7 @@ class Vender extends Authenticatable implements JWTSubject
 
     //relations
     public function Products(){
-        return $this->hasMany(Product::class, 'vender_id');
+        return $this->hasMany(Product::class, 'vendor_id');
     }
 
     public function getJWTIdentifier()
@@ -69,7 +69,7 @@ class Vender extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-            'type'       => 'vender'
+            'type'       => 'vendor'
         ];
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Venders extends Migration
+class Vendors extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Venders extends Migration
      */
     public function up()
     {
-        Schema::create('venders', function (Blueprint $table) {
+        Schema::create('vendors', function (Blueprint $table) {
             $table->id();
             $table->string('fullName')->nullable();
             $table->string('password')->nullable();
@@ -35,6 +35,6 @@ class Venders extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('venders');
+        Schema::dropIfExists('vendors');
     }
 }
