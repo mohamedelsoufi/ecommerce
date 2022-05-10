@@ -38,10 +38,8 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vendor'], function() 
 
         Route::group(['prefix' => 'profile'], function(){
             Route::get('/', 'App\Http\Controllers\Api\site\vendors\authentication\profile@index');
-            Route::post('update', 'App\Http\Controllers\Api\site\vendors\authentication\profile@update');
+            Route::post('update', 'App\Http\Controlles\Api\site\vendors\authentication\profile@update');
             Route::post('changePassword', 'App\Http\Controllers\Api\site\vendors\authentication\profile@changePasswordProcess');
-            Route::post('address/add', 'App\Http\Controllers\Api\site\vendors\authentication\profile@add_address');
-            Route::post('address/edit', 'App\Http\Controllers\Api\site\vendors\authentication\profile@edit_address');
         });
 
         Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('vender');

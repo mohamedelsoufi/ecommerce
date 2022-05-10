@@ -45,8 +45,13 @@ Route::group(['middleware' => ['changeLang']], function() {
             Route::get('/', 'App\Http\Controllers\Api\site\users\authentication\profile@index');
             Route::post('update', 'App\Http\Controllers\Api\site\users\authentication\profile@update');
             Route::post('changePassword', 'App\Http\Controllers\Api\site\users\authentication\profile@changePasswordProcess');
-            Route::post('address/add', 'App\Http\Controllers\Api\site\users\authentication\profile@add_address');
-            Route::post('address/edit', 'App\Http\Controllers\Api\site\users\authentication\profile@edit_address');
+        });
+
+        Route::group(['prefix' => 'addresses'], function(){
+            Route::get('/', 'App\Http\Controllers\Api\site\users\addresses@index');
+            Route::post('create', 'App\Http\Controllers\Api\site\users\addresses@create');
+            Route::post('update', 'App\Http\Controllers\Api\site\users\addresses@update');
+            Route::post('delete', 'App\Http\Controllers\Api\site\users\addresses@delete');
         });
 
         //comments

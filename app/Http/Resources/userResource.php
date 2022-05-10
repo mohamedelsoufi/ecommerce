@@ -32,7 +32,6 @@ class userResource extends JsonResource
             'gender'            => $gender,
             'birth'             => $this->birth,
             'iamge'             => ($this->image != null)? url('public/uploads/users/' . $this->image->src) : url('public/uploads/users/default.jpg'),
-            'address'           => new addressResource($this->address),
         ];
     }
 }
