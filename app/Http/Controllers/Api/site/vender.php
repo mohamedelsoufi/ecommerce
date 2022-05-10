@@ -22,7 +22,7 @@ class vender extends Controller
     public function home(){
         //get user
         if (! $vender = auth('vender')->user()) {
-            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+            return response::faild(trans('vender.vendor not found'), 404, 'E04');
         }
 
         //products count
@@ -75,7 +75,7 @@ class vender extends Controller
     public function products(){
         //get user
         if (! $vender = auth('vender')->user()) {
-            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+            return response::faild(trans('vender.vendor not found'), 404, 'E04');
         }
 
         //products
@@ -117,7 +117,7 @@ class vender extends Controller
     public function products_informations(){
         //get user
         if (! $vender = auth('vender')->user()) {
-            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+            return response::faild(trans('vender.vendor not found'), 404, 'E04');
         }
 
         //products count
@@ -154,12 +154,12 @@ class vender extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if (! $vender = auth('vender')->user()) {
-            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+            return response::faild(trans('vender.vendor not found'), 404, 'E04');
         }
 
         //get products orders
@@ -173,7 +173,7 @@ class vender extends Controller
     public function money(){
         //get user
         if (! $vender = auth('vender')->user()) {
-            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+            return response::faild(trans('vender.vendor not found'), 404, 'E04');
         }
 
         //totalMony (that finished or returned)
@@ -228,19 +228,19 @@ class vender extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get vender
         if (! $vender = auth('vender')->user()) {
-            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+            return response::faild(trans('vender.vendor not found'), 404, 'E04');
         }
 
         //check if subcategory is parent subcategory parent = 0
         $sub_category = Sub_category::where('parent', $request->get('sub_categoriesId'))->first();
 
         if($sub_category == null){
-            return $this->falid(trans('vender.this sub category not valide'), 400);
+            return $this->faild(trans('vender.this sub category not valide'), 400);
         }
 
         $product = Product::create([
@@ -279,19 +279,19 @@ class vender extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get vender
         if (! $vender = auth('vender')->user()) {
-            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+            return response::faild(trans('vender.vendor not found'), 404, 'E04');
         }
 
         //select product 
         $product = Product::where('vender_id', $vender->id)->where('id', $request->get('product_id'))->first();
 
         if($product == null){
-            return $this->falid(trans('vender.this product not found'), 404, 'E04');
+            return $this->faild(trans('vender.this product not found'), 404, 'E04');
         }
 
         //delete product
@@ -301,7 +301,7 @@ class vender extends Controller
             return $this->success(trans('vender.delete product success'), 200);
         }
 
-        return $this->falid(trans('vender.delete product faild'), 400);
+        return $this->faild(trans('vender.delete product faild'), 400);
     }
 
     public function product_edit(Request $request){
@@ -322,19 +322,19 @@ class vender extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get vender
         if (! $vender = auth('vender')->user()) {
-            return response::falid(trans('vender.vendor not found'), 404, 'E04');
+            return response::faild(trans('vender.vendor not found'), 404, 'E04');
         }
 
         //sellect product 
         $product = Product::where('vender_id', $vender->id)->where('id', $request->get('product_id'))->first();
 
         if($product == null){
-            return $this->falid(trans('vender.this product not found'), 404, 'E04');
+            return $this->faild(trans('vender.this product not found'), 404, 'E04');
         }
 
         //check if subcategory is parent subcategory parent = 0
@@ -342,7 +342,7 @@ class vender extends Controller
             $sub_category = Sub_category::where('parent', $request->get('sub_categoriesId'))->first();
 
             if($sub_category == null){
-                return $this->falid(trans('vender.this sub category not valide'), 400);
+                return $this->faild(trans('vender.this sub category not valide'), 400);
             }
         }
 

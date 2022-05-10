@@ -32,16 +32,32 @@ class checkJWTtoken extends Controller
             $payload = JWTAuth::getPayload($token)->toArray();
             
             if ($payload['type'] != $guard) {
-                return $this->falid(trans('auth.Not authorized'), 401, 'E01');
+                return response()->json([
+                    'successful' => false,
+                    'status'     => 'E01',
+                    'message' => trans('auth.Not authorized'),
+                ], 401);
             }
 
         } catch (Exception $e) {
             if ($e instanceof TokenInvalidException) {
-                return $this->falid(trans('auth.Token is Invalid'),401, 'E01');
+                return response()->json([
+                    'successful' => false,
+                    'status'     => 'E01',
+                    'message' => trans('auth.Token is Invalid'),
+                ], 401);
             } else if ($e instanceof TokenExpiredException) {
-                return $this->falid(trans('auth.Token is Expired'),401, 'E01');
+                return response()->json([
+                    'successful' => false,
+                    'status'     => 'E01',
+                    'message' => trans('auth.Token is Expired'),
+                ], 401);
             } else {
-                return $this->falid(trans('auth.Authorization Token not found'),404, 'E01');
+                return response()->json([
+                    'successful' => false,
+                    'status'     => 'E04',
+                    'message' => trans('auth.Authorization Token not found'),
+                ], 404);
             }
         }
 

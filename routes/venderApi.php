@@ -20,22 +20,22 @@ date_default_timezone_set('Africa/cairo');
 Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() {
     Route::post('register', 'App\Http\Controllers\Api\site\authentication\registration@venderRegister');
 
-    Route::post('login', 'App\Http\Controllers\Api\site\authentication\auth@login')->name('vender');
+    Route::post('login', 'App\Http\Controllers\Api\site\vendors\authentication\login@login');
 
-    //forget passwored
-    Route::group(['prefix' => 'forgetPasswored'], function(){
-        Route::post('sendMail', 'App\Http\Controllers\Api\site\authentication\resetPasswored@sendEmail')->name('vender');
-        Route::post('checkCode', 'App\Http\Controllers\Api\site\authentication\resetPasswored@checkCode')->name('vender');
-        Route::post('passwordResetProcess', 'App\Http\Controllers\Api\site\authentication\resetPasswored@passwordResetProcess')->name('vender');
-    });
-
-    //verification
-    Route::group(['prefix' => 'verification'], function(){
-        Route::post('sendMail', 'App\Http\Controllers\Api\site\authentication\verification@sendEmail')->name('vender');
-        Route::post('/', 'App\Http\Controllers\Api\site\authentication\verification@passwordResetProcess')->name('vender');
-    });
+    Route::group(['prefix' => 'resetPasswored'], function(){
+        Route::post('sendCode', 'App\Http\Controllers\Api\site\vendors\authentication\resetPasswored@sendCode');
+        Route::post('checkCode', 'App\Http\Controllers\Api\site\vendors\authentication\resetPasswored@checkCode');
+        Route::post('passwordResetProcess', 'App\Http\Controllers\Api\site\vendors\authentication\resetPasswored@passwordResetProcess')->middleware('checkJWTtoken:vender');
+    });   
 
     Route::group(['middleware' => ['checkJWTtoken:vender']], function() {
+        Route::post('logout', 'App\Http\Controllers\Api\site\vendors\authentication\login@logout')->name('vender');
+
+        Route::group(['prefix' => 'verification'], function(){
+            Route::post('sendCode', 'App\Http\Controllers\Api\site\vendors\authentication\verification@send_code_to_vendor_from_token');
+            Route::post('/', 'App\Http\Controllers\Api\site\vendors\authentication\verification@verificationProcess');
+        });
+
         //profile
         Route::group(['prefix' => 'profile'], function(){
             Route::get('/', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('vender');
@@ -46,8 +46,6 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
         });
 
         Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('vender');
-
-        Route::post('logout', 'App\Http\Controllers\Api\site\authentication\auth@logout')->name('vender');
 
         Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('vender');
 

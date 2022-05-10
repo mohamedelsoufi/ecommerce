@@ -32,13 +32,13 @@ class guest extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //check if main category is active
         $main_category = Main_category::active()->where('parent', '!=', 0)->where('id',$request->get('mainCategory_id'))->first();
         if($main_category == null){
-            return $this->falid(trans('guest.this category not found'), 404, 'E04');
+            return $this->faild(trans('guest.this category not found'), 404, 'E04');
         }
 
         //get all product from this category (order number of sell)
@@ -73,7 +73,7 @@ class guest extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         $sub_category = Sub_category::where('status', 1)->whereHas('Main_categories', function($q){
@@ -83,7 +83,7 @@ class guest extends Controller
         if($sub_category != null){
             return $this->success(trans('auth.success'), 200, 'sub_category', new sub_catResource($sub_category));
         } else {
-            return $this->falid(trans('guest.this category not found'), 404, 'E04');
+            return $this->faild(trans('guest.this category not found'), 404, 'E04');
         }
     }
 
@@ -94,7 +94,7 @@ class guest extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         $product = Product::active()->where('id',$request->get('product_id'))->first();
@@ -110,7 +110,7 @@ class guest extends Controller
         if($product != null){
             return $this->success(trans('auth.success'), 200, 'data', $data);
         } else {
-            return $this->falid(trans('guest.this product not found'), 404, 'E04');
+            return $this->faild(trans('guest.this product not found'), 404, 'E04');
         }
     }
 

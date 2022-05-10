@@ -19,7 +19,7 @@ trait response
         }
     }
 
-    public static function falid($message, $statusCode, $status = 'E00'){
+    public static function faild($message, $statusCode, $status = 'E00'){
         return response()->json([
             'successful' => false,
             'status'     => $status,

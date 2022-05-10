@@ -25,7 +25,7 @@ class all extends Controller
         ]);
 
         if($validator->fails()){
-            return $this::falid($validator->errors(), 403, 'E03');
+            return $this::faild($validator->errors(), 403, 'E03');
         }
 
         $data = [

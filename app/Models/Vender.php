@@ -16,7 +16,7 @@ class Vender extends Authenticatable implements JWTSubject
 
     protected $casts = [
         'id'                => 'integer',
-        'email_verified_at' => 'datetime',
+        'verified'          => 'integer',
         'status'            => 'integer',
         'gender'            => 'integer',
     ];
@@ -68,6 +68,8 @@ class Vender extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'type'       => 'vender'
+        ];
     }
 }

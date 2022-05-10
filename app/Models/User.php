@@ -38,7 +38,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'id'                => 'integer',
-        'email_verified_at' => 'datetime',
+        'verified'          => 'integer',
         'status'            => 'integer',
         'gender'            => 'integer',
     ];
@@ -96,6 +96,8 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'type'       => 'user'
+        ];
     }
 }

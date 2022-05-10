@@ -19,7 +19,7 @@ class address extends Controller
         ]);
 
         if($validator->fails()){
-            return $this::falid($validator->errors(), 403);
+            return $this::faild($validator->errors(), 403);
         }
 
         $address = ModelsAddress::find($request->address_id);
@@ -40,7 +40,7 @@ class address extends Controller
         ]);
 
         if($validator->fails()){
-            return $this::falid($validator->errors(), 403, 'E03');
+            return $this::faild($validator->errors(), 403, 'E03');
         }
 
         $address = ModelsAddress::create([
@@ -70,7 +70,7 @@ class address extends Controller
         ]);
 
         if($validator->fails()){
-            return $this::falid($validator->errors(), 403);
+            return $this::faild($validator->errors(), 403);
         }
 
         $input = $request->only(
@@ -83,6 +83,6 @@ class address extends Controller
             return $this::success(trans('all.edit address success'), 200, 'address', new addressResource($address));
         }
 
-        return $this::falid(trans('all.edit address faild'), 200);
+        return $this::faild(trans('all.edit address faild'), 200);
     }
 }

@@ -56,12 +56,12 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $love = Love::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->first();
@@ -83,7 +83,7 @@ class user extends Controller
     public function get_love(Request $request){
         //get user
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $products = Product::active()->whereHas('Loves', function($q) use($user){
@@ -101,12 +101,12 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         Comment::create([
@@ -125,12 +125,12 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $comment = Comment::where('user_id', $user->id)->where('id', $request->get('comment_id'))->first();
@@ -139,7 +139,7 @@ class user extends Controller
             $comment->delete();
             return $this->success(trans('user.delete comment success'), 200);
         } else {
-            return $this->falid(trans('user.this comment nout found'), 404, 'E04');
+            return $this->faild(trans('user.this comment nout found'), 404, 'E04');
         }
     }
 
@@ -151,12 +151,12 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $comment = Comment::where('user_id', $user->id)->where('id', $request->get('comment_id'))->first();
@@ -166,7 +166,7 @@ class user extends Controller
             $comment->save();
             return $this->success(trans('user.edit comment success'), 200);
         } else {
-            return $this->falid(trans('user.this comment nout found'), 404, 'E04');
+            return $this->faild(trans('user.this comment nout found'), 404, 'E04');
         }
     }
 
@@ -178,12 +178,12 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $rating = Rating::where('user_id', $user->id)->where('product_id', $request->get('product_id'))->first();
@@ -208,7 +208,7 @@ class user extends Controller
     public function cart_get(){
         //get user
         if(!$user = auth('user')->user()){
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $carts = Cart::where('user_id', $user->id)->get();
@@ -226,18 +226,18 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if(!$user = auth('user')->user()){
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $cart = Cart::where('user_id', $user->id)->where('product_id', $request->get('product_id'))->first();
 
         if($cart != null){
-            return $this::falid(trans('user.this product already add to cart'), 400);
+            return $this::faild(trans('user.this product already add to cart'), 400);
         }
 
         Cart::create([
@@ -261,18 +261,18 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if(!$user = auth('user')->user()){
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $cart = Cart::where('user_id', $user->id)->where('id', $request->get('cart_id'))->first();
 
         if($cart == null){
-            return $this::falid(trans('user.this cart item don\'t found'), 404,'E04');
+            return $this::faild(trans('user.this cart item don\'t found'), 404,'E04');
         }
 
         $cart->quantity = $request->get('quantity');
@@ -284,7 +284,7 @@ class user extends Controller
             return $this::success(trans('user.edit success'), 200);
         }
 
-        return $this::falid(trans('user.some thing is wrong'),400);
+        return $this::faild(trans('user.some thing is wrong'),400);
 
     }
 
@@ -295,32 +295,32 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if(!$user = auth('user')->user()){
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $cart = Cart::where('user_id', $user->id)->where('id', $request->get('cart_id'))->first();
 
         if($cart == null){
-            return $this::falid(trans('user.this cart item don\'t found'), 404,'E04');
+            return $this::faild(trans('user.this cart item don\'t found'), 404,'E04');
         }
 
         if($cart->delete()){
             return $this::success(trans('user.delete success'), 200);
         }
 
-        return $this::falid(trans('user.some thing is wrong'),400);
+        return $this::faild(trans('user.some thing is wrong'),400);
 
     }
 
     public function cart_empty(){
         //get user
         if(!$user = auth('user')->user()){
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         Cart::where('user_id', $user->id)->delete();
@@ -335,7 +335,7 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //select code
@@ -343,7 +343,7 @@ class user extends Controller
 
         //check if promocode is expired
         if(date('Y-m-d H:i:s') > $promoCode->expire_date){
-            return $this::falid(trans('user.this promo code expired'), 400, 'E06');
+            return $this::faild(trans('user.this promo code expired'), 400, 'E06');
         }
 
         return $this::success(trans('auth.success'), 200, 'promoCode', $promoCode);
@@ -363,12 +363,12 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user details//
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         try{
@@ -376,7 +376,7 @@ class user extends Controller
             $carts = Cart::where('user_id', $user->id)->get();
 
             if($carts->count() == 0){
-                return $this::falid(trans('user.cart is empty'), 400);
+                return $this::faild(trans('user.cart is empty'), 400);
             }
 
             //get promo code //
@@ -397,7 +397,7 @@ class user extends Controller
             //create order
             $create_order = $this->order->create_order($request, $carts, $user, $promoCode_discound, $promoCode_id);
             if($create_order->successful  == false){
-                return $this->falid($create_order->message, 400);
+                return $this->faild($create_order->message, 400);
             }
 
             //cart empty
@@ -405,7 +405,7 @@ class user extends Controller
 
             DB::commit();
         } catch(\Exception $ex){
-            return $this::falid(trans('user.make order faild'), 400);
+            return $this::faild(trans('user.make order faild'), 400);
         }
 
         return $this->success(trans('user.make order success'), 200);
@@ -418,12 +418,12 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         //sellect order
@@ -431,7 +431,7 @@ class user extends Controller
 
         //check if it is exist
         if($order == null){
-            return $this::falid(trans('user.this order don\'t found'), 404, 'E04');
+            return $this::faild(trans('user.this order don\'t found'), 404, 'E04');
         }
 
         //update order
@@ -439,7 +439,7 @@ class user extends Controller
             return $this::success(trans('user.order cancel success'), 200);
         }
 
-        return $this::falid(trans('user.order cancel faild'), 400);
+        return $this::faild(trans('user.order cancel faild'), 400);
     }
 
     public function order_tracking(Request $request){
@@ -449,12 +449,12 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user details//
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         if($request->get('status') == 3){
@@ -473,12 +473,12 @@ class user extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->falid($validator->errors(), 403, 'E03');
+            return $this->faild($validator->errors(), 403, 'E03');
         }
 
         //get user
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         $orders = Order::where('user_id', $user->id)->where('id', $request->get('order_id'))->first()->Orderdetail;
@@ -488,7 +488,7 @@ class user extends Controller
     public function profil_details(){
         //get user
         if (! $user = auth('user')->user()) {
-            return response::falid(trans('user.user not found'), 404, 'E04');
+            return response::faild(trans('user.user not found'), 404, 'E04');
         }
 
         //products that user add love in it

@@ -38,6 +38,7 @@ return [
     //email verify
     'You must verify your email'                    => 'You must verify your email',
     'email verification success'                    => 'email verification success',
+    'send verify code success, please check your email.' => 'send verify code success, please check your email.',
 
     //register
     'register success'                              => 'register success',
@@ -45,7 +46,7 @@ return [
     //profile
     'old password is wrong'                         => 'old password is wrong',
     'change password success'                       => 'change password success',
-    'update password falid'                         => 'update password falid',
+    'update password faild'                         => 'update password faild',
     'update data success'                           => 'update data success',
     'update profile faild'                          => 'update profile faild',
     'update image success'                          => 'update image success',
