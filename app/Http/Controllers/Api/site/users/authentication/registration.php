@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\site\users\authentication;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\userResource;
 use App\Models\User;
 use App\Traits\response;
 use Illuminate\Http\Request;
@@ -30,14 +31,14 @@ class registration extends Controller
             return response::faild($validator->errors(), 403, 'E03');
         }
 
-        $users = $this->insert_user_in_dataBase($request);
+        $user = $this->insert_user_in_dataBase($request);
 
-        $token = JWTAuth::fromUser($users);
+        $token = JWTAuth::fromUser($user);
 
         return response()->json([
             "successful"=> true,
             'message'   => trans('auth.register success'),
-            'users'     => $users,
+            'user'      => new userResource($user),
             'token'     => $token,
         ], 200);
     }

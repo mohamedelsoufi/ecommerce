@@ -358,8 +358,8 @@ class vender extends Controller
         if($request->file('images') != null){
             //delete old images
             foreach($product->image as $oldImage){
-                if(file_exists(base_path('public/uploads/products/') . $oldImage->image)){
-                    unlink(base_path('public/uploads/products/') . $oldImage->image);
+                if(file_exists(base_path('public/uploads/products/') . $oldimage->src)){
+                    unlink(base_path('public/uploads/products/') . $oldimage->src);
                 }
                 // delete images from images table
                 $oldImage->delete();

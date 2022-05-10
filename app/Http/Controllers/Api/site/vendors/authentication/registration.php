@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\site\vendors\authentication;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\vendorResource;
 use App\Models\Vendor;
 use App\Traits\response;
 use Illuminate\Http\Request;
@@ -28,14 +29,14 @@ class registration extends Controller
             return response::faild($validator->errors(), 403, 'E03');
         }
 
-        $vendors = $this->insert_vendor_in_dataBase($request);
+        $vendor = $this->insert_vendor_in_dataBase($request);
 
-        $token = JWTAuth::fromUser($vendors);
+        $token = JWTAuth::fromUser($vendor);
 
         return response()->json([
             "successful"=> true,
             'message'   => trans('auth.register success'),
-            'vendors'   => $vendors,
+            'vendor'    => new vendorResource($vendor),
             'token'     => $token,
         ], 200);
     }

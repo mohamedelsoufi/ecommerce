@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 date_default_timezone_set('Africa/cairo');
 
-Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() {
+Route::group(['middleware' => ['changeLang'], 'prefix' => 'vendor'], function() {
     Route::post('register', 'App\Http\Controllers\Api\site\vendors\authentication\registration@create');
 
     Route::post('login', 'App\Http\Controllers\Api\site\vendors\authentication\login@login');
@@ -36,16 +36,13 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vender'], function() 
             Route::post('/', 'App\Http\Controllers\Api\site\vendors\authentication\verification@verificationProcess');
         });
 
-        //profile
         Route::group(['prefix' => 'profile'], function(){
-            Route::get('/', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('vender');
-            Route::post('edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('vender');
-            Route::post('edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('vender');
-            Route::post('address/add', 'App\Http\Controllers\Api\site\authentication\profile@add_address')->name('vender');
-            Route::post('address/edit', 'App\Http\Controllers\Api\site\authentication\profile@edit_address')->name('vender');
+            Route::get('/', 'App\Http\Controllers\Api\site\vendors\authentication\profile@index');
+            Route::post('update', 'App\Http\Controllers\Api\site\vendors\authentication\profile@update');
+            Route::post('changePassword', 'App\Http\Controllers\Api\site\vendors\authentication\profile@changePasswordProcess');
+            Route::post('address/add', 'App\Http\Controllers\Api\site\vendors\authentication\profile@add_address');
+            Route::post('address/edit', 'App\Http\Controllers\Api\site\vendors\authentication\profile@edit_address');
         });
-
-        Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('vender');
 
         Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('vender');
 

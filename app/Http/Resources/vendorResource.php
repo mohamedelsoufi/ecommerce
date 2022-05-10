@@ -31,7 +31,7 @@ class vendorResource extends JsonResource
             'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
             'gender'            => $gender,
             'birth'             => $this->birth,
-            'iamge'             => ($this->image != null)? url('public/uploads/vendors/' . $this->image->image) : url('public/uploads/vendors/default.jpg'),
+            'iamge'             => ($this->image != null)? url('public/uploads/vendors/' . $this->image->src) : url('public/uploads/vendors/default.jpg'),
             'address'           => new addressResource($this->address),
         ];
     }

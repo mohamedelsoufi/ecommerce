@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\site\vendors\authentication;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\vendorResource;
 use App\Traits\response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -65,7 +66,7 @@ class login extends Controller
             return response()->json([
                 'successful'=> false,
                 'message'   => trans('auth.You must verify your email'),
-                'vendor'    => $vendor,
+                'vendor'    => new vendorResource($vendor),
                 'token'     => $token,
             ], 403);
         }
@@ -73,7 +74,7 @@ class login extends Controller
         return response()->json([
             'successful'=> true,
             'message'   => trans('auth.success'),
-            'vendor'    => $vendor,
+            'vendor'    => new vendorResource($vendor),
             'token'     => $token,
         ], 200);
     }

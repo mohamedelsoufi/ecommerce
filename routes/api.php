@@ -41,14 +41,12 @@ Route::group(['middleware' => ['changeLang']], function() {
             Route::post('/', 'App\Http\Controllers\Api\site\users\authentication\verification@verificationProcess');
         });
 
-        //profile 
         Route::group(['prefix' => 'profile'], function(){
-            Route::get('/', 'App\Http\Controllers\Api\site\authentication\profile@getProfile')->name('user');
-            Route::get('details', 'App\Http\Controllers\Api\site\user@profil_details')->name('user');
-            Route::post('edite', 'App\Http\Controllers\Api\site\authentication\profile@editProdile')->name('user');
-            Route::post('edite/image', 'App\Http\Controllers\Api\site\authentication\profile@edit_image')->name('user');
-            Route::post('address/add', 'App\Http\Controllers\Api\site\authentication\profile@add_address')->name('user');
-            Route::post('address/edit', 'App\Http\Controllers\Api\site\authentication\profile@edit_address')->name('user');
+            Route::get('/', 'App\Http\Controllers\Api\site\users\authentication\profile@index');
+            Route::post('update', 'App\Http\Controllers\Api\site\users\authentication\profile@update');
+            Route::post('changePassword', 'App\Http\Controllers\Api\site\users\authentication\profile@changePasswordProcess');
+            Route::post('address/add', 'App\Http\Controllers\Api\site\users\authentication\profile@add_address');
+            Route::post('address/edit', 'App\Http\Controllers\Api\site\users\authentication\profile@edit_address');
         });
 
         //comments
@@ -75,8 +73,6 @@ Route::group(['middleware' => ['changeLang']], function() {
             Route::post('details', 'App\Http\Controllers\Api\site\user@order_details');
             Route::post('cancel', 'App\Http\Controllers\Api\site\user@cancel_order');
         });
-
-        Route::post('changePassword', 'App\Http\Controllers\Api\site\authentication\profile@changePassword')->name('user');
 
         Route::get('home', 'App\Http\Controllers\Api\site\user@home');
 

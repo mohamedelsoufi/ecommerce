@@ -30,7 +30,7 @@ class productsDetailsResource extends JsonResource
         $orderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 2)->orWhere('status', 3);
         })->whereHas('Product', function($q){
-            $q->notDelete()->where('id', $this->id)->where('vendor_id',  $this->vendor->id);
+            $q->notDelete()->where('id', $this->id)->where('vendor_id',  $this->Vendor->id);
         })->get();
 
         $totalMony = $orderdetails->sum(function ($product) {
@@ -42,7 +42,7 @@ class productsDetailsResource extends JsonResource
         $returnedOrderdetails  = Orderdetail::whereHas('Order' , function($q){
             $q->where('status', 3);
         })->whereHas('Product', function($q){
-            $q->notDelete()->where('id', $this->id)->where('vendor_id', $this->vendor->id);
+            $q->notDelete()->where('id', $this->id)->where('vendor_id', $this->Vendor->id);
         })->get();
         
         $returned_count = $returnedOrderdetails->sum(function ($product) {

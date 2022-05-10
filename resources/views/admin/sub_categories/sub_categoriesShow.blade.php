@@ -55,7 +55,7 @@
                                   @foreach ($sub_categories as $sub_category)
                                       <tr>
                                           <td>{{$sub_category->id}}</td>
-                                          <td><img src="{{url('public/uploads/sub_categories/' .  $sub_category->image->image)}}" style="width: 70px;"></td>
+                                          <td><img src="{{url('public/uploads/sub_categories/' .  $sub_category->image->src)}}" style="width: 70px;"></td>
                                           <td>{{$sub_category->name}}</td>
                                           <td>{{$sub_category->Main_categories->name}}</td>
                                           <td>{{$sub_category->getStatus()}}</td>

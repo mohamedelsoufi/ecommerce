@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\site\users\authentication;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\userResource;
 use App\Traits\response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -67,7 +68,7 @@ class login extends Controller
             return response()->json([
                 'successful'=> false,
                 'message'   => trans('auth.You must verify your email'),
-                'user'      => $user,
+                'user'      => new userResource($user),
                 'token'     => $token,
             ], 403);
         }
@@ -75,7 +76,7 @@ class login extends Controller
         return response()->json([
             'successful'=> true,
             'message'   => trans('auth.success'),
-            'user'      => $user,
+            'user'      => new userResource($user),
             'token'     => $token,
         ], 200);
     }

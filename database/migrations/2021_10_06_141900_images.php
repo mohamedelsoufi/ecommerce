@@ -17,7 +17,7 @@ class Images extends Migration
             $table->id();
             $table->bigInteger('imageable_id')->nullable();
             $table->string('imageable_type')->nullable();
-            $table->string('image')->nullable();
+            $table->string('src')->nullable();
             $table->timestamps();
         });
     }
