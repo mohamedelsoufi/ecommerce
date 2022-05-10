@@ -74,14 +74,22 @@ class User extends Authenticatable implements JWTSubject
         return $this->morphMany(Address::class, 'addressable');
     }
     /////
+    public function getImage(){
+        if($this->Image != null){
+            return url('public/uploads/users/' . $this->Image->src);
+        } else {
+            return url('public/uploads/users/default.jpg');
+        }
+    }
+
     public function getGender()
     {
-        return $this->gender == 0 ? 'male': 'famale';
+        return $this->gender == 0 ? trans('guest.male'): trans('guest.famale');
     }
 
     public function getStatus()
     {
-        return $this->status == 1 ? 'active': 'blocked';
+        return $this->status == 1 ? trans('guest.active'): trans('guest.blocked');
     }
 
     public function getChangStatus()

@@ -14,24 +14,21 @@ class userResource extends JsonResource
      */
     public function toArray($request)
     {
-        //gender
-        if($this->gender == 0){
-            $gender = trans('guest.male');
-        } else if($this->gender == 1){
-            $gender = trans('guest.famale');
-        } else {
-            $gender = trans('guest.other');
-        }
-
         return [
             'id'                => $this->id,
             'fullName'          => $this->fullName,
             'phone'             => $this->phone,
             'email'             => $this->email,
-            'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
-            'gender'            => $gender,
             'birth'             => $this->birth,
-            'iamge'             => ($this->image != null)? url('public/uploads/users/' . $this->image->src) : url('public/uploads/users/default.jpg'),
+            'image'             => $this->getImage(),
+            'gender'            => [
+                                        'boolean' => $this->gender,
+                                        'string'  => $this->getGender(),
+                                    ],
+            'status'            => [
+                                        'boolean' => $this->status,
+                                        'string'  => $this->getStatus(),
+                                    ],
         ];
     }
 }

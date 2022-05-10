@@ -15,9 +15,9 @@ class cartResource extends JsonResource
     public function toArray($request)
     {
         //get product images
-        if($this->Product->image->first() != null){
-            $images = $this->Product->image->transform(function ($item, $key){
-                return url('public/uploads/products/' . $item->image);
+        if($this->Product->Image->first() != null){
+            $images = $this->Product->Image->transform(function ($item, $key){
+                return url('public/uploads/products/' . $item->Image);
             });;
         } else {
             $images = array(url('public/uploads/products/default.jpg'));

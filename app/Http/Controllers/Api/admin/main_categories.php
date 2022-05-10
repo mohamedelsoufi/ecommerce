@@ -152,7 +152,7 @@ class main_categories extends Controller
             //update image
             if($request->hasFile('image')){
                 //delete old image
-                $oldImage = $main_category_parent->image->src;
+                $oldImage = $main_category_parent->Image->src;
                 
                 if(file_exists(base_path('public/uploads/main_categories/') . $oldImage)){
                     unlink(base_path('public/uploads/main_categories/') . $oldImage);
@@ -160,8 +160,8 @@ class main_categories extends Controller
 
                 //upload new image
                 $image_name = $this->upload_image($request->file('image'),'uploads/main_categories', 300, 300);
-                $main_category_parent->image->src = $image_name;
-                $main_category_parent->image->save();
+                $main_category_parent->Image->src = $image_name;
+                $main_category_parent->Image->save();
             }
 
             //update (parent) main category

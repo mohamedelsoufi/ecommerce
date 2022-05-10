@@ -29,7 +29,7 @@ class sub_catResource extends JsonResource
             'name'              => $this->name,
             'main_category_id'  => $this->main_cate_id,
             'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
-            'iamge'             => ($sub_cat->image != null) ? url('public/uploads/sub_categories/' . $sub_cat->image->src) : url('public/uploads/sub_categories/default.jpg'),
+            'iamge'             => ($sub_cat->Image != null) ? url('public/uploads/sub_categories/' . $sub_cat->Image->src) : url('public/uploads/sub_categories/default.jpg'),
             'locale'            => $this->locale,
         ];
     }

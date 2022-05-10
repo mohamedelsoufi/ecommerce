@@ -162,7 +162,7 @@ class sub_categories extends Controller
             //update image
             if($request->hasFile('image')){
                 //delete old image
-                $oldImage = $sub_category_parent->image->src;
+                $oldImage = $sub_category_parent->Image->src;
                 
                 if(file_exists(base_path('public/uploads/sub_categories/') . $oldImage)){
                     unlink(base_path('public/uploads/sub_categories/') . $oldImage);
@@ -170,8 +170,8 @@ class sub_categories extends Controller
 
                 //upload new image
                 $image_name = $this->upload_image($request->file('image'),'uploads/sub_categories', 300, 300);
-                $sub_category_parent->image->src = $image_name;
-                $sub_category_parent->image->save();
+                $sub_category_parent->Image->src = $image_name;
+                $sub_category_parent->Image->save();
             }
 
             //update (parent) sub category

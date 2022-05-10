@@ -58,21 +58,21 @@ class profile extends Controller
     public function update_image($image, $user){
         $image_name = $this->upload_image($image,'uploads/users', 300, 300);
 
-        if($user->image == null){
+        if($user->Image == null){
             Image::create([
                 'imageable_id'   => $user->id,
                 'imageable_type' => 'App\Models\User',
                 'src'            => $image_name,
             ]);
         } else {
-            $oldImage = $user->image->src;
+            $oldImage = $user->Image->src;
 
             if(file_exists(base_path('public/uploads/users/') . $oldImage)){
                 unlink(base_path('public/uploads/users/') . $oldImage);
             }
 
-            $user->image->src = $image_name;
-            $user->image->save();
+            $user->Image->src = $image_name;
+            $user->Image->save();
         }
     }
 

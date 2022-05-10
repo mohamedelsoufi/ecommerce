@@ -72,8 +72,8 @@ class Product extends Model
 
     public function getImage()
     {
-        if($this->image->first() != null){
-            return url('public/uploads/products'). '/'  . $this->image->first()->image;
+        if($this->Image->first() != null){
+            return url('public/uploads/products'). '/'  . $this->Image->first()->Image;
         } else {
             return url('public/uploads/products/default.jpg');
         }

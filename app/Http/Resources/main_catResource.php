@@ -39,7 +39,7 @@ class main_catResource extends JsonResource
             'id'                => $this->id,
             'name'              => $this->name,
             'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
-            'iamge'             => ($main_cat->image != null) ? url('public/uploads/main_categories/' . $main_cat->image->src) :  url('public/uploads/main_categories/default.jpg'),
+            'iamge'             => ($main_cat->Image != null) ? url('public/uploads/main_categories/' . $main_cat->Image->src) :  url('public/uploads/main_categories/default.jpg'),
             'locale'            => $this->locale,
         ];
     }
