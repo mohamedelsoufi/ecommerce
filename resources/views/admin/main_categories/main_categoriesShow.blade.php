@@ -54,8 +54,8 @@
                                   @foreach ($main_categories as $main_category)
                                       <tr>
                                           <td>{{$main_category->id}}</td>
-                                          <td><img src="{{url('public/uploads/main_categories/' .  $main_category->image->src)}}" style="width: 70px;"></td>
-                                          <td>{{$main_category->name}}</td>
+                                          <td><img src="{{$main_category->getImage()}}" style="width: 70px;"></td>
+                                          <td>{{$main_category->translate('en')->name}}</td>
                                           <td>{{$main_category->getStatus()}}</td>
                                           <td>
                                             <a href="{{url('/admin/main_categories/edit/' . $main_category->id)}}" class="btn btn-purple btn-min-width box-shadow-5 mr-1 mb-1" style="min-width: 6.5rem; margin-right: 8px !important;">edit</a>

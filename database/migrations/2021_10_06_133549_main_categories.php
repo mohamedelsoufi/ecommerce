@@ -15,11 +15,19 @@ class MainCategories extends Migration
     {
         Schema::create('main_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
             $table->tinyInteger('status')->default(1)->comment('0->not avtive, 1->active, -1 -> delete');
-            $table->string('locale')->nullable();
-            $table->bigInteger('parent')->nullable();
             $table->timestamps();
+        });
+
+        Schema::create('main_categories_translations', function(Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedBigInteger('main_category_id');
+            $table->string('locale')->index();
+            $table->string('name');
+            $table->timestamps();
+
+            $table->unique(['main_category_id', 'locale']);
+            $table->foreign('main_category_id')->references('id')->on('main_categories')->onDelete('cascade');
         });
     }
 
@@ -31,5 +39,7 @@ class MainCategories extends Migration
     public function down()
     {
         Schema::dropIfExists('main_categories');
+        Schema::dropIfExists('main_categories_translations');
+
     }
 }

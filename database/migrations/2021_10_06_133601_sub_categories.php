@@ -15,14 +15,22 @@ class SubCategories extends Migration
     {
         Schema::create('sub_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
             $table->unsignedBigInteger('main_cate_id')->nullable();
             $table->tinyInteger('status')->default(1)->comment('0->not avtive, 1->active, -1 -> delete');
-            $table->string('locale')->nullable();
-            $table->bigInteger('parent')->nullable();
             $table->timestamps();
 
             $table->foreign('main_cate_id')->references('id')->on('main_categories')->onDelete('cascade');
+        });
+
+        Schema::create('sub_categories_translations', function(Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedBigInteger('sub_category_id');
+            $table->string('locale')->index();
+            $table->string('name');
+            $table->timestamps();
+
+            $table->unique(['sub_category_id', 'locale']);
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
         });
     }
 
@@ -34,5 +42,7 @@ class SubCategories extends Migration
     public function down()
     {
         Schema::dropIfExists('sub_categories');
+        Schema::dropIfExists('sub_categories_translations');
+
     }
 }

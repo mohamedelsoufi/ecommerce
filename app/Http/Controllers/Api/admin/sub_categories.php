@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class sub_categories extends Controller
 {
     public function sub_categoryShow(){
-        $sub_categories = Sub_category::where('parent', 0)->where('status', '!=', -1)->paginate();
+        $sub_categories = Sub_category::where('status', '!=', -1)->paginate();
         return view('admin.sub_categories.sub_categoriesShow')->with('sub_categories',$sub_categories);
     }
 

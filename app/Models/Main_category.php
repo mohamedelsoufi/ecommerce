@@ -5,10 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-
-class Main_category extends Model
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+class Main_category extends Model implements TranslatableContract
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Translatable;
+
+    public $translatedAttributes = ['name'];
+
     protected $table = 'main_categories';
 
     protected $guarded = [];
@@ -24,7 +28,7 @@ class Main_category extends Model
         return $this->hasMany(Sub_category::class, 'main_cate_id');
     }
 
-    public function image()
+    public function Image()
     {
         return $this->morphOne(Image::class, 'imageable');
     }
@@ -43,6 +47,14 @@ class Main_category extends Model
     public function getChangStatus()
     {
         return $this->status == 0 ? 'active': 'un active';
+    }
+
+    public function getImage(){
+        if($this->Image != null){
+            return url('public/uploads/main_categories/' . $this->Image->src);
+        } else {
+            return url('public/uploads/main_categories/default.jpg');
+        }
     }
 
     //scope

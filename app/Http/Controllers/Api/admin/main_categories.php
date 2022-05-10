@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class main_categories extends Controller
 {
     public function main_categoryShow(){
-        $main_categories = Main_category::where('parent', 0)->where('status', '!=', -1)->paginate();
+        $main_categories = Main_category::where('status', '!=', -1)->paginate();
         return view('admin.main_categories.main_categoriesShow')->with('main_categories',$main_categories);
     }
 
