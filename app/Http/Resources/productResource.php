@@ -17,54 +17,40 @@ class productResource extends JsonResource
      */
     public function toArray($request)
     {
-        //gender
-        if($this->gender == 0){
-            $gender = trans('guest.male');
-        } else if($this->gender == 1){
-            $gender = trans('guest.famale');
-        } else {
-            $gender = trans('guest.other');
-        }
-
-        //rating
-        $ratnig = $this->Ratings;
-        $count = $ratnig->count();
-        $allRatnig = $ratnig->sum('rating');
-
-        //get product images
-        if($this->Images->first() != null){
-            $images = $this->Image->transform(function ($item, $key) {
-                return url('public/uploads/products/' . $item->Image);
-            });
-        } else {
-            $images = array(url('public/uploads/products/default.jpg'));
-        }
-
         return [
             'id'                => $this->id,
             'name'              => $this->name,
             'describe'          => $this->describe,
-            'price'             => $this->price,
-            'status'            => ($this->status == 1) ? trans('guest.active'): trans('guest.not active'),
             'number_of_sell'    => $this->number_of_sell,
             'discound'          => $this->discound,
             'quantity'          => $this->quantity,
-            'gender'            => $gender,
             'comments_count'    => $this->comments->count(),
-            'images'            => $images,
             'colors'            => $this->colors,
             'sizes'             => $this->sizes,
+            'image'             => $this->getImage(),
+            'price'             => [
+                                    'value'     => $this->price,
+                                    'currency'  => '$',
+                                ],
+            'status'            => [
+                                        'boolean' => $this->status,
+                                        'string'  => $this->getStatus(),
+                                    ],
+            'gender'            => [
+                                        'boolean' => $this->gender,
+                                        'string'  => $this->getGender(),
+                                    ],
             'rating'            => [
-                                        'count'     => $count,
-                                        'rating'    => ($count != 0) ? $allRatnig / $count : 0,
+                                        'count'     => $this->Ratings->count(),
+                                        'rating'    => $this->getRating(),
                                     ],
             'sub_category'      => [
-                                        'id'    => $this->Sub_category->id,     //relation
-                                        'name'  => Sub_category::where('locale', Config::get('app.locale'))->where('parent', $this->Sub_category->id)->first()->name,
+                                        'id'    => $this->Sub_category->id,
+                                        'name'  => $this->Sub_category->translate('en')->name,
                                     ],
             'vendor'            => [
-                                        'id'        => $this->Vendor->id,       //relation
-                                        'fullName'  => $this->Vendor->fullName, //relation
+                                        'id'        => $this->Vendor->id,
+                                        'fullName'  => $this->Vendor->fullName
                                 ],
         ];
     }

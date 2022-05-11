@@ -54,20 +54,25 @@ Route::group(['middleware' => ['changeLang']], function() {
             Route::post('delete', 'App\Http\Controllers\Api\site\users\addresses@delete');
         });
 
-        //comments
-        Route::group(['prefix' => 'comment'], function(){
-            Route::post('add', 'App\Http\Controllers\Api\site\user@add_comment');
-            Route::post('delete', 'App\Http\Controllers\Api\site\user@delete_comment');
-            Route::post('edit', 'App\Http\Controllers\Api\site\user@edit_comment');
+        Route::post('rating', 'App\Http\Controllers\Api\site\users\ratings@create');
+
+        Route::group(['prefix' => 'comments'], function(){
+            Route::post('create', 'App\Http\Controllers\Api\site\users\comments@create');
+            Route::post('delete', 'App\Http\Controllers\Api\site\users\comments@delete');
+            Route::post('update', 'App\Http\Controllers\Api\site\users\comments@update');
+        });
+
+        Route::group(['prefix' => 'loves'], function(){
+            Route::get('/', 'App\Http\Controllers\Api\site\users\loves@index');
+            Route::post('change', 'App\Http\Controllers\Api\site\users\loves@change');
         });
         
-        //cart
         Route::group(['prefix' => 'cart'], function(){
-            Route::get('/', 'App\Http\Controllers\Api\site\user@cart_get');
-            Route::post('add', 'App\Http\Controllers\Api\site\user@cart_add');
-            Route::post('edit', 'App\Http\Controllers\Api\site\user@cart_edit');
-            Route::post('remove', 'App\Http\Controllers\Api\site\user@cart_remove');
-            Route::post('empty', 'App\Http\Controllers\Api\site\user@cart_empty');
+            Route::get('/', 'App\Http\Controllers\Api\site\users\carts@index');
+            Route::post('create', 'App\Http\Controllers\Api\site\users\carts@create');
+            Route::post('update', 'App\Http\Controllers\Api\site\users\carts@update');
+            Route::post('delete', 'App\Http\Controllers\Api\site\users\carts@delete');
+            Route::post('empty', 'App\Http\Controllers\Api\site\users\carts@empty');
         });
 
         //order
@@ -80,12 +85,6 @@ Route::group(['middleware' => ['changeLang']], function() {
         });
 
         Route::get('home', 'App\Http\Controllers\Api\site\user@home');
-
-        //loves
-        Route::post('love', 'App\Http\Controllers\Api\site\user@love');
-        Route::get('loves', 'App\Http\Controllers\Api\site\user@get_love');
-
-        Route::post('rating', 'App\Http\Controllers\Api\site\user@rating');
 
         Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('user');
     });

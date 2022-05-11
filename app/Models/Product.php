@@ -73,9 +73,17 @@ class Product extends Model
     public function getImage()
     {
         if($this->Images->first() != null){
-            return url('public/uploads/products'). '/'  . $this->Images->first()->Image;
+            return url('public/uploads/products/' . $this->Images->first()->src);
         } else {
             return url('public/uploads/products/default.jpg');
+        }
+    }
+
+    public function getRating(){
+        if(count($this->Ratings) > 0){
+            return ceil($this->Ratings->sum('rating') / count($this->Ratings));
+        } else {
+            return 0;
         }
     }
 
