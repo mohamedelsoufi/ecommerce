@@ -85,8 +85,6 @@ Route::group(['middleware' => ['changeLang']], function() {
         });
 
         Route::get('home', 'App\Http\Controllers\Api\site\user@home');
-
-        Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('user');
     });
 });
 

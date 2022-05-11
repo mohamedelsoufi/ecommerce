@@ -20,12 +20,17 @@ date_default_timezone_set('Africa/cairo');
 Route::get('/clear-cache',function(){
     Artisan::call('config:cache');
     Artisan::call('cache:clear');
-    // Artisan::call('jwt:secret');
     return "cache clear";
 });
 
 Route::group(['middleware' => ['changeLang'], 'prefix' => 'guest'], function() {
-    Route::get('mainCategorys', 'App\Http\Controllers\Api\site\guest@getCategories');
+    Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us');
+
+    Route::get('main_categories', 'App\Http\Controllers\Api\site\guest\main_catecories@index');
+
+    Route::get('sub_categories', 'App\Http\Controllers\Api\site\guest\sub_catecories@index');
+
+
     Route::get('mainCategorys/details', 'App\Http\Controllers\Api\site\guest@main_cate_details');
 
     Route::get('SubCategorys/details', 'App\Http\Controllers\Api\site\guest@sub_cate_details');

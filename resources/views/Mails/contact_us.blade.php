@@ -1,5 +1,3 @@
-type  => {{$type}},
-<br>
 email => {{$email}},
 <br>
 phone => {{$phone}},

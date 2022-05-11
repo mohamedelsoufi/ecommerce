@@ -19,12 +19,6 @@ class guest extends Controller
 {
     use response;
 
-    public function getCategories(){
-
-        $main_cate = Main_category::where('locale', '=', Config::get('app.locale'))->active()->get();
-        return $this->success(trans('auth.success'), 200, 'main_categories', main_catResource::collection($main_cate));
-    }
-
     public function main_cate_details(Request $request){
         //validation
         $validator = Validator::make($request->all(), [

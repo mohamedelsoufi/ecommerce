@@ -18,7 +18,6 @@ class contact_us extends Mailable
      */
     public function __construct($data)
     {
-        $this->type     = $data['type'];
         $this->email    = $data['email'];
         $this->phone    = $data['phone'];
         $this->title    = $data['title'];
@@ -33,7 +32,6 @@ class contact_us extends Mailable
     public function build()
     {
         return $this->view('Mails.contact_us')->with([
-            'type'  => $this->type,
             'email' => $this->email,
             'phone' => $this->phone,
             'title' => $this->title,

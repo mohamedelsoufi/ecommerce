@@ -57,8 +57,6 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vendor'], function() 
             Route::get('money', 'App\Http\Controllers\Api\site\vender@money');
         });
 
-        Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us')->name('vender');
-
         Route::get('home', 'App\Http\Controllers\Api\site\vender@home');
 
         //product
