@@ -17,12 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 date_default_timezone_set('Africa/cairo');
 
-Route::get('/clear-cache',function(){
-    Artisan::call('config:cache');
-    Artisan::call('cache:clear');
-    return "cache clear";
-});
-
 Route::group(['middleware' => ['changeLang']], function() {
     Route::post('register', 'App\Http\Controllers\Api\site\users\authentication\registration@create');
     Route::post('login', 'App\Http\Controllers\Api\site\users\authentication\login@login');
@@ -75,16 +69,14 @@ Route::group(['middleware' => ['changeLang']], function() {
             Route::post('empty', 'App\Http\Controllers\Api\site\users\carts@empty');
         });
 
-        //order
-        Route::group(['prefix' => 'order'], function(){
-            Route::post('address', 'App\Http\Controllers\Api\site\user@order_address');
-            Route::post('make', 'App\Http\Controllers\Api\site\user@make_order');
-            Route::post('tracking', 'App\Http\Controllers\Api\site\user@order_tracking');
-            Route::post('details', 'App\Http\Controllers\Api\site\user@order_details');
-            Route::post('cancel', 'App\Http\Controllers\Api\site\user@cancel_order');
+        Route::group(['prefix' => 'orders'], function(){
+            Route::post('/', 'App\Http\Controllers\Api\site\users\orders@index');
+            Route::post('create', 'App\Http\Controllers\Api\site\users\orders@create');
+            Route::post('delete', 'App\Http\Controllers\Api\site\users\orders@delete');
+            Route::post('tracking', 'App\Http\Controllers\Api\site\users\orders@order_tracking');
         });
 
-        Route::get('home', 'App\Http\Controllers\Api\site\user@home');
+        Route::get('home', 'App\Http\Controllers\Api\site\users\home@index');
     });
 });
 

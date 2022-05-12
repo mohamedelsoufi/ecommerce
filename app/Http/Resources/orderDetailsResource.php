@@ -23,17 +23,7 @@ class orderDetailsResource extends JsonResource
             'product_total_price'   => $this->product_total_price,
             'color'                 => $this->color,
             'size'                  => $this->size,
-            'product'               => [
-                'id'                => $this->Product->id,
-                'name'              => $this->Product->name,
-                'describe'          => $this->Product->describe,
-                'price'             => $this->Product->price,
-                'status'            => ($this->Product->status == 1) ? trans('guest.active'): trans('guest.not active'),
-                'number_of_sell'    => $this->Product->number_of_sell,
-                'discound'          => $this->Product->discound,
-                'quantity'          => $this->Product->quantity,
-                'image'             => ($this->product->Images->first() != null) ? $this->product->Images : array(['image' => 'default.jpg']),
-                ],
+            'product'               => new productResource($this->Product)
         ];
     }
 }
