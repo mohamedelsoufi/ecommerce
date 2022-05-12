@@ -27,20 +27,17 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'guest'], function() {
     Route::post('contact_us', 'App\Http\Controllers\Api\site\all@contact_us');
 
     Route::get('main_categories', 'App\Http\Controllers\Api\site\guest\main_catecories@index');
+    Route::get('main_categories/details', 'App\Http\Controllers\Api\site\guest\main_catecories@details');
 
     Route::get('sub_categories', 'App\Http\Controllers\Api\site\guest\sub_catecories@index');
+    Route::get('sub_categories/details', 'App\Http\Controllers\Api\site\guest\sub_catecories@details');
+    Route::get('sub_categories/byMainCategory', 'App\Http\Controllers\Api\site\guest\sub_catecories@sub_categories_by_main_category');
+
+    Route::get('search', 'App\Http\Controllers\Api\site\guest\search@search');
 
 
-    Route::get('mainCategorys/details', 'App\Http\Controllers\Api\site\guest@main_cate_details');
-
-    Route::get('SubCategorys/details', 'App\Http\Controllers\Api\site\guest@sub_cate_details');
-
-    Route::get('product/details', 'App\Http\Controllers\Api\site\guest@product_details');
-
-    Route::get('filter', 'App\Http\Controllers\Api\site\guest@filter');
-    Route::get('search', 'App\Http\Controllers\Api\site\guest@search');
-
-    Route::post('promoCode/check', 'App\Http\Controllers\Api\site\user@check_promoCode');
+    Route::get('product/details', 'App\Http\Controllers\Api\site\guest\products@index');
+    Route::get('product/bySubCategory', 'App\Http\Controllers\Api\site\guest\products@product_by_sub_category');
 });
 
 
