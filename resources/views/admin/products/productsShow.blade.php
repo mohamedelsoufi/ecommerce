@@ -60,7 +60,7 @@
                                           <td><img src="{{$product->getImage()}}" style="width: 70px;"></td>
                                           <td>{{$product->name}}</td>
                                           <td>{{$product->Sub_category->Main_categories->name}} -> {{$product->Sub_category->name}}</td>
-                                          <td>{{$product->Vender->fullName}}</td>
+                                          <td>{{$product->Vendor->fullName}}</td>
                                           <td>{{$product->getStatus()}}</td>
                                           <td>{{$product->getGender()}}</td>
                                           <td>

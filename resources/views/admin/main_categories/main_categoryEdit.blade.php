@@ -39,10 +39,10 @@
                 <div class="card-body card-dashboard ">
                     <div class="card-content collapse show">
                         <div class="card-body card-dashboard">
-                            <form class="form" action="{{url('admin/main_categories/edit/' . $main_category_parent_id )}}" method="post" enctype="multipart/form-data">
+                            <form class="form" action="{{url('admin/main_categories/edit/' . $main_category_id )}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-body">
-                                    <h4 class="form-section"><i class="ft-user"></i>Edit ({{App\Models\Main_category::find($main_category_parent_id)->name}})</h4>
+                                    <h4 class="form-section"><i class="ft-user"></i>Edit ({{App\Models\Main_category::find($main_category_id)->name}})</h4>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -60,7 +60,7 @@
                                                 <div class="form-group">
                                                     <label for="projectinput1">name in {{$lang}}</label>
                                                     <br>
-                                                    <input type="text" name="main_cate[{{$key}}][name]"value="{{ App\Models\Main_category::where('parent', $main_category_parent_id)->where('locale', $key)->first()->name }}" class="form-control" autocomplete="off">
+                                                    <input type="text" name="main_cate[{{$key}}][name]"value="{{ App\Models\Main_category::find($main_category_id)->translate($key)->name }}" class="form-control" autocomplete="off">
                                                     @error('main_cate.' . $key . '.name')
                                                         <span style="color: red;">{{$message}}</span>
                                                     @enderror

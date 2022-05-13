@@ -29,12 +29,10 @@ class promoCode extends Controller
     }
 
     public function expiry($id){
-        //sellect Promo_code
         $promo_code = Promo_code::find($id);
 
-        if($promo_code == null){
+        if($promo_code == null)
             return redirect()->back()->with('error', 'faild');
-        }
 
         if($promo_code->update(['expire_date'=> '2001-01-01 01:00:00'])){
             return redirect()->back()->with('success', 'success');

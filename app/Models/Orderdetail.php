@@ -29,4 +29,23 @@ class Orderdetail extends Model
     public function Order(){
         return $this->belongsTo(Order::class,'order_id');
     }
+
+    //scope
+    public function scopeFinished($query, $id)
+    {
+        return $query->whereHas('Order' , function($q){
+                                $q->where('status', 2);
+                            })->whereHas('Product', function($q) use($id){
+                                $q->where('vendor_id', $id);
+                            });
+    }
+
+    public function scopeReturned($query, $id)
+    {
+        return $query->whereHas('Order' , function($q){
+                                $q->where('status', 3);
+                            })->whereHas('Product', function($q) use($id){
+                                $q->where('vendor_id', $id);
+                            });
+    }
 }

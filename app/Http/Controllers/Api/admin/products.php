@@ -15,26 +15,22 @@ class products extends Controller
     }
 
     public function delete($id){
-        //sellect product
         $product = Product::find($id);
 
-        if($product == null){
+        if($product == null)
             return redirect()->back()->with('error', 'delete product faild');
-        }
-        //delete main category parent
-        if($product->update(['status'=> -1])){
+    
+        if($product->update(['status'=> -1]))
             return redirect()->back()->with('success', 'delete product success');
-        }
+    
         return redirect()->back()->with('error', 'delete product faild');
     }
 
     public function active($id){
-        //sellect product
         $product = Product::find($id);
 
-        if($product == null){
+        if($product == null)
             return redirect()->back()->with('error', 'faild');
-        }
 
         if($product->status == 1){
             //un active product

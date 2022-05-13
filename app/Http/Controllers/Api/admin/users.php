@@ -15,18 +15,14 @@ class users extends Controller
     }
 
     public function block($id){
-        //sellect user
         $user = User::find($id);
 
-        if($user == null){
+        if($user == null)
             return redirect()->back()->with('error', 'this user not found');
-        }
 
         if($user->status == 1){
-            //block user
             $user->status = 0;
         } else {
-            //un block user
             $user->status = 1;
         }
 

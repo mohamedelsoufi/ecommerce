@@ -50,9 +50,9 @@ class Sub_category extends Model implements TranslatableContract
 
     public function getImage(){
         if($this->Image != null){
-            return url('public/uploads/main_categories/' . $this->Image->src);
+            return url('public/uploads/sub_categories/' . $this->Image->src);
         } else {
-            return url('public/uploads/main_categories/default.jpg');
+            return url('public/uploads/sub_categories/default.jpg');
         }
     }
 

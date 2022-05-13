@@ -30,6 +30,7 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vendor'], function() 
 
     Route::group(['middleware' => ['checkJWTtoken:vendor']], function() {
         Route::post('logout', 'App\Http\Controllers\Api\site\vendors\authentication\login@logout')->name('vender');
+        Route::get('home', 'App\Http\Controllers\Api\site\vendors\home@index');
 
         Route::group(['prefix' => 'verification'], function(){
             Route::post('sendCode', 'App\Http\Controllers\Api\site\vendors\authentication\verification@send_code_to_vendor_from_token');
@@ -42,7 +43,6 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vendor'], function() 
             Route::post('changePassword', 'App\Http\Controllers\Api\site\vendors\authentication\profile@changePasswordProcess');
         });
 
-        //product
         Route::group(['prefix' => 'products'], function(){
             Route::get('/', 'App\Http\Controllers\Api\site\vendors\products@index');
             Route::post('create', 'App\Http\Controllers\Api\site\vendors\products@create');
@@ -50,23 +50,9 @@ Route::group(['middleware' => ['changeLang'], 'prefix' => 'vendor'], function() 
             Route::post('delete', 'App\Http\Controllers\Api\site\vendors\products@delete');
         });
 
-        //products
-        Route::group(['prefix' => 'products'], function(){
-            Route::get('/', 'App\Http\Controllers\Api\site\vender@products');
-            Route::get('informations', 'App\Http\Controllers\Api\site\vender@products_informations');
-            Route::get('money', 'App\Http\Controllers\Api\site\vender@money');
+        Route::group(['prefix' => 'orders'], function(){
+            Route::get('/', 'App\Http\Controllers\Api\site\vendors\orders@index');
         });
-
-        Route::get('home', 'App\Http\Controllers\Api\site\vender@home');
-
-        //product
-        Route::group(['prefix' => 'product'], function(){
-            Route::get('order', 'App\Http\Controllers\Api\site\vender@product_order');
-            Route::post('add', 'App\Http\Controllers\Api\site\vender@product_add');
-            Route::post('delete', 'App\Http\Controllers\Api\site\vender@product_delete');
-            Route::post('edit', 'App\Http\Controllers\Api\site\vender@product_edit');
-        });
-
     });
 });
 

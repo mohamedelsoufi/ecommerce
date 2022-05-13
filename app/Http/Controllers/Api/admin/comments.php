@@ -14,16 +14,14 @@ class comments extends Controller
     }
 
     public function deleteComment($id){
-        //sellect comment
         $comment = comment::find($id);
 
-        if($comment == null){
+        if($comment == null)
             return redirect()->back()->with('error', 'this comment not found');
-        }
 
-        if($comment->delete()){
+        if($comment->delete())
             return redirect()->back()->with('success', 'success');
-        }
+
         return redirect()->back()->with('error', 'faild');
     }
 }
