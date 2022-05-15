@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\DB;
 
 class sub_categories extends Controller
 {
-    public function sub_categoryShow(){
+    public function index(){
         $sub_categories = Sub_category::where('status', '!=', -1)->paginate();
         return view('admin.sub_categories.sub_categoriesShow')->with('sub_categories',$sub_categories);
     }
 
-    public function sub_category_delete($id){
+    public function destroy($id){
         try{
             DB::beginTransaction();
             $sub_category = Sub_category::find($id);
@@ -59,12 +59,12 @@ class sub_categories extends Controller
         }  
     }
 
-    public function add_view(){
+    public function create(){
         $main_categories = Main_category::where('status', '!=', -1)->get();
         return view('admin.sub_categories.sub_categoriesAdd')->with('main_categories', $main_categories);
     }
 
-    public function add(add $request){
+    public function store(add $request){
         try{
             DB::beginTransaction();
             
@@ -97,7 +97,7 @@ class sub_categories extends Controller
         }   
     }
 
-    public function edit_View($id){
+    public function show($id){
         $main_categories = Main_category::where('status', '!=', -1)->get();
 
         $sub_category = Sub_category::find($id);

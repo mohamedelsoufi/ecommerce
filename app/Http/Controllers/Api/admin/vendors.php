@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 
 class vendors extends Controller
 {
-    public function vendorShow(){
+    public function index(){
         $vensers = Vendor::paginate();
         return view('admin.vendors.vendorsShow')->with('vensers', $vensers);
     }
 
-    public function block($id){
+    public function destroy($id){
         $vendor = Vendor::find($id);
 
         if($vendor == null)

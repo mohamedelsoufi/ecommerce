@@ -9,16 +9,16 @@ use Illuminate\Http\Request;
 
 class promoCode extends Controller
 {
-    public function promoCodesShow(){
+    public function index(){
         $promo_codes = Promo_code::paginate();
         return view('admin.promoCodes.promoCodesShow')->with('promo_codes',$promo_codes);
     }
 
-    public function addView(){
+    public function create(){
         return view('admin.promoCodes.promoCodesAdd');
     }
 
-    public function add(add $request){
+    public function store(add $request){
         Promo_code::create([
             'code'          => $request->code,
             'discound'      => $request->discound,

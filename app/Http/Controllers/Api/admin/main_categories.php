@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Validator;
 
 class main_categories extends Controller
 {
-    public function main_categoryShow(){
+    public function index(){
         $main_categories = Main_category::where('status', '!=', -1)->paginate();
 
         return view('admin.main_categories.main_categoriesShow')->with('main_categories',$main_categories);
     }
 
-    public function main_category_delete($id){
+    public function destroy($id){
         try{
             DB::beginTransaction();
             $main_category = Main_category::find($id);
@@ -61,11 +61,11 @@ class main_categories extends Controller
         }  
     }
 
-    public function add_view(){
+    public function create(){
         return view('admin.main_categories.main_categoriesAdd');
     }
 
-    public function add(add $request){
+    public function store(add $request){
         try{
             DB::beginTransaction();      
             $image_name = $this->upload_image($request->file('image'),'uploads/main_categories', 300, 300);
@@ -96,7 +96,7 @@ class main_categories extends Controller
 
     }
 
-    public function edit_View($id){
+    public function show($id){
         $main_category = Main_category::find($id);
 
         if($main_category == null)

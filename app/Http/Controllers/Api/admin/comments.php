@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class comments extends Controller
 {
-    public function commentsShow(){
+    public function index(){
         $comments = Comment::paginate();
         return view('admin.comments.commentsShow')->with('comments',$comments);
     }
 
-    public function deleteComment($id){
+    public function destroy($id){
         $comment = comment::find($id);
 
         if($comment == null)

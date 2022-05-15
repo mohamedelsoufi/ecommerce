@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 
 class users extends Controller
 {
-    public function userShow(){
+    public function index(){
         $users = User::paginate();
         return view('admin.users.usersShow')->with('users', $users);
     }
 
-    public function block($id){
+    public function destroy($id){
         $user = User::find($id);
 
         if($user == null)

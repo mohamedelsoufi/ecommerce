@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 
 class products extends Controller
 {
-    public function productShow(){
+    public function index(){
         $products = Product::where('status', '!=', -1)->paginate();
         return view('admin.products.productsShow')->with('products',$products);
     }
 
-    public function delete($id){
+    public function destroy($id){
         $product = Product::find($id);
 
         if($product == null)

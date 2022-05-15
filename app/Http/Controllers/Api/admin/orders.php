@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class orders extends Controller
 {
-    public function ordersShow(){
+    public function index(){
         $orders = Order::paginate();
         return view('admin.orders.ordersShow')->with('orders',$orders);
     }
 
-    public function details($id){
+    public function show($id){
         //sellect product
         $order = Order::find($id);
 
